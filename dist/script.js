@@ -76,7 +76,7 @@ scene.add( light2 );
 
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
-loader.load( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/39255/ladybug.gltf', function ( data ) {
+loader.load( './../models/scene.gltf', function ( data ) {
 
   
     var object = data.scene;
