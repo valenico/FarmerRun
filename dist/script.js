@@ -8,7 +8,7 @@ function render () {
   requestAnimationFrame( render );
   renderCalls.forEach((callback)=>{ callback(); });
 }
-render();
+// render();
 
 /*////////////////////////////////////////*/
 
@@ -73,7 +73,6 @@ renderCalls.push(function(){
 
 
 
-
 var light = new THREE.AmbientLight( 0x20202A, 20, 100 );
 light.position.set( 30, -10, 30 );
 scene.add( light );
@@ -105,44 +104,6 @@ floorGroup.position.z = 500;
 
 
 /*//////////////////////////////////////////*/
-// Metodo con cui carica la texture
-// bisogna capire come farla vedere bene
-
-var onLoad = function (texture) {
-  var objGeometry = new THREE.PlaneGeometry(100, 100, 32);
-  var objMaterial = new THREE.MeshPhongMaterial({
-    map: texture,
-    side: THREE.DoubleSide,
-    shading: THREE.FlatShading
-  });
-
-  var mesh = new THREE.Mesh(objGeometry, objMaterial);
-  scene.add(mesh);
-
-  var render = function () {
-    requestAnimationFrame(render);
-    mesh.rotation.x = 90;
-    renderer.render(scene, camera);
-  };
-  render();
-}
-
-// Function called when download progresses
-var onProgress = function (xhr) {
-  console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-};
-
-// Function called when download errors
-var onError = function (xhr) {
-  console.log('An error happened');
-};
-
-
-
-var loader1 = new THREE.TextureLoader();
-loader1.load('./ground.jpg', onLoad, onProgress, onError);
-
-// fine metodo texture
 
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
@@ -175,3 +136,37 @@ function animate(sonic){
 	//scene.remove(sonic);
 
 }
+
+// Metodo con cui carica la texture
+// bisogna capire come farla vedere bene
+
+var onLoad = function (texture) {
+  var objGeometry = new THREE.PlaneGeometry(100, 100, 32);
+  var objMaterial = new THREE.MeshPhongMaterial({
+    map: texture,
+    side: THREE.DoubleSide,
+    shading: THREE.FlatShading
+  });
+
+  var mesh = new THREE.Mesh(objGeometry, objMaterial);
+  scene.add(mesh);
+  mesh.rotation.x = 300;
+}
+
+// Function called when download progresses
+var onProgress = function (xhr) {
+  console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+};
+
+// Function called when download errors
+var onError = function (xhr) {
+  console.log('An error happened');
+};
+
+
+
+var loader1 = new THREE.TextureLoader();
+loader1.load('./ground.jpg', onLoad, onProgress, onError);
+
+// fine metodo texture
+render();
