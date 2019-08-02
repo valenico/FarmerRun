@@ -15,7 +15,7 @@ render();
 var scene = new THREE.Scene();
 
 var camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 0.1, 800 );
-camera.position.set(5,5,5);
+camera.position.set(0,2,-4);
 
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setPixelRatio( window.devicePixelRatio );
@@ -80,11 +80,36 @@ scene.add( light );
 
 /* ////////////////////////////////////////////////////////////////////////// */
 
+var moverGroup = new THREE.Object3D();
+scene.add( moverGroup );
+var floorGroup = new THREE.Object3D();
+
+var floorMaterial = new THREE.MeshLambertMaterial({
+	color: 0x006400, //diffuse							
+	emissive: 0x000000, 
+	shading: THREE.FlatShading, 
+	side: THREE.DoubleSide,
+	map: new THREE.TextureLoader().load('./ground.jpg'),
+});
+
+floorGeometry = new THREE.PlaneGeometry( 20, 1000 , 20,20 );
+var floorMesh = new THREE.Mesh( floorGeometry, floorMaterial );
+
+floorGroup.add( floorMesh );
+moverGroup.add( floorGroup );
+floorMesh.rotation.x = Math.PI/2;
+//floorMesh.rotation.z = Math.PI/2;
+floorGroup.position.y = 0;
+moverGroup.position.z = 0;
+floorGroup.position.z = 500;
+
+
+/*//////////////////////////////////////////*/
 
 
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
-loader.load( './../models/eggman-yurro.glb', function ( data ) {
+loader.load( './../models/scene.gltf', function ( data ) {
 
   
     var object = data.scene;
@@ -107,3 +132,5 @@ loader.load( './../models/eggman-yurro.glb', function ( data ) {
     console.log(animations);
     scene.add( object );
 });
+
+while(true) loader.positionX(loader.positionX+1)
