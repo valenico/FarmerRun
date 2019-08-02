@@ -109,16 +109,17 @@ floorGroup.position.z = 500;
 
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
-loader.load( './../models/scene.gltf', function ( data ) {
+
+loader.load( './../models/scene.gltf', function ( gltf ) {
 
   
-    var object = data.scene;
-    object.position.set(0, 0, -0.75);
+    var sonic = gltf.scene;
+    sonic.position.set(0, 0, -0.75);
     //object.scale.set(2,2,2);
   
 
-    data.scene.traverse(function(child){
-      console.log(child);
+    gltf.scene.traverse(function(child){
+      //console.log(child);
       if(child.name == "Thigh_R_014"){
         //child.rotateZ(5);
       }
@@ -128,9 +129,12 @@ loader.load( './../models/scene.gltf', function ( data ) {
     //clipAction.play(object);
 
     //object.position.y = - 95;
-    var animations = data.animations;
-    console.log(animations);
-    scene.add( object );
+    scene.add( sonic );
+    animate(sonic);
 });
 
-while(true) loader.positionX(loader.positionX+1)
+function animate(sonic){
+	console.log(sonic.position);
+	//scene.remove(sonic);
+
+}
