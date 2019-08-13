@@ -136,19 +136,20 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
 });
 
-function lerp(target, current, fraction){
-	return (target-current)*fraction + current;
+function lerp(current, target, fraction){
+	return (target-current)*fraction;
 }
 
 function animate(){
-  //sonic.translateX(lerp(sonic.position + 10, sonic.position, 0.2))4
-  if(typeof(scene.getObjectByName( "sonic", true ))!= "undefined"){
-  	console.log(scene.getObjectByName( "sonic", true ).position);
-  	var aux = scene.getObjectByName( "sonic", true ).position.z;
-  	//scene.getObjectByName( "sonic", true ).position.z += 0.1;
-  	scene.getObjectByName( "sonic", true ).position.z += lerp(10, 0, 0.01);
-  	camera.position.z += lerp(10, 0, 0.01);
-  	}
+
+  s = scene.getObjectByName( "sonic", true )
+  if(typeof(s)!= "undefined"){
+	//if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
+	//t = (t >= 1) ? 0 : t+= 0.002;
+
+  	s.position.z += lerp(0, 10, 0.01);
+  	camera.position.z += lerp(0, 10, 0.01);
+
   requestAnimationFrame(animate);
   render();
 
@@ -194,14 +195,6 @@ var loader1 = new THREE.TextureLoader();
 loader1.load('./ground1.jpg', onLoad, onProgress, onError);
 
 function render(){
-
-  if(t < 0.5){
-    try {
-      sonic.getObjectByName(sonic_dic.Testa).rotation.x += 1;
-    } catch(err) {}
-  } 
- // scene.add(sonic);
-  t = (t >= 1) ? 0 : t+= 0.002;
   renderer.render(scene, camera);
 }
 
