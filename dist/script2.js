@@ -1,7 +1,6 @@
 const backgroundColor = 0x000000;
 
 /// Dictionary for body parts of sonic ///
-
 const sonic_dic = { 
 
   Testa : "Head_06",
@@ -31,6 +30,12 @@ const sonic_dic = {
   Mano_sx : "Hand_L_022"
 
 };
+
+/// AXIS (+)
+
+// x = laterale sx
+// y = su
+// z = avanti
 
 /*////////////////////////////////////////*/
 
@@ -124,15 +129,26 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
         child.rotateY(-1);
       }
      }); */
-
+     sonic.name = "sonic"
     scene.add( sonic );
    // animate(sonic);
 
 
 });
 
+function lerp(target, current, fraction){
+	return (target-current)*fraction + current;
+}
+
 function animate(){
-	
+  //sonic.translateX(lerp(sonic.position + 10, sonic.position, 0.2))4
+  if(typeof(scene.getObjectByName( "sonic", true ))!= "undefined"){
+  	console.log(scene.getObjectByName( "sonic", true ).position);
+  	var aux = scene.getObjectByName( "sonic", true ).position.z;
+  	//scene.getObjectByName( "sonic", true ).position.z += 0.1;
+  	scene.getObjectByName( "sonic", true ).position.z += lerp(10, 0, 0.01);
+  	// camera.position.z += lerp(10, 0, 0.01);
+  	}
   requestAnimationFrame(animate);
   render();
 
@@ -151,7 +167,7 @@ var onLoad = function (texture) {
 
   texture.repeat.set(times_horizontal, times_vert);
 
-  var objGeometry = new THREE.PlaneGeometry(10, 1000, 32);
+  var objGeometry = new THREE.PlaneGeometry(10, 1000);
 
   var objMaterial = new THREE.MeshPhongMaterial({
     map: texture,
@@ -166,7 +182,7 @@ var onLoad = function (texture) {
 
 // Function called when download progresses
 var onProgress = function (xhr) {
-  console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+  //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
 };
 
 // Function called when download errors
