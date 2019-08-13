@@ -147,7 +147,7 @@ function animate(){
   	var aux = scene.getObjectByName( "sonic", true ).position.z;
   	//scene.getObjectByName( "sonic", true ).position.z += 0.1;
   	scene.getObjectByName( "sonic", true ).position.z += lerp(10, 0, 0.01);
-  	// camera.position.z += lerp(10, 0, 0.01);
+  	camera.position.z += lerp(10, 0, 0.01);
   	}
   requestAnimationFrame(animate);
   render();
@@ -177,12 +177,12 @@ var onLoad = function (texture) {
 
   var mesh = new THREE.Mesh(objGeometry, objMaterial);
   scene.add(mesh);
-  mesh.rotation.x = 300;
+  mesh.rotation.x = 300.0222;
 }
 
 // Function called when download progresses
 var onProgress = function (xhr) {
-  //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+  console.log((xhr.loaded / xhr.total * 100) + '% loaded');
 };
 
 // Function called when download errors
