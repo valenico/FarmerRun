@@ -136,8 +136,10 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
 });
 
+function lerp1(current, target, fraction){
+	return (target-current)*fraction;}
+
 function lerp(current, target, fraction){
-	//return (target-current)*fraction;
   var array_of_points = [];
 
   for (var is = 0; is < (1/fraction); is++){
@@ -153,8 +155,8 @@ function lerp(current, target, fraction){
 s = 0.02;
 
 // the array is fucking ordered! leg dx up, low -- leg sx up, low
-sonic_legs = [lerp(6, 7.5 , 0.01).concat(lerp(7.5, 6, 0.01)), lerp(4, 5.5, 0.01).concat(lerp(5.5,4,0.01)), 
-  lerp(7.5, 6, 0.01).concat(lerp(6,7.5,0.01)),lerp(5.5 , 4, 0.01).concat(lerp(4,5.5,0.01))];
+sonic_legs = [lerp(6, 7.5 , 0.02).concat(lerp(7.5, 6, 0.02)), lerp(4, 5.5, 0.02).concat(lerp(5.5,4,0.02)), 
+  lerp(7.5, 6, 0.02).concat(lerp(6,7.5,0.02)),lerp(5.5 , 4, 0.02).concat(lerp(4,5.5,0.02))];
 
 
 function animate(){
@@ -164,9 +166,8 @@ function animate(){
 	//if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
 	//t = (t >= 1) ? 0 : t+= 0.002;
 
-  	//s.position.z += lerp(0, 10, 0.01);
-  	//camera.position.z += lerp(0, 10, 0.01);
-
+  	//sonic.position.z += lerp1(0, 10, 0.01);
+    //camera.position.z += lerp1(0, 10, 0.01);
   
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = sonic_legs[1][t];
     sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = sonic_legs[0][t];
