@@ -136,28 +136,9 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
 });
 
-/*function lerp(current, target, fraction){
-	return (target-current)*fraction;
-}*/
-//this version returns an array of all the intermediate positions
 function lerp(current, target, fraction){
-
-  var array_of_points = [];
-
-  for (var is = 0; is < (1/fraction); is++){
-    var j = is*fraction;
-    array_of_points.push(current*(1-j)+target*j); 
-  }
-
-  return array_of_points;
+	return (target-current)*fraction;
 }
-
-// for the z position of sonic i just use a scalar, we don't have a 'ending' point
-s = 0.02;
-
-// the array is fucking ordered! leg dx up, low -- leg sx up, low
-sonic_legs = [lerp(6, 7.5 , 0.01).concat(lerp(7.5, 6, 0.01)), lerp(4, 5.5, 0.01).concat(lerp(5.5,4,0.01)), 
-  lerp(7.5, 6, 0.01).concat(lerp(6,7.5,0.01)),lerp(5.5 , 4, 0.01).concat(lerp(4,5.5,0.01))];
 
 function animate(){
 
@@ -166,17 +147,8 @@ function animate(){
 	//if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
 	//t = (t >= 1) ? 0 : t+= 0.002;
 
-  	//s.position.z += lerp(0, 10, 0.01);
-  	//camera.position.z += lerp(0, 10, 0.01);
-    sonic.position.z += s;
-    camera.position.z += s;
-  
-    sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = sonic_legs[1][t];
-    sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = sonic_legs[0][t];
-      
-    sonic.getObjectByName(sonic_dic.Polpaccio_sx).rotation.z = sonic_legs[3][t];
-    sonic.getObjectByName(sonic_dic.Coscia_sx).rotation.z = sonic_legs[2][t];
-    t = (t == sonic_legs[0].length) ? 0 : t+=1;
+  	s.position.z += lerp(0, 10, 0.01);
+  	camera.position.z += lerp(0, 10, 0.01);
   }
   requestAnimationFrame(animate);
   render();
