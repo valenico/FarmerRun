@@ -10,6 +10,8 @@
 
 - check sulla posizione.x di sonic che altrimenti può andare nel vuoto
 
+- **REQUIREMENT** texture differenti? contano quelle fatte da immagini? facciamo attenzione a crearne qualcuna almeno
+
 ## Fix minori:
 
 - il resto del mondo rimane nero ? 
