@@ -25,7 +25,7 @@ const sonic_dic = {
 
   Spalla_sx : "Shulder_L_0019",
   Braccio_sx : "UpperArm_L_020",
-  Avambraccio_sx : "ForeArm_L_0321",
+  Avambraccio_sx : "ForeArm_L_021",
   Polso_sx : "Wrist_L_033",
   Mano_sx : "Hand_L_022"
 
@@ -183,10 +183,13 @@ function lerp(current, target, fraction){
 s = 0.02;
 
 // the array is fucking ordered! leg dx up, low -- leg sx up, low
-sonic_legs = [lerp(6, 7.5 , 0.02).concat(lerp(7.5, 6, 0.02)), lerp(4, 5.5, 0.02).concat(lerp(5.5,4,0.02)), 
-  lerp(7.5, 6, 0.02).concat(lerp(6,7.5,0.02)),lerp(5.5 , 4, 0.02).concat(lerp(4,5.5,0.02))];
+run = [lerp(6, 8 , 0.03).concat(lerp(8, 6, 0.03)), lerp(4, 5.5, 0.03).concat(lerp(5.5,4,0.03)), 
+       lerp(8, 6, 0.03).concat(lerp(6,8,0.03)),lerp(5.5 , 4, 0.03).concat(lerp(4,5.5,0.03)),
+       lerp(0, -2, 0.03).concat(lerp(-2,0,0.03)),lerp(-2, 0, 0.03).concat(lerp(0,-2,0.03)),
+       lerp(0, 1, 0.03).concat(lerp(1,0,0.03)),lerp(1, 0, 0.03).concat(lerp(0,1,0.03))];
 
-jump_points = lerp(0 , 1 , 0.02).concat(lerp(1 , 0 , 0.02));
+
+jump_points = lerp(0 , 1 , 0.04).concat(lerp(1 , 0 , 0.04));
 var t_jump = 0;
 
 function check_ring(){
@@ -219,15 +222,25 @@ function animate(){
 	//if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
 	//t = (t >= 1) ? 0 : t+= 0.002;
 
-  	//sonic.position.z += lerp1(0, 10, 0.01);
-    //camera.position.z += lerp1(0, 10, 0.01);
+  	sonic.position.z += lerp1(0, 10, 0.01);
+    camera.position.z += lerp1(0, 10, 0.01);
   
-    sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = sonic_legs[1][t];
-    sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = sonic_legs[0][t];
+    sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
+    sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = run[0][t];
       
-    sonic.getObjectByName(sonic_dic.Polpaccio_sx).rotation.z = sonic_legs[3][t];
-    sonic.getObjectByName(sonic_dic.Coscia_sx).rotation.z = sonic_legs[2][t];
-    t = (t == sonic_legs[0].length) ? 0 : t+=1;
+    sonic.getObjectByName(sonic_dic.Polpaccio_sx).rotation.z = run[3][t];
+    sonic.getObjectByName(sonic_dic.Coscia_sx).rotation.z = run[2][t];
+
+    sonic.getObjectByName(sonic_dic.Avambraccio_sx).rotation.z = run[4][t];
+    sonic.getObjectByName(sonic_dic.Avambraccio_dx).rotation.z = run[5][t];
+
+    sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.z = run[6][t];
+    sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.z = run[7][t];
+    sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = -1;
+    sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1;
+    sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
+
+    t = (t == run[0].length) ? 0 : t+=1;
     
     r = check_ring();
     if(r != -1){
