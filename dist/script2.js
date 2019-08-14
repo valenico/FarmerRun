@@ -191,7 +191,7 @@ function animate(){
     t = (t == sonic_legs[0].length) ? 0 : t+=1;
   }
   if(jump){
-    sonic.position.y = jump_points[t2];
+    sonic.position.y = jump_points[t_jump];
     t_jump += 1;
     if(t_jump >= jump_points.length){
       jump = false;
