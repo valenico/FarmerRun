@@ -49,6 +49,7 @@ function render () {
 var renderer, scene, camera, controls, sonic, ring, ring2;
 var t = 0;
 var jump = false;
+var score = 0;
 //function renderScene(){ renderer.render( scene, camera ); }
 //renderCalls.push(renderScene);
 
@@ -215,6 +216,14 @@ function check_ring(){
   return -1;
 }
 
+var text2 = document.createElement('h1');
+text2.style.position = 'absolute';
+text2.style.color = "white";
+text2.innerHTML = score;
+text2.style.top = 50 + 'px';
+text2.style.left = 50 + 'px';
+document.body.appendChild(text2);
+
 function animate(){
 
   s = scene.getObjectByName( "sonic", true );
@@ -244,7 +253,8 @@ function animate(){
     
     r = check_ring();
     if(r != -1){
-      console.log("PUNTI");
+      score +=10;
+      text2.innerHTML = score;
       rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
     }
   }
