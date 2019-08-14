@@ -46,7 +46,7 @@ function render () {
 }
 */ 
 /*////////////////////////////////////////*/
-var renderer, scene, camera, controls, sonic;
+var renderer, scene, camera, controls, sonic, ring, ring2;
 var t = 0;
 var jump = false;
 //function renderScene(){ renderer.render( scene, camera ); }
@@ -148,6 +148,22 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
 });
 
+var rings;
+
+loader.load('./../models/ring.glb', function(gltf) {
+    ring = gltf.scene;
+    ring.scale.set(0.005,0.005,0.005);
+    ring.position.set(0, 0.5 , 5);
+    scene.add(ring);
+
+    ring2 = gltf.scene.clone();
+    ring2.scale.set(0.005,0.005,0.005);
+    ring2.position.set(0, 0.5 , 7);
+    scene.add(ring2);
+
+    rings = [ring, ring2 ];
+});
+
 function lerp1(current, target, fraction){
 	return (target-current)*fraction;}
 
@@ -173,6 +189,29 @@ sonic_legs = [lerp(6, 7.5 , 0.02).concat(lerp(7.5, 6, 0.02)), lerp(4, 5.5, 0.02)
 jump_points = lerp(0 , 1 , 0.02).concat(lerp(1 , 0 , 0.02));
 var t_jump = 0;
 
+function check_ring(){
+
+  for(var i = 0; i < rings.length ; i++){
+    r = rings[i];
+    console.log(r);
+    try {
+      z = sonic.position.z <= r.position.z + 0.05;
+      z1 = sonic.position.z >= r.position.z - 0.05;
+
+      y = sonic.position.y <= r.position.y + 0.5;
+      y2 = sonic.position.y >= r.position.y - 0.5;
+
+      x = sonic.position.x <= r.position.x + 0.3;
+      x2 = sonic.position.x >= r.position.x - 0.3;
+      if(z && z1 && x && x2 && y && y2){
+        return i;
+      }
+    } catch(err){
+    }
+  }
+  return -1;
+}
+
 function animate(){
 
   s = scene.getObjectByName( "sonic", true );
@@ -189,6 +228,12 @@ function animate(){
     sonic.getObjectByName(sonic_dic.Polpaccio_sx).rotation.z = sonic_legs[3][t];
     sonic.getObjectByName(sonic_dic.Coscia_sx).rotation.z = sonic_legs[2][t];
     t = (t == sonic_legs[0].length) ? 0 : t+=1;
+    
+    r = check_ring();
+    if(r != -1){
+      console.log("PUNTI");
+      rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
+    }
   }
   if(jump){
     sonic.position.y = jump_points[t_jump];
