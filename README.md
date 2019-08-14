@@ -8,6 +8,8 @@
 
 - Rifinire il posizionamento degli anelli
 
+- check sulla posizione.x di sonic che altrimenti può andare nel vuoto
+
 ## Fix minori:
 
 - il resto del mondo rimane nero ? 
