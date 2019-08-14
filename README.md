@@ -17,3 +17,5 @@
 - cosetti per andare più veloce / tempo per punti 
 
 - mani mentre corre più aereodinamiche ? dovrebbe essere un valore fisso di rotazione y
+
+- mettere un 'PLAY' all'inizio così sicuro cliccano lo schermo e si possono muvoere (?)
