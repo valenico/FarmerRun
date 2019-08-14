@@ -142,14 +142,14 @@ function lerp(current, target, fraction){
 
 function animate(){
 
-  s = scene.getObjectByName( "sonic", true )
+  s = scene.getObjectByName( "sonic", true );
   if(typeof(s)!= "undefined"){
 	//if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
 	//t = (t >= 1) ? 0 : t+= 0.002;
 
   	s.position.z += lerp(0, 10, 0.01);
   	camera.position.z += lerp(0, 10, 0.01);
-
+  }
   requestAnimationFrame(animate);
   render();
 
