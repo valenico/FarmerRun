@@ -48,6 +48,7 @@ function render () {
 /*////////////////////////////////////////*/
 var renderer, scene, camera, controls, sonic;
 var t = 0;
+var jump = false;
 //function renderScene(){ renderer.render( scene, camera ); }
 //renderCalls.push(renderScene);
 
@@ -93,6 +94,17 @@ function init() {
     controls.update()
   }); */
 
+  document.addEventListener("keydown", onDocumentKeyDown, false);
+  function onDocumentKeyDown(event) {
+    var keyCode = event.which;
+    if (keyCode == 65) {
+      sonic.position.x += 0.5;
+    } else if (keyCode == 68) {
+      sonic.position.x -= 0.5;
+    } else if (keyCode == 32){
+      jump = true;
+    }
+  };
   var light = new THREE.AmbientLight( 0x20202A, 20, 100 );
   light.position.set( 30, -10, 30 );
   scene.add( light );
@@ -158,6 +170,8 @@ s = 0.02;
 sonic_legs = [lerp(6, 7.5 , 0.02).concat(lerp(7.5, 6, 0.02)), lerp(4, 5.5, 0.02).concat(lerp(5.5,4,0.02)), 
   lerp(7.5, 6, 0.02).concat(lerp(6,7.5,0.02)),lerp(5.5 , 4, 0.02).concat(lerp(4,5.5,0.02))];
 
+jump_points = lerp(0 , 1 , 0.02).concat(lerp(1 , 0 , 0.02));
+var t_jump = 0;
 
 function animate(){
 
@@ -175,6 +189,14 @@ function animate(){
     sonic.getObjectByName(sonic_dic.Polpaccio_sx).rotation.z = sonic_legs[3][t];
     sonic.getObjectByName(sonic_dic.Coscia_sx).rotation.z = sonic_legs[2][t];
     t = (t == sonic_legs[0].length) ? 0 : t+=1;
+  }
+  if(jump){
+    sonic.position.y = jump_points[t2];
+    t_jump += 1;
+    if(t_jump >= jump_points.length){
+      jump = false;
+      t_jump = 0;
+    }
   }
   requestAnimationFrame(animate);
   render();
