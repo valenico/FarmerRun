@@ -184,10 +184,11 @@ function lerp(current, target, fraction){
 s = 0.02;
 
 // the array is fucking ordered! leg dx up, low -- leg sx up, low
-run = [lerp(6, 8 , 0.03).concat(lerp(8, 6, 0.03)), lerp(4, 5.5, 0.03).concat(lerp(5.5,4,0.03)), 
-       lerp(8, 6, 0.03).concat(lerp(6,8,0.03)),lerp(5.5 , 4, 0.03).concat(lerp(4,5.5,0.03)),
-       lerp(0, -2, 0.03).concat(lerp(-2,0,0.03)),lerp(-2, 0, 0.03).concat(lerp(0,-2,0.03)),
-       lerp(0, 1, 0.03).concat(lerp(1,0,0.03)),lerp(1, 0, 0.03).concat(lerp(0,1,0.03))];
+run_speed = 0.03;
+run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_speed).concat(lerp(5.5,4,run_speed)), 
+       lerp(8, 6, run_speed).concat(lerp(6,8,run_speed)),lerp(5.5 , 4, run_speed).concat(lerp(4,5.5,run_speed)),
+       lerp(0, -2, run_speed).concat(lerp(-2,0,run_speed)),lerp(-2, 0, run_speed).concat(lerp(0,-2,run_speed)),
+       lerp(0, 1, run_speed).concat(lerp(1,0,run_speed)),lerp(1, 0, run_speed).concat(lerp(0,1,run_speed))];
 
 
 jump_points = lerp(0 , 1 , 0.04).concat(lerp(1 , 0 , 0.04));
@@ -226,13 +227,13 @@ document.body.appendChild(text2);
 
 function animate(){
 
-  s = scene.getObjectByName( "sonic", true );
-  if(typeof(s)!= "undefined"){
+  object = scene.getObjectByName( "sonic", true );
+  if(typeof(object)!= "undefined"){
 	//if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
 	//t = (t >= 1) ? 0 : t+= 0.002;
 
-  	sonic.position.z += lerp1(0, 10, 0.01);
-    camera.position.z += lerp1(0, 10, 0.01);
+  	//sonic.position.z += lerp1(0, 10, 0.01);
+    //camera.position.z += lerp1(0, 10, 0.01);
   
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
     sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = run[0][t];
@@ -245,8 +246,8 @@ function animate(){
 
     sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.z = run[6][t];
     sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.z = run[7][t];
-    sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = -1;
-    sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1;
+    sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = -1.5;
+    sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1.5;
     sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
 
     t = (t == run[0].length) ? 0 : t+=1;
