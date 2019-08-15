@@ -53,6 +53,12 @@ var score = 0;
 //function renderScene(){ renderer.render( scene, camera ); }
 //renderCalls.push(renderScene);
 
+var max_rings = 50;
+var max_distance = 50;
+var probability = 0.2;
+var rings = new Array(max_rings);
+var rings_in_use = 0;
+
 function init() {
 
   scene = new THREE.Scene();
@@ -110,21 +116,7 @@ function init() {
   light.position.set( 30, -10, 30 );
   scene.add( light );
 
-
 }
-
-
-/*////////////////////////////////////////////////////////////////////
-
-
-var qInitial = new THREE.Quaternion().setFromAxisAngle( (0,0,1) , -5 );
-var qFinal = new THREE.Quaternion().setFromAxisAngle( (0,0,1),5);
-var quaternionKF = new THREE.QuaternionKeyframeTrack( '.quaternion', [ 0, 1, 2 ], [ qInitial.x, qInitial.y, qInitial.z, qInitial.w, qFinal.x, qFinal.y, qFinal.z, qFinal.w, qInitial.x, qInitial.y, qInitial.z, qInitial.w ] );
-var clip = new THREE.AnimationClip( 'Run', 3, [quaternionKF] );
-*/
-
-
-/* ////////////////////////////////////////////////////////////////////////// */
 
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
@@ -142,31 +134,60 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
         child.rotateY(-1);
       }
      }); */
-     sonic.name = "sonic"
+    sonic.name = "sonic"
     scene.add( sonic );
    // animate(sonic);
 
 
 });
 
-var rings;
+
 
 loader.load('./../models/ring.glb', function(gltf) {
-    ring = gltf.scene;
+    var ring = gltf.scene;
     ring.scale.set(0.005,0.005,0.005);
-    ring.position.set(0, 0.5 , 5);
-    scene.add(ring);
+    //ring.position.set(0, 0.5 , 5);
+    //scene.add(ring);
+    rings[0] = ring;
 
-    ring2 = gltf.scene.clone();
-    ring2.scale.set(0.005,0.005,0.005);
-    ring2.position.set(0, 0.5 , 7);
-    scene.add(ring2);
+    var clone;
 
-    rings = [ring, ring2 ];
+    for(i = 1 ; i < max_rings ; i ++){
+          clone = gltf.scene.clone();
+          clone.scale.set(0.005,0.005,0.005);
+          //clone.position.set(0, 0.5 , 7);
+          //scene.add(ring2);
+          rings[i] = clone;
+    }
+randomCoinInitialization(0);
+
 });
 
+function randomCoinInitialization(start){
+  for(z = 0; z < max_distance; z++){
+    if(rings_in_use >= max_rings) break;
+
+    var p = Math.random();
+    if(p <= probability){
+      rings_in_use+=1;
+      rings[z].position.set((Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + z);
+      scene.add(rings[z]);
+    }
+  }
+}
+
+function randomCoinGenerator(){
+
+}
+
+function randomCoinRepositioning(coin, start){
+    coin.position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + max_distance + Math.random()*10+2);
+  }
+
+
 function lerp1(current, target, fraction){
-	return (target-current)*fraction;}
+	return (target-current)*fraction;
+}
 
 function lerp(current, target, fraction){
   var array_of_points = [];
@@ -194,20 +215,25 @@ run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_sp
 jump_points = lerp(0 , 1 , 0.04).concat(lerp(1 , 0 , 0.04));
 var t_jump = 0;
 
+error = 0.5;
+
 function check_ring(){
 
   for(var i = 0; i < rings.length ; i++){
     r = rings[i];
-    console.log(r);
+    //console.log(r);
     try {
-      z = sonic.position.z <= r.position.z + 0.05;
-      z1 = sonic.position.z >= r.position.z - 0.05;
 
-      y = sonic.position.y <= r.position.y + 0.5;
-      y2 = sonic.position.y >= r.position.y - 0.5;
+      if(sonic.position.z >= r.position.z + 3) randomCoinRepositioning(r, sonic.position.z); // ring miss
 
-      x = sonic.position.x <= r.position.x + 0.3;
-      x2 = sonic.position.x >= r.position.x - 0.3;
+      z = sonic.position.z <= r.position.z + error;
+      z1 = sonic.position.z >= r.position.z - error;
+
+      y = sonic.position.y <= r.position.y + error;
+      y2 = sonic.position.y >= r.position.y - error;
+
+      x = sonic.position.x <= r.position.x + error;
+      x2 = sonic.position.x >= r.position.x - error;
       if(z && z1 && x && x2 && y && y2){
         return i;
       }
@@ -232,8 +258,8 @@ function animate(){
 	//if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
 	//t = (t >= 1) ? 0 : t+= 0.002;
 
-  	//sonic.position.z += lerp1(0, 10, 0.01);
-    //camera.position.z += lerp1(0, 10, 0.01);
+  	sonic.position.z += lerp1(0, 10, 0.01);
+    camera.position.z += lerp1(0, 10, 0.01);
   
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
     sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = run[0][t];
@@ -256,7 +282,8 @@ function animate(){
     if(r != -1){
       score +=10;
       text2.innerHTML = score;
-      rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
+      randomCoinRepositioning(rings[r], sonic.position.z);
+      //rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
     }
   }
   if(jump){

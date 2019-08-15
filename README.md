@@ -2,7 +2,7 @@
 
 ## Cose da fare:
 
-- Corsa infinita (~~fixare il problema di valerio~~ + capire se allungare la strada/fare dei livelli/evitare che sonic cada nel vuoto alla fine)
+- Corsa infinita (capire se allungare la strada/fare dei livelli/evitare che sonic cada nel vuoto alla fine)
 
 - Ostacoli + Eggman
 
