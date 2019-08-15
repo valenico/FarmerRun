@@ -141,7 +141,12 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
 });
 
-
+loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
+  eggman = gltf.scene;
+  eggman.position.set(0, 0, -100);
+  eggman.scale.set(0.5,0.5,0.5);
+  scene.add( eggman );
+});
 
 loader.load('./../models/ring.glb', function(gltf) {
     var ring = gltf.scene;
@@ -215,6 +220,15 @@ run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_sp
 jump_points = lerp(0 , 1 , 0.04).concat(lerp(1 , 0 , 0.04));
 var t_jump = 0;
 
+eggman_moves_x = lerp( 0 , -2.5, run_speed/6).concat(lerp(-2.5,2.5,run_speed/3)).concat(lerp(2.5,0,run_speed/6));
+var t_egg = 0;
+egg_speed = 0.06;
+var egg = true;
+var is_time = false;
+var hitting = false;
+var t_hit = 0;
+var n_hit = 0;
+
 error = 0.5;
 
 function check_ring(){
@@ -275,7 +289,43 @@ function animate(){
     sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = -1.5;
     sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1.5;
     sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
+	    
+    if(egg){
+      is_time = Math.random() > 0.99;
+      if(is_time){
+        egg = false;
+        eggman.position.z = sonic.position.z - 5;
+      }
+    }
 
+    if(is_time){
+      eggman.position.x = eggman_moves_x[t_egg]
+      
+      //here that should be a random movement towards sonic to hit him
+      if(eggman.position.z >= sonic.position.z + 4){ //we're in front of sonic
+        hitting = Math.random() > 0.9; //probability of trying to hit
+      } else if(hitting == false){
+        eggman.position.z += egg_speed;
+      }
+
+      if(hitting){
+        eggman.position.z -= (n_hit == 10) ? 0.07 : 0.04; //going back towards sonic, full speed if it's last hit
+        t_hit +=1;
+        if(t_hit >= 80){ // after going to him, we set time and variable, he'll go back to its z position
+          t_hit = 0;
+          n_hit +=1;
+          hitting = false;
+        }
+      }
+
+      t_egg = (t_egg >= eggman_moves_x.length) ? 0 : t_egg+1;
+
+      if(n_hit == 11){
+        eggman.position.z -= 0.07; //smooth disappearing, otherwise it just stops
+        is_time = false;
+        egg = true;
+      }
+    } 
     t = (t == run[0].length) ? 0 : t+=1;
     
     r = check_ring();
