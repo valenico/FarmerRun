@@ -98,9 +98,9 @@ function init() {
   document.addEventListener("keydown", onDocumentKeyDown, false);
   function onDocumentKeyDown(event) {
     var keyCode = event.which;
-    if (keyCode == 65) {
+    if (keyCode == 65 && sonic.position.x < 4) {
       sonic.position.x += 0.5;
-    } else if (keyCode == 68) {
+    } else if (keyCode == 68 && sonic.position.x > -4) {
       sonic.position.x -= 0.5;
     } else if (keyCode == 32){
       jump = true;
