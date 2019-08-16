@@ -246,7 +246,7 @@ run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_sp
        lerp(0, 1, run_speed).concat(lerp(1,0,run_speed)),lerp(1, 0, run_speed).concat(lerp(0,1,run_speed))];
 
 
-jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1 , 0 , 0.04));
+jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1.5 , 0 , 0.04));
 var t_jump = 0;
 
 eggman_moves_x = lerp( 0 , -2.5, run_speed/6).concat(lerp(-2.5,2.5,run_speed/3)).concat(lerp(2.5,0,run_speed/6));
@@ -353,6 +353,7 @@ function animate(){
       if(n_hit == 11){
         eggman.position.z -= 0.07; //smooth disappearing, otherwise it just stops
         is_time = false;
+	n_hit = 0;
         egg = true;
       }
     } 
