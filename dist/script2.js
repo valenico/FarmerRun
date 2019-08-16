@@ -220,7 +220,7 @@ function randomCoinRepositioning(coin, start){
 
 
 function lerp1(current, target, fraction){
-	return (target-current)*fraction;
+  return (target-current)*fraction;
 }
 
 function lerp(current, target, fraction){
@@ -300,10 +300,10 @@ function animate(){
 
   object = scene.getObjectByName( "sonic", true );
   if(typeof(object)!= "undefined"){
-	//if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
-	//t = (t >= 1) ? 0 : t+= 0.002;
+  //if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
+  //t = (t >= 1) ? 0 : t+= 0.002;
 
-  	sonic.position.z += lerp1(0, 10, 0.01);
+    sonic.position.z += lerp1(0, 10, 0.01);
     camera.position.z += lerp1(0, 10, 0.01);
   
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
@@ -320,14 +320,14 @@ function animate(){
     sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = -1.5;
     sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1.5;
     sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
-	    
+      
     if(egg){
       is_time = Math.random() > 0.99;
       if(is_time){
         egg = false;
         eggman.position.z = sonic.position.z - 5;
-	egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
-	scene.add(egglight);
+  egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
+  scene.add(egglight);
       }
     }
 
@@ -356,7 +356,7 @@ function animate(){
       if(n_hit == 11){
         eggman.position.z -= 0.07; //smooth disappearing, otherwise it just stops
         is_time = false;
-	n_hit = 0;
+  n_hit = 0;
         egg = true;
       }
     } 
