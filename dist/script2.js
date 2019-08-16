@@ -55,7 +55,8 @@ var score = 0;
 
 var max_rings = 50;
 var max_distance = 50;
-var probability = 0.2;
+var min_space = 2;
+var probability = 0.4;
 var rings = new Array();
 var rings_in_use = 0;
 
@@ -153,34 +154,59 @@ loader.load('./../models/ring.glb', function(gltf) {
     ring.scale.set(0.005,0.005,0.005);
     //ring.position.set(0, 0.5 , 5);
     //scene.add(ring);
-    rings.push(ring);
-    console.log("BELLAA");
-    randomCoinInitialization(0);
-
+    //rings.push(ring);
+    randomCoinInitialization(ring);
 });
 
-function randomCoinInitialization(start){
-  rings[0].position.set((Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + 1);
-  scene.add(rings[0])
-  rings_in_use += 1;
+
+function coin_curve(ring, start){
+  var coin_curve = [];
+  var yy;
   var clone;
+  var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
+  for(var i = 0 ; i < 5; i++){
+    clone = ring.clone();
+    if(i <= 2) yy = i + 0.5;
+    else yy -= 1;
+    clone.position.set(x , yy , start + i);
+    scene.add(clone);
+    coin_curve.push(clone);
+  }
+  return coin_curve;
+}
 
-  console.log("BELLAA");
+function coin_line(ring, start){
+  var coin_line = [];
+  var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
+  for(var i = 0; i < 5; i++){
+    var clone = ring.clone();
+    clone.position.set(x , 0.5 ,start + i);
+    coin_line.push(clone);
+    scene.add(clone);
+  }
+  return coin_line;
+}
 
-  for(z = 1; z < max_distance; z++){
-    if(rings_in_use >= max_rings) break;
+
+function randomCoinInitialization(ring){
+  var coins = [];
+  for(i = 0; i < 5; i++){
 
     var p = Math.random();
     if(p <= probability){
-      clone = rings[0].clone();
-      clone.scale.set(0.005,0.005,0.005);
-      rings.push(clone);
-      rings_in_use += 1;
-
-      clone.position.set((Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + z);
-      scene.add(clone);
+      coins = coin_curve(ring , 5*i + min_space);
+      rings.push(coins);
+      rings_in_use += 5;
+      //console.log(coins);
+    }
+    else{
+      coins = coin_line(ring, 5*i + min_space);
+      rings.push(coins);
+      rings_in_use += 5;
+      //console.log(coins);
     }
   }
+  console.log(rings);
 }
 
 
@@ -220,7 +246,7 @@ run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_sp
        lerp(0, 1, run_speed).concat(lerp(1,0,run_speed)),lerp(1, 0, run_speed).concat(lerp(0,1,run_speed))];
 
 
-jump_points = lerp(0 , 1 , 0.04).concat(lerp(1 , 0 , 0.04));
+jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1 , 0 , 0.04));
 var t_jump = 0;
 
 eggman_moves_x = lerp( 0 , -2.5, run_speed/6).concat(lerp(-2.5,2.5,run_speed/3)).concat(lerp(2.5,0,run_speed/6));
@@ -237,24 +263,25 @@ error = 0.5;
 function check_ring(){
 
   for(var i = 0; i < rings.length ; i++){
-    r = rings[i];
-    //console.log(r);
-    try {
+    for(var j = 0; j < rings[0].length; j++){
+      r = rings[i][j];
+      //console.log(r);
+      try {
 
-      if(sonic.position.z >= r.position.z + 3) randomCoinRepositioning(r, sonic.position.z); // ring miss
+        if(sonic.position.z >= r.position.z + 3) randomCoinRepositioning(r, sonic.position.z); // ring miss
 
-      z = sonic.position.z <= r.position.z + error;
-      z1 = sonic.position.z >= r.position.z - error;
+        z = sonic.position.z <= r.position.z + error;
+        z1 = sonic.position.z >= r.position.z - error;
 
-      y = sonic.position.y <= r.position.y + error;
-      y2 = sonic.position.y >= r.position.y - error;
+        y = sonic.position.y <= r.position.y + error;
+        y2 = sonic.position.y >= r.position.y - error;
 
-      x = sonic.position.x <= r.position.x + error;
-      x2 = sonic.position.x >= r.position.x - error;
-      if(z && z1 && x && x2 && y && y2){
-        return i;
-      }
-    } catch(err){
+        x = sonic.position.x <= r.position.x + error;
+        x2 = sonic.position.x >= r.position.x - error;
+        if(z && z1 && x && x2 && y && y2){
+          return r;
+        }
+      } catch(err){}
     }
   }
   return -1;
@@ -335,7 +362,7 @@ function animate(){
     if(r != -1){
       score +=10;
       text2.innerHTML = score;
-      randomCoinRepositioning(rings[r], sonic.position.z);
+      randomCoinRepositioning(r, sonic.position.z);
       //rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
     }
   }
