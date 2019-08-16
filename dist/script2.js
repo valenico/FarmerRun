@@ -56,7 +56,7 @@ var score = 0;
 var max_rings = 50;
 var max_distance = 50;
 var probability = 0.2;
-var rings = new Array(max_rings);
+var rings = new Array();
 var rings_in_use = 0;
 
 function init() {
@@ -153,33 +153,36 @@ loader.load('./../models/ring.glb', function(gltf) {
     ring.scale.set(0.005,0.005,0.005);
     //ring.position.set(0, 0.5 , 5);
     //scene.add(ring);
-    rings[0] = ring;
-
-    var clone;
-
-    for(i = 1 ; i < max_rings ; i ++){
-          clone = gltf.scene.clone();
-          clone.scale.set(0.005,0.005,0.005);
-          //clone.position.set(0, 0.5 , 7);
-          //scene.add(ring2);
-          rings[i] = clone;
-    }
-randomCoinInitialization(0);
+    rings.push(ring);
+    console.log("BELLAA");
+    randomCoinInitialization(0);
 
 });
 
 function randomCoinInitialization(start){
-  for(z = 0; z < max_distance; z++){
+  rings[0].position.set((Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + 1);
+  scene.add(rings[0])
+  rings_in_use += 1;
+  var clone;
+
+  console.log("BELLAA");
+
+  for(z = 1; z < max_distance; z++){
     if(rings_in_use >= max_rings) break;
 
     var p = Math.random();
     if(p <= probability){
-      rings_in_use+=1;
-      rings[z].position.set((Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + z);
-      scene.add(rings[z]);
+      clone = rings[0].clone();
+      clone.scale.set(0.005,0.005,0.005);
+      rings.push(clone);
+      rings_in_use += 1;
+
+      clone.position.set((Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + z);
+      scene.add(clone);
     }
   }
 }
+
 
 function randomCoinGenerator(){
 
