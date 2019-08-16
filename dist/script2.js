@@ -152,15 +152,13 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
 loader.load('./../models/ring.glb', function(gltf) {
     var ring = gltf.scene;
     ring.scale.set(0.005,0.005,0.005);
-    //ring.position.set(0, 0.5 , 5);
-    //scene.add(ring);
-    //rings.push(ring);
+
     randomCoinInitialization(ring);
 });
 
 
 function coin_curve(ring, start){
-  var coin_curve = [];
+  var coin_curve = new THREE.Group();
   var yy;
   var clone;
   var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
@@ -169,27 +167,30 @@ function coin_curve(ring, start){
     if(i <= 2) yy = i + 0.5;
     else yy -= 1;
     clone.position.set(x , yy , start + i);
-    scene.add(clone);
-    coin_curve.push(clone);
+    coin_curve.add(clone);
   }
+  scene.add(coin_curve);
+
   return coin_curve;
 }
 
 function coin_line(ring, start){
-  var coin_line = [];
+  var coin_line = new THREE.Group();
   var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
+
   for(var i = 0; i < 5; i++){
     var clone = ring.clone();
     clone.position.set(x , 0.5 ,start + i);
-    coin_line.push(clone);
-    scene.add(clone);
+    coin_line.add(clone);
   }
+  scene.add(coin_line);
   return coin_line;
+
 }
 
 
 function randomCoinInitialization(ring){
-  var coins = [];
+  var coins;
   for(i = 0; i < 5; i++){
 
     var p = Math.random();
@@ -206,13 +207,9 @@ function randomCoinInitialization(ring){
       //console.log(coins);
     }
   }
-  console.log(rings);
+  //console.log(rings);
 }
 
-
-function randomCoinGenerator(){
-
-}
 
 function randomCoinRepositioning(coin, start){
     coin.position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + max_distance + Math.random()*10+2);
@@ -263,9 +260,9 @@ error = 0.5;
 
 function check_ring(){
 
-  for(var i = 0; i < rings.length ; i++){
-    for(var j = 0; j < rings[0].length; j++){
-      r = rings[i][j];
+  for(var i = 0; i < 5 ; i++){
+    for(var j = 0; j < 5; j++){
+      r = rings[i].children[j];
       //console.log(r);
       try {
 
