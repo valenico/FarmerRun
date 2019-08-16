@@ -257,6 +257,7 @@ var is_time = false;
 var hitting = false;
 var t_hit = 0;
 var n_hit = 0;
+var egglight = new THREE.PointLight('red', 100);
 
 error = 0.5;
 
@@ -325,6 +326,8 @@ function animate(){
       if(is_time){
         egg = false;
         eggman.position.z = sonic.position.z - 5;
+	egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
+	scene.add(egglight);
       }
     }
 
@@ -362,10 +365,11 @@ function animate(){
     r = check_ring();
     if(r != -1){
       score +=10;
-      text2.innerHTML = score;
       randomCoinRepositioning(r, sonic.position.z);
       //rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
     }
+    text2.innerHTML = score;
+    egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
   }
   if(jump){
     sonic.position.y = jump_points[t_jump];
