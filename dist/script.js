@@ -1,4 +1,4 @@
-const backgroundColor = 0x000000;
+const backgroundColor = 0xe0ffff; //light blue for the sky
 
 /// Dictionary for body parts of sonic ///
 const sonic_dic = { 
@@ -68,7 +68,7 @@ function render () {
 }
 */ 
 /*////////////////////////////////////////*/
-var renderer, scene, camera, controls, sonic, ring, ring2;
+var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
 var score = 0;
@@ -120,19 +120,24 @@ function init() {
   document.addEventListener("keydown", onDocumentKeyDown, false);
   function onDocumentKeyDown(event) {
     var keyCode = event.which;
-    if (keyCode == 65 && sonic.position.x < 4) {
+    if (keyCode == 65 && sonic.position.x < 2.5) {
       sonic.position.x += 0.5;
-    } else if (keyCode == 68 && sonic.position.x > -4) {
+    } else if (keyCode == 68 && sonic.position.x > -2.5) {
       sonic.position.x -= 0.5;
     } else if (keyCode == 32){
       jump = true;
     }
   };
-  var light = new THREE.AmbientLight( 0x20202A, 20, 100 );
+  var light = new THREE.AmbientLight( 0xffffff, 2 , 1  );
   light.position.set( 30, -10, 30 );
   scene.add( light );
 
 }
+
+var egglight = new THREE.PointLight( 'red', 50, 1 , 2);
+var pointLightHelper = new THREE.PointLightHelper( egglight , 1 );
+egglight.visible = false;
+pointLightHelper.visible = false;
 
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
@@ -185,6 +190,8 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
   eggman.position.set(0, 0, -100);
   eggman.scale.set(0.5,0.5,0.5);
   scene.add( eggman );
+  scene.add( egglight );
+  scene.add( pointLightHelper );
 });
 
 loader.load('./../models/ring.glb', function(gltf) {
@@ -231,9 +238,9 @@ egg_speed = 0.06;
 var egg = true;
 var is_time = false;
 var hitting = false;
-var t_hit = 0;
 var n_hit = 0;
-var egglight = new THREE.PointLight('red', 100);
+var wait = 0;
+var e = false;
 
 var error = 0.5;
 
@@ -280,6 +287,20 @@ function check_ring(){
     }
 }
 
+function check_eggman(oldv){
+  if(oldv || (wait != 0 && wait < 80)){
+    wait +=1;
+  } else {
+    v = eggman.position.z <= sonic.position.z + error;
+    v2 = eggman.position.z >= sonic.position.z - error;
+    v3 = eggman.position.x <= sonic.position.x + error;
+    v4 = eggman.position.x >= sonic.position.x - error;
+    wait = 0;
+    if(v && v4 && v2 && v3) return true;
+  }
+  return false;
+}
+
 var text2 = document.createElement('h1');
 text2.style.position = 'absolute';
 text2.style.color = "white";
@@ -318,13 +339,15 @@ function animate(){
       if(is_time){
         egg = false;
         eggman.position.z = sonic.position.z - 5;
-  		egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
-  		scene.add(egglight);
+  		  egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
+  		  egglight.visible = true; 
+        pointLightHelper.visible = true;
       }
     }
 
     if(is_time){
       eggman.position.x = eggman_moves_x[t_egg]
+      egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
       
       //here that should be a random movement towards sonic to hit him
       if(eggman.position.z >= sonic.position.z + 4){ //we're in front of sonic
@@ -335,10 +358,8 @@ function animate(){
 
       if(hitting){
         eggman.position.z -= (n_hit == 10) ? 0.07 : 0.04; //going back towards sonic, full speed if it's last hit
-        t_hit +=1;
-        if(t_hit >= 80){ // after going to him, we set time and variable, he'll go back to its z position
-          t_hit = 0;
-          n_hit +=1;
+        if(eggman.position.z <= sonic.position.z){ // after going to him, we set time and variable, he'll go back to its z position
+          n_hit +=1
           hitting = false;
         }
       }
@@ -348,16 +369,23 @@ function animate(){
       if(n_hit == 11){
         eggman.position.z -= 0.07; //smooth disappearing, otherwise it just stops
         is_time = false;
-  		n_hit = 0;
+  		  n_hit = 0;
         egg = true;
       }
+      
+      e = check_eggman(e);
+      if(e && score > 20) score -=30; // if e and score < 20 you die ? 
+      
     } 
     t = (t == run[0].length) ? 0 : t+=1;
     
-    check_ring();
-    
+    check_ring();    
     text2.innerHTML = score;
-    egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
+
+    if(eggman.position.z > sonic.position.z){
+      egglight.visible = false; 
+      pointLightHelper.visible = false;
+    } 
   }
   if(jump){
     sonic.position.y = jump_points[t_jump];
@@ -376,16 +404,27 @@ function animate(){
 // bisogna capire come farla vedere bene
 
 var onLoad = function (texture) {
+  
+  var n = texture.image.src.slice(-11,-4);
 
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
 
-  const times_horizontal = 3;
-  const times_vert = 500;
+  const times_horizontal;
+  const times_vert;
+  var objGeometry;
+  
+  if(n == 'ground1'){
+    objGeometry = new THREE.PlaneGeometry(6,1000,32);
+    times_horizontal = 3;
+    times_vert = 500;
+  } else {
+    objGeoemtry = new THREE.PlaneGeometry(1000,3,32);
+    times_horizontal = 100;
+    times_vert = 1;
+  }
 
   texture.repeat.set(times_horizontal, times_vert);
-
-  var objGeometry = new THREE.PlaneGeometry(10, 1000);
 
   var objMaterial = new THREE.MeshPhongMaterial({
     map: texture,
@@ -394,8 +433,19 @@ var onLoad = function (texture) {
   });
 
   var mesh = new THREE.Mesh(objGeometry, objMaterial);
+  if(n == 'ground1'){
+    mesh.rotation.x = 300.0222;
+  } else {
+    mesh.position.set(-3,1.5,0);
+    mesh.rotation.y = 300.025;
+    
+    var clone_side = mesh.clone();
+    clone_side.position.x = 3;
+    clone_side.rotation.y = - 300.025;
+    scene.add(clone_side);
+  }
   scene.add(mesh);
-  mesh.rotation.x = 300.0222;
+  
 }
 
 // Function called when download progresses
@@ -410,6 +460,7 @@ var onError = function (xhr) {
 
 var loader1 = new THREE.TextureLoader();
 loader1.load('./ground1.jpg', onLoad, onProgress, onError);
+loader1.load('./side.jpg', onLoad, onProgress, on Error);
 
 function render(){
   renderer.render(scene, camera);
