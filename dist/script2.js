@@ -59,6 +59,7 @@ var min_space = 2;
 var probability = 0.4;
 var rings = new Array();
 var rings_in_use = 0;
+var size = 5;
 
 function init() {
 
@@ -159,30 +160,34 @@ loader.load('./../models/ring.glb', function(gltf) {
 });
 
 
-function coin_curve(ring, start){
+function coin_curve(ring, start, group){
   var coin_curve = [];
   var yy;
   var clone;
   var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
-  for(var i = 0 ; i < 5; i++){
+  for(var i = 0 ; i < size; i++){
     clone = ring.clone();
     if(i <= 2) yy = i + 0.5;
     else yy -= 1;
+    clone.id = group*size + i;
     clone.position.set(x , yy , start + i);
     scene.add(clone);
     coin_curve.push(clone);
+    rings.push(clone);
   }
   return coin_curve;
 }
 
-function coin_line(ring, start){
+function coin_line(ring, start, group){
   var coin_line = [];
   var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
-  for(var i = 0; i < 5; i++){
+  for(var i = 0; i < size; i++){
     var clone = ring.clone();
+    clone.id = group*size + i;
     clone.position.set(x , 0.5 ,start + i);
     coin_line.push(clone);
     scene.add(clone);
+    rings.push(clone);
   }
   return coin_line;
 }
@@ -190,33 +195,41 @@ function coin_line(ring, start){
 
 function randomCoinInitialization(ring){
   var coins = [];
-  for(i = 0; i < 5; i++){
+  for(i = 0; i < size; i++){
 
     var p = Math.random();
     if(p <= probability){
-      coins = coin_curve(ring , 5*i + min_space);
-      rings.push(coins);
-      rings_in_use += 5;
+      coins = coin_curve(ring , 5*i + min_space, i);
+      //rings.push(coins);
       //console.log(coins);
     }
     else{
-      coins = coin_line(ring, 5*i + min_space);
-      rings.push(coins);
-      rings_in_use += 5;
+      coins = coin_line(ring, 5*i + min_space, i);
+      //rings.push(coins);
       //console.log(coins);
     }
   }
-  console.log(rings);
+  //console.log(rings);
 }
 
-
-function randomCoinGenerator(){
-
-}
 
 function randomCoinRepositioning(coin, start){
     coin.position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + max_distance + Math.random()*10+2);
   }
+
+function ringRepositioning(ring, parentid, id){
+  if(id == 0){
+    var rand = Math.random();  
+    ring.position.z += max_distance;
+    if(scene.getObjectById(ring.id) == null) scene.add(ring);
+  }
+  else{
+    if(ring.position.z < rings[parentid].position.z){
+      ring.position.z = rings[parentid].position.z + id;
+      if(scene.getObjectById(ring.id) == null) scene.add(ring);
+    }
+  }
+}
 
 
 function lerp1(current, target, fraction){
@@ -264,12 +277,14 @@ error = 0.5;
 function check_ring(){
 
   for(var i = 0; i < rings.length ; i++){
-    for(var j = 0; j < rings[0].length; j++){
-      r = rings[i][j];
+      r = rings[i];
       //console.log(r);
       try {
 
-        if(sonic.position.z >= r.position.z + 3) randomCoinRepositioning(r, sonic.position.z); // ring miss
+        var group = Math.floor(i/size);
+        var id = i%size;
+        var parent = i - id;
+        if(sonic.position.z >= r.position.z + 2) ringRepositioning(r, parent, id); // ring miss
 
         z = sonic.position.z <= r.position.z + error;
         z1 = sonic.position.z >= r.position.z - error;
@@ -284,7 +299,7 @@ function check_ring(){
         }
       } catch(err){}
     }
-  }
+
   return -1;
 }
 
@@ -365,7 +380,12 @@ function animate(){
     r = check_ring();
     if(r != -1){
       score +=10;
-      randomCoinRepositioning(r, sonic.position.z);
+      scene.remove(r);
+      var i = rings.indexOf(r);
+      var group = Math.floor(i/size);
+      var id = i%size;
+      var parent = i - id;
+      ringRepositioning(r, parent, id);
       //rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
     }
     text2.innerHTML = score;
@@ -412,7 +432,7 @@ var onLoad = function (texture) {
 
 // Function called when download progresses
 var onProgress = function (xhr) {
-  console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+//console.log((xhr.loaded / xhr.total * 100) + '% loaded');
 };
 
 // Function called when download errors
