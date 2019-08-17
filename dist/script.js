@@ -53,13 +53,6 @@ var score = 0;
 //function renderScene(){ renderer.render( scene, camera ); }
 //renderCalls.push(renderScene);
 
-var max_distance = 50;
-var min_space = 2;
-var probability = 0.3;
-var rings = new Array();
-var size = 5;
-var lines_type = new Array(5);
-
 function init() {
 
   scene = new THREE.Scene();
@@ -184,9 +177,10 @@ run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_sp
 
 
 jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1.5 , 0 , 0.04));
-var t_jump = 0;
 
 eggman_moves_x = lerp( 0 , -2.5, run_speed/6).concat(lerp(-2.5,2.5,run_speed/3)).concat(lerp(2.5,0,run_speed/6));
+
+var t_jump = 0;
 var t_egg = 0;
 egg_speed = 0.06;
 var egg = true;
@@ -196,7 +190,7 @@ var t_hit = 0;
 var n_hit = 0;
 var egglight = new THREE.PointLight('red', 100);
 
-error = 0.5;
+var error = 0.5;
 
 function check_ring(){
   var res;
@@ -279,8 +273,8 @@ function animate(){
       if(is_time){
         egg = false;
         eggman.position.z = sonic.position.z - 5;
-  egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
-  scene.add(egglight);
+  		egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
+  		scene.add(egglight);
       }
     }
 
@@ -309,7 +303,7 @@ function animate(){
       if(n_hit == 11){
         eggman.position.z -= 0.07; //smooth disappearing, otherwise it just stops
         is_time = false;
-  n_hit = 0;
+  		n_hit = 0;
         egg = true;
       }
     } 
