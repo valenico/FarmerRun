@@ -219,12 +219,14 @@ function randomCoinRepositioning(coin, start){
 
 function ringRepositioning(ring, parentid, id){
   if(id == 0){
-    var rand = Math.random();  
+    var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
+    ring.position.x = x;
     ring.position.z += max_distance;
     if(scene.getObjectById(ring.id) == null) scene.add(ring);
   }
   else{
     if(ring.position.z < rings[parentid].position.z){
+      ring.position.x = rings[parentid].position.x;
       ring.position.z = rings[parentid].position.z + id;
       if(scene.getObjectById(ring.id) == null) scene.add(ring);
     }
