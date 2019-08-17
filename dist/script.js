@@ -23,11 +23,33 @@ const sonic_dic = {
   Polso_dx : "Wrist_R_048",
   Mano_dx : "Hand_R_037",
 
+  Indice_lower_sx: "Index2_L_024",
+  Indice_upper_sx: "Index1_L_023",
+  Medio_lower_sx: "Middle2_L_026",
+  Medio_upper_sx: "Middle1_L_025",
+  Mignolo_lower_sx:  "Pinky2_L_028",
+  Mignolo_upper_sx: "Pinky1_L_027",    
+  Anulare_lower_sx: "Ring2_L_030",
+  Anulare_upper_sx:  "Ring1_L_029",
+  Pollice_lower_sx: "Thumb2_L_032",
+  Pollice_upper_sx:  "Thumb1_L_031",
+
+  Indice_upper_dx: "Index1_R_038",
+  Indice_lower_dx: "Index2_R_039",
+  Medio_upper_dx: "Middle1_R_040",
+  Medio_lower_dx: "Middle2_R_041",
+  Mignolo_upper_dx: "Pinky1_R_042",
+  Mignolo_lower_dx: "Pinky2_R_043",
+  Anulare_upper_dx: "Ring1_R_044",
+  Anulare_lower_dx: "Ring2_R_045",
+  Pollice_upper_dx: "Thumb1_R_046",
+  Pollice_lower_dx: "Thumb2_R_047",
+
   Spalla_sx : "Shulder_L_0019",
   Braccio_sx : "UpperArm_L_020",
   Avambraccio_sx : "ForeArm_L_021",
   Polso_sx : "Wrist_L_033",
-  Mano_sx : "Hand_L_022"
+  Mano_sx : "Hand_L_022",
 
 };
 
@@ -128,7 +150,30 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
         child.rotateY(-1);
       }
      }); */
-    sonic.name = "sonic"
+    sonic.name = "sonic";
+
+    sonic.getObjectByName(sonic_dic.Indice_lower_sx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Indice_upper_sx).rotation.z = 1;
+    sonic.getObjectByName(sonic_dic.Medio_lower_sx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Medio_upper_sx).rotation.z = 1;
+    sonic.getObjectByName(sonic_dic.Mignolo_lower_sx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Mignolo_upper_sx).rotation.z = 1;
+    sonic.getObjectByName(sonic_dic.Anulare_lower_sx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Anulare_upper_sx).rotation.z = 1;    
+    sonic.getObjectByName(sonic_dic.Pollice_lower_sx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Pollice_upper_sx).rotation.z = 0.5;
+
+    sonic.getObjectByName(sonic_dic.Indice_lower_dx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Indice_upper_dx).rotation.z = 1;
+    sonic.getObjectByName(sonic_dic.Medio_lower_dx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Medio_upper_dx).rotation.z = 1;
+    sonic.getObjectByName(sonic_dic.Mignolo_lower_dx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Mignolo_upper_dx).rotation.z = 1;
+    sonic.getObjectByName(sonic_dic.Anulare_lower_dx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Anulare_upper_dx).rotation.z = 1;
+    sonic.getObjectByName(sonic_dic.Pollice_lower_dx).rotation.z = 2;
+    sonic.getObjectByName(sonic_dic.Pollice_upper_dx).rotation.z = 1;
+
     scene.add( sonic );
    // animate(sonic);
 
