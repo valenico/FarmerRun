@@ -280,12 +280,14 @@ function check_ring(){
 
   for(var i = 0; i < rings.length ; i++){
       r = rings[i];
-      //console.log(r);
+      var id = i%size;
+      var parent = i - id;
+      
+      if(scene.getObjectById(r.id) == null){
+        ringRepositioning(r, parent, id);
+        continue;
+      }
       try {
-
-        var group = Math.floor(i/size);
-        var id = i%size;
-        var parent = i - id;
         if(sonic.position.z >= r.position.z + 2) ringRepositioning(r, parent, id); // ring miss
 
         z = sonic.position.z <= r.position.z + error;
@@ -381,7 +383,7 @@ function animate(){
     
     r = check_ring();
     if(r != -1){
-      score +=10;
+      score +=1;
       scene.remove(r);
       var i = rings.indexOf(r);
       var group = Math.floor(i/size);
