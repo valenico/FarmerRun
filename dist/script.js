@@ -31,11 +31,12 @@ const sonic_dic = {
 
 };
 
-/// AXIS (+)
+/* AXIS (+)
 
-// x = laterale sx
-// y = su
-// z = avanti
+   x = laterale sx
+   y = su
+   z = avanti
+*/
 
 /*////////////////////////////////////////*/
 
@@ -44,21 +45,57 @@ function render () {
   requestAnimationFrame( render );
   renderCalls.forEach((callback)=>{ callback(); });
 }
+//function renderScene(){ renderer.render( scene, camera ); }
+//renderCalls.push(renderScene);
+
 */ 
 /*////////////////////////////////////////*/
 var renderer, scene, camera, controls, sonic, ring, ring2;
 var t = 0;
 var jump = false;
 var score = 0;
-//function renderScene(){ renderer.render( scene, camera ); }
-//renderCalls.push(renderScene);
+var start = 0;
 
-var max_distance = 50;
-var min_space = 2;
-var probability = 0.3;
-var rings = new Array();
-var size = 5;
-var lines_type = new Array(5);
+// for the z position of sonic i just use a scalar, we don't have a 'ending' point
+var s = 0.02;
+
+// the array is fucking ordered! leg dx up, low -- leg sx up, low
+var run_speed = 0.03;
+
+// Animations
+run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_speed).concat(lerp(5.5,4,run_speed)), 
+       lerp(8, 6, run_speed).concat(lerp(6,8,run_speed)),lerp(5.5 , 4, run_speed).concat(lerp(4,5.5,run_speed)),
+       lerp(0, -2, run_speed).concat(lerp(-2,0,run_speed)),lerp(-2, 0, run_speed).concat(lerp(0,-2,run_speed)),
+       lerp(0, 1, run_speed).concat(lerp(1,0,run_speed)),lerp(1, 0, run_speed).concat(lerp(0,1,run_speed))];
+
+
+jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1.5 , 0 , 0.04));
+
+eggman_moves_x = lerp( 0 , -2.5, run_speed/6).concat(lerp(-2.5,2.5,run_speed/3)).concat(lerp(2.5,0,run_speed/6));
+
+var t_jump = 0;
+var t_egg = 0;
+var egg_speed = 0.06;
+var egg = true;
+var is_time = false;
+var hitting = false;
+var t_hit = 0;
+var n_hit = 0;
+var egglight = new THREE.PointLight('red', 100);
+
+var error = 0.5;
+
+var text2 = document.createElement('h1');
+text2.style.position = 'absolute';
+text2.style.color = "white";
+text2.innerHTML = score;
+text2.style.top = 50 + 'px';
+text2.style.left = 50 + 'px';
+document.body.appendChild(text2);
+
+var loader1;
+
+
 
 function init() {
 
@@ -126,20 +163,15 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
     sonic = gltf.scene;
     sonic.position.set(0, 0, -0.75);
-    //object.scale.set(2,2,2);
-  
-  /*  gltf.scene.traverse(function(child){
+    //object.scale.set(2,2,2);  
+    /*  gltf.scene.traverse(function(child){
       if(child.name == 'Shoulder_L_Reference'){
         child.rotateZ(-0.8);
         child.rotateX(1);
         child.rotateY(-1);
-      }
-     }); */
+      }}); */
     sonic.name = "sonic"
     scene.add( sonic );
-   // animate(sonic);
-
-
 });
 
 loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
@@ -154,7 +186,6 @@ loader.load('./../models/ring.glb', function(gltf) {
     ring.scale.set(0.005,0.005,0.005);
     randomCoinInitialization(ring);
 });
-
 
 function lerp1(current, target, fraction){
   return (target-current)*fraction;
@@ -172,82 +203,6 @@ function lerp(current, target, fraction){
 }
 
 
-// for the z position of sonic i just use a scalar, we don't have a 'ending' point
-s = 0.02;
-
-// the array is fucking ordered! leg dx up, low -- leg sx up, low
-run_speed = 0.03;
-run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_speed).concat(lerp(5.5,4,run_speed)), 
-       lerp(8, 6, run_speed).concat(lerp(6,8,run_speed)),lerp(5.5 , 4, run_speed).concat(lerp(4,5.5,run_speed)),
-       lerp(0, -2, run_speed).concat(lerp(-2,0,run_speed)),lerp(-2, 0, run_speed).concat(lerp(0,-2,run_speed)),
-       lerp(0, 1, run_speed).concat(lerp(1,0,run_speed)),lerp(1, 0, run_speed).concat(lerp(0,1,run_speed))];
-
-
-jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1.5 , 0 , 0.04));
-var t_jump = 0;
-
-eggman_moves_x = lerp( 0 , -2.5, run_speed/6).concat(lerp(-2.5,2.5,run_speed/3)).concat(lerp(2.5,0,run_speed/6));
-var t_egg = 0;
-egg_speed = 0.06;
-var egg = true;
-var is_time = false;
-var hitting = false;
-var t_hit = 0;
-var n_hit = 0;
-var egglight = new THREE.PointLight('red', 100);
-
-error = 0.5;
-
-function check_ring(){
-  var res;
-  var group;
-  for(var i = 0; i < rings.length ; i++){
-      r = rings[i];
-      var id = i%size;
-      var parent = i - id;
-      group = Math.floor(i/size);
-
-      if(scene.getObjectById(r.id) == null){
-        ringRepositioning(r, parent, id);
-        continue;
-      }
-      try {
-        if(sonic.position.z >= r.position.z + 2) ringRepositioning(r, parent, id, group); // ring miss
-
-        z = sonic.position.z <= r.position.z + error;
-        z1 = sonic.position.z >= r.position.z - error;
-
-        y = sonic.position.y <= r.position.y + error;
-        y2 = sonic.position.y >= r.position.y - error;
-
-        x = sonic.position.x <= r.position.x + error;
-        x2 = sonic.position.x >= r.position.x - error;
-        if(z && z1 && x && x2 && y && y2){ 
-          res = r;
-          break;
-        }
-        else res = -1;
-      } catch(err){}
-    }
-
-  if(res != -1){
-      score += 10;
-      scene.remove(res);
-      var i = rings.indexOf(r);
-      var id = i%size;
-      var parent = i - id;
-      ringRepositioning(r, parent, id, group);
-      //rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
-    }
-}
-
-var text2 = document.createElement('h1');
-text2.style.position = 'absolute';
-text2.style.color = "white";
-text2.innerHTML = score;
-text2.style.top = 50 + 'px';
-text2.style.left = 50 + 'px';
-document.body.appendChild(text2);
 
 function animate(){
 
@@ -279,8 +234,8 @@ function animate(){
       if(is_time){
         egg = false;
         eggman.position.z = sonic.position.z - 5;
-  egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
-  scene.add(egglight);
+  		egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
+  		scene.add(egglight);
       }
     }
 
@@ -309,7 +264,7 @@ function animate(){
       if(n_hit == 11){
         eggman.position.z -= 0.07; //smooth disappearing, otherwise it just stops
         is_time = false;
-  n_hit = 0;
+  		n_hit = 0;
         egg = true;
       }
     } 
@@ -369,13 +324,21 @@ var onError = function (xhr) {
   console.log('An error happened');
 };
 
-var loader1 = new THREE.TextureLoader();
-loader1.load('./ground1.jpg', onLoad, onProgress, onError);
-
 function render(){
   renderer.render(scene, camera);
 }
 
 // fine metodo texture
-init();
-animate();
+
+
+window.onload = function startGame () {
+	if(!start){
+
+		loader1 = new THREE.TextureLoader();
+		loader1.load('./ground1.jpg', onLoad, onProgress, onError);
+
+		init();
+		animate();
+	}
+
+}
