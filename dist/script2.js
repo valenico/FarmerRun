@@ -53,13 +53,12 @@ var score = 0;
 //function renderScene(){ renderer.render( scene, camera ); }
 //renderCalls.push(renderScene);
 
-var max_rings = 50;
 var max_distance = 50;
 var min_space = 2;
-var probability = 0.4;
+var probability = 0.3;
 var rings = new Array();
-var rings_in_use = 0;
 var size = 5;
+var lines_type = new Array(5);
 
 function init() {
 
@@ -153,9 +152,6 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
 loader.load('./../models/ring.glb', function(gltf) {
     var ring = gltf.scene;
     ring.scale.set(0.005,0.005,0.005);
-    //ring.position.set(0, 0.5 , 5);
-    //scene.add(ring);
-    //rings.push(ring);
     randomCoinInitialization(ring);
 });
 
@@ -177,6 +173,7 @@ function coin_curve(ring, start, group){
   }
   return coin_curve;
 }
+
 
 function coin_line(ring, start, group){
   var coin_line = [];
@@ -200,16 +197,13 @@ function randomCoinInitialization(ring){
     var p = Math.random();
     if(p <= probability){
       coins = coin_curve(ring , 5*i + min_space, i);
-      //rings.push(coins);
-      //console.log(coins);
+      lines_type[i] = 1;
     }
     else{
       coins = coin_line(ring, 5*i + min_space, i);
-      //rings.push(coins);
-      //console.log(coins);
+      lines_type[i] = 0;
     }
   }
-  //console.log(rings);
 }
 
 
@@ -217,17 +211,33 @@ function randomCoinRepositioning(coin, start){
     coin.position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, start + max_distance + Math.random()*10+2);
   }
 
-function ringRepositioning(ring, parentid, id){
+
+function ringRepositioning(ring, parentid, id, group){
+  // First of the line
   if(id == 0){
     var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
     ring.position.x = x;
     ring.position.z += max_distance;
+
+    var p = Math.random();
+    if(p < probability) lines_type[group] = 1;
+    else lines_type[group] = 0;
+    
     if(scene.getObjectById(ring.id) == null) scene.add(ring);
   }
+  // Following rings
   else{
     if(ring.position.z < rings[parentid].position.z){
       ring.position.x = rings[parentid].position.x;
       ring.position.z = rings[parentid].position.z + id;
+
+      if(lines_type[group] == 1) { // rings curve
+
+        if(id == 4) ring.position.y = 0.5;
+        else if(id == 3) ring.position.y = id - 2 + 0.5;
+        else ring.position.y = id + 0.5;
+
+      } else ring.position.y = 0.5;    
       if(scene.getObjectById(ring.id) == null) scene.add(ring);
     }
   }
@@ -277,18 +287,20 @@ var egglight = new THREE.PointLight('red', 100);
 error = 0.5;
 
 function check_ring(){
-
+  var res;
+  var group;
   for(var i = 0; i < rings.length ; i++){
       r = rings[i];
       var id = i%size;
       var parent = i - id;
-      
+      group = Math.floor(i/size);
+
       if(scene.getObjectById(r.id) == null){
         ringRepositioning(r, parent, id);
         continue;
       }
       try {
-        if(sonic.position.z >= r.position.z + 2) ringRepositioning(r, parent, id); // ring miss
+        if(sonic.position.z >= r.position.z + 2) ringRepositioning(r, parent, id, group); // ring miss
 
         z = sonic.position.z <= r.position.z + error;
         z1 = sonic.position.z >= r.position.z - error;
@@ -298,13 +310,23 @@ function check_ring(){
 
         x = sonic.position.x <= r.position.x + error;
         x2 = sonic.position.x >= r.position.x - error;
-        if(z && z1 && x && x2 && y && y2){
-          return r;
+        if(z && z1 && x && x2 && y && y2){ 
+          res = r;
+          break;
         }
+        else res = -1;
       } catch(err){}
     }
 
-  return -1;
+  if(res != -1){
+      score += 10;
+      scene.remove(res);
+      var i = rings.indexOf(r);
+      var id = i%size;
+      var parent = i - id;
+      ringRepositioning(r, parent, id, group);
+      //rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
+    }
 }
 
 var text2 = document.createElement('h1');
@@ -381,17 +403,8 @@ function animate(){
     } 
     t = (t == run[0].length) ? 0 : t+=1;
     
-    r = check_ring();
-    if(r != -1){
-      score +=1;
-      scene.remove(r);
-      var i = rings.indexOf(r);
-      var group = Math.floor(i/size);
-      var id = i%size;
-      var parent = i - id;
-      ringRepositioning(r, parent, id);
-      //rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
-    }
+    check_ring();
+    
     text2.innerHTML = score;
     egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
   }
