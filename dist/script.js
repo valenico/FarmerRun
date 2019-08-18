@@ -362,12 +362,12 @@ var onLoad = function (texture) {
   if(n =='ground1'){
     mesh.rotation.x = 300.0222;
   } else {
-    mesh.position.set(-3, 1.5, 0);
-    mesh.rotation.y = 300.025;
+    mesh.position.set(-2.98, 1.5, 0);
+    mesh.rotation.y = 300.022225;
 
     var clone_side = mesh.clone();
-    clone_side.position.x = 3;
-    clone_side.rotation.y = -300.025;
+    clone_side.position.x = 2.98;
+    clone_side.rotation.y = -300.022225;
     scene.add(clone_side);
 
   }
