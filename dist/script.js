@@ -1,6 +1,7 @@
-const backgroundColor = 0xe0ffff; //light blue for the sky
+const backgroundColor = 0xe0ffff;
 
 /// Dictionary for body parts of sonic ///
+var score = 0;
 const sonic_dic = { 
 
   Testa : "Head_06",
@@ -33,7 +34,6 @@ const sonic_dic = {
   Anulare_upper_sx:  "Ring1_L_029",
   Pollice_lower_sx: "Thumb2_L_032",
   Pollice_upper_sx:  "Thumb1_L_031",
-
   Indice_upper_dx: "Index1_R_038",
   Indice_lower_dx: "Index2_R_039",
   Medio_upper_dx: "Middle1_R_040",
@@ -53,12 +53,6 @@ const sonic_dic = {
 
 };
 
-/// AXIS (+)
-
-// x = laterale sx
-// y = su
-// z = avanti
-
 /*////////////////////////////////////////*/
 
 /*var renderCalls = []; 
@@ -71,9 +65,9 @@ function render () {
 var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
-var score = 0;
 //function renderScene(){ renderer.render( scene, camera ); }
 //renderCalls.push(renderScene);
+
 
 function init() {
 
@@ -113,12 +107,8 @@ function init() {
   controls.enableDamping = true;
   controls.dampingFactor = 0.05;
 
- /* renderCalls.push(function(){
-    controls.update()
-  }); */
-
-  document.addEventListener("keydown", onDocumentKeyDown, false);
-  function onDocumentKeyDown(event) {
+document.addEventListener("keydown", onDocumentKeyDown, false);
+function onDocumentKeyDown(event) {
     var keyCode = event.which;
     if (keyCode == 65 && sonic.position.x < 2.5) {
       sonic.position.x += 0.5;
@@ -126,36 +116,29 @@ function init() {
       sonic.position.x -= 0.5;
     } else if (keyCode == 32){
       jump = true;
+
     }
   };
-  var light = new THREE.AmbientLight( 0xffffff, 2 , 1  );
+
+  var light = new THREE.AmbientLight( 0xffffff, 2 , 1 );
   light.position.set( 30, -10, 30 );
   scene.add( light );
 
 }
 
-var egglight = new THREE.PointLight( 'red', 50, 1 , 2);
-var pointLightHelper = new THREE.PointLightHelper( egglight , 1 );
-egglight.visible = false;
-pointLightHelper.visible = false;
+/* creation of a column object as obstacle, to clone/move 
+var cgeometry = new THREE.CylinderBufferGeometry( 0.5 , 0.5, 2.5, 32 );
+var cmaterial = new THREE.MeshLambertMaterial( {color: 'gray'} );
+var cylinder = new THREE.Mesh( cgeometry, cmaterial );
+cylinder.position.set(2, 1.25 , 6);
+*/
 
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
 
 loader.load( './../models/scene.gltf', function ( gltf ) {
-
     sonic = gltf.scene;
     sonic.position.set(0, 0, -0.75);
-    //object.scale.set(2,2,2);
-  
-  /*  gltf.scene.traverse(function(child){
-      if(child.name == 'Shoulder_L_Reference'){
-        child.rotateZ(-0.8);
-        child.rotateX(1);
-        child.rotateY(-1);
-      }
-     }); */
-    sonic.name = "sonic";
 
     sonic.getObjectByName(sonic_dic.Indice_lower_sx).rotation.z = 2;
     sonic.getObjectByName(sonic_dic.Indice_upper_sx).rotation.z = 1;
@@ -167,7 +150,6 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic.getObjectByName(sonic_dic.Anulare_upper_sx).rotation.z = 1;    
     sonic.getObjectByName(sonic_dic.Pollice_lower_sx).rotation.z = 2;
     sonic.getObjectByName(sonic_dic.Pollice_upper_sx).rotation.z = 0.5;
-
     sonic.getObjectByName(sonic_dic.Indice_lower_dx).rotation.z = 2;
     sonic.getObjectByName(sonic_dic.Indice_upper_dx).rotation.z = 1;
     sonic.getObjectByName(sonic_dic.Medio_lower_dx).rotation.z = 2;
@@ -180,10 +162,18 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic.getObjectByName(sonic_dic.Pollice_upper_dx).rotation.z = 1;
 
     scene.add( sonic );
-   // animate(sonic);
-
-
 });
+
+loader.load('./../models/ring.glb', function(gltf) {
+    var ring = gltf.scene;
+    ring.scale.set(0.005,0.005,0.005);
+    randomCoinInitialization(ring);
+});
+
+var egglight = new THREE.PointLight( 'red', 50, 1 , 2);
+var pointLightHelper = new THREE.PointLightHelper( egglight , 1 );
+egglight.visible = false;
+pointLightHelper.visible = false;
 
 loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
   eggman = gltf.scene;
@@ -194,18 +184,8 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
   scene.add( pointLightHelper );
 });
 
-loader.load('./../models/ring.glb', function(gltf) {
-    var ring = gltf.scene;
-    ring.scale.set(0.005,0.005,0.005);
-    randomCoinInitialization(ring);
-});
-
-
-function lerp1(current, target, fraction){
-  return (target-current)*fraction;
-}
-
 function lerp(current, target, fraction){
+
   var array_of_points = [];
 
   for (var is = 0; is < (1/fraction); is++){
@@ -216,76 +196,37 @@ function lerp(current, target, fraction){
   return array_of_points;
 }
 
-
-// for the z position of sonic i just use a scalar, we don't have a 'ending' point
-s = 0.02;
-
-// the array is fucking ordered! leg dx up, low -- leg sx up, low
+s = 0.3;
 run_speed = 0.03;
+// the array is fucking ordered! leg dx up, low -- leg sx up, low
 run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_speed).concat(lerp(5.5,4,run_speed)), 
-       lerp(8, 6, run_speed).concat(lerp(6,8,run_speed)),lerp(5.5 , 4, run_speed).concat(lerp(4,5.5,run_speed)),
-       lerp(0, -2, run_speed).concat(lerp(-2,0,run_speed)),lerp(-2, 0, run_speed).concat(lerp(0,-2,run_speed)),
-       lerp(0, 1, run_speed).concat(lerp(1,0,run_speed)),lerp(1, 0, run_speed).concat(lerp(0,1,run_speed))];
-
+  lerp(8, 6, run_speed).concat(lerp(6,8,run_speed)),lerp(5.5 , 4, run_speed).concat(lerp(4,5.5,run_speed)),
+  lerp(0, -2, run_speed).concat(lerp(-2,0,run_speed)),lerp(-2, 0, run_speed).concat(lerp(0,-2,run_speed)),
+  lerp(0, 1, run_speed).concat(lerp(1,0,run_speed)),lerp(1, 0, run_speed).concat(lerp(0,1,run_speed))];
 
 jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1.5 , 0 , 0.04));
+eggman_moves_x = lerp( 0 , -2.25, run_speed/6).concat(lerp(-2.25,2.25,run_speed/3)).concat(lerp(2.25,0,run_speed/6));
 
-eggman_moves_x = lerp( 0 , -2.5, run_speed/6).concat(lerp(-2.5,2.5,run_speed/3)).concat(lerp(2.5,0,run_speed/6));
-
-var t_jump = 0;
 var t_egg = 0;
-egg_speed = 0.06;
+var t_jump = 0;
+var error = 0.5;
+
+var text2 = document.createElement('h1');
+text2.style.position = 'absolute';
+text2.style.color = "black";
+text2.innerHTML = score;
+text2.style.top = 50 + 'px';
+text2.style.left = 50 + 'px';
+document.body.appendChild(text2);
+
+var egg_speed = 0.06;
 var egg = true;
 var is_time = false;
 var hitting = false;
 var n_hit = 0;
+
 var wait = 0;
 var e = false;
-
-var error = 0.5;
-
-function check_ring(){
-  var res;
-  var group;
-  for(var i = 0; i < rings.length ; i++){
-      r = rings[i];
-      var id = i%size;
-      var parent = i - id;
-      group = Math.floor(i/size);
-
-      if(scene.getObjectById(r.id) == null){
-        ringRepositioning(r, parent, id);
-        continue;
-      }
-      try {
-        if(sonic.position.z >= r.position.z + 2) ringRepositioning(r, parent, id, group); // ring miss
-
-        z = sonic.position.z <= r.position.z + error;
-        z1 = sonic.position.z >= r.position.z - error;
-
-        y = sonic.position.y <= r.position.y + error;
-        y2 = sonic.position.y >= r.position.y - error;
-
-        x = sonic.position.x <= r.position.x + error;
-        x2 = sonic.position.x >= r.position.x - error;
-        if(z && z1 && x && x2 && y && y2){ 
-          res = r;
-          break;
-        }
-        else res = -1;
-      } catch(err){}
-    }
-
-  if(res != -1){
-      score += 10;
-      scene.remove(res);
-      var i = rings.indexOf(r);
-      var id = i%size;
-      var parent = i - id;
-      ringRepositioning(r, parent, id, group);
-      //rings[r].position.set( (Math.random() < 0.5 ? -1 : 1)*Math.random()*3 , Math.random() < 0.5 ? 1.2 : 0.5, sonic.position.z + Math.random()*10+2);
-    }
-}
 
 function check_eggman(oldv){
   if(oldv || (wait != 0 && wait < 80)){
@@ -301,24 +242,11 @@ function check_eggman(oldv){
   return false;
 }
 
-var text2 = document.createElement('h1');
-text2.style.position = 'absolute';
-text2.style.color = "white";
-text2.innerHTML = score;
-text2.style.top = 50 + 'px';
-text2.style.left = 50 + 'px';
-document.body.appendChild(text2);
-
 function animate(){
+  if(typeof(sonic) != 'undefined'){
+    sonic.position.z += s;
+    camera.position.z += s;
 
-  object = scene.getObjectByName( "sonic", true );
-  if(typeof(object)!= "undefined"){
-  //if(t >= 0.5) s.getObjectByName(sonic_dic.Testa).rotation.x += 1;
-  //t = (t >= 1) ? 0 : t+= 0.002;
-
-    sonic.position.z += lerp1(0, 10, 0.01);
-    camera.position.z += lerp1(0, 10, 0.01);
-  
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
     sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = run[0][t];
       
@@ -327,66 +255,66 @@ function animate(){
 
     sonic.getObjectByName(sonic_dic.Avambraccio_sx).rotation.z = run[4][t];
     sonic.getObjectByName(sonic_dic.Avambraccio_dx).rotation.z = run[5][t];
-
     sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.z = run[6][t];
     sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.z = run[7][t];
     sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = -1.5;
     sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1.5;
     sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
-      
+
     if(egg){
-      is_time = Math.random() > 0.99;
+      is_time = Math.random() > 0.995;
       if(is_time){
         egg = false;
         eggman.position.z = sonic.position.z - 5;
-  		  egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
-  		  egglight.visible = true; 
+        egglight.position.set(eggman.position.x , 0 , sonic.position.z - 0.1 );
+        egglight.visible = true; 
         pointLightHelper.visible = true;
       }
     }
 
     if(is_time){
       eggman.position.x = eggman_moves_x[t_egg]
-      egglight.position.set(eggman.position.x, eggman.position.y, eggman.position.z + 2.5);
+      egglight.position.set(eggman.position.x, 0, sonic.position.z - 0.1 );
       
       //here that should be a random movement towards sonic to hit him
       if(eggman.position.z >= sonic.position.z + 4){ //we're in front of sonic
-        hitting = Math.random() > 0.9; //probability of trying to hit
+        hitting = Math.random() > 0.95; //probability of trying to hit
       } else if(hitting == false){
         eggman.position.z += egg_speed;
       }
 
       if(hitting){
-        eggman.position.z -= (n_hit == 10) ? 0.07 : 0.04; //going back towards sonic, full speed if it's last hit
+        eggman.position.z -= (n_hit == 10) ? 0.1 : 0.05; //going back towards sonic
         if(eggman.position.z <= sonic.position.z){ // after going to him, we set time and variable, he'll go back to its z position
-          n_hit +=1
+          n_hit +=1;
           hitting = false;
         }
       }
 
       t_egg = (t_egg >= eggman_moves_x.length) ? 0 : t_egg+1;
 
+      // we must decide how make it go away, even with a cycle of movements 
       if(n_hit == 11){
-        eggman.position.z -= 0.07; //smooth disappearing, otherwise it just stops
+        eggman.position.z -= 0.1;
+        n_hit = 0;
         is_time = false;
-  		  n_hit = 0;
         egg = true;
       }
-      
-      e = check_eggman(e);
-      if(e && score > 20) score -=30; // if e and score < 20 you die ? 
-      
-    } 
-    t = (t == run[0].length) ? 0 : t+=1;
-    
-    check_ring();    
-    text2.innerHTML = score;
 
+      e = check_eggman(e);
+      if(e && score > 20) score-=30;
+      //else if(e && score == 0) window.alert("GAME OVER");
+    } 
+    t = (t >= run[0].length) ? 0 : t+=1;
+
+    check_ring();
+    text2.innerHTML = score;
     if(eggman.position.z > sonic.position.z){
       egglight.visible = false; 
       pointLightHelper.visible = false;
     } 
-  }
+  } 
+
   if(jump){
     sonic.position.y = jump_points[t_jump];
     t_jump += 1;
@@ -401,25 +329,22 @@ function animate(){
 }
 
 // Metodo con cui carica la texture
-// bisogna capire come farla vedere bene
-
 var onLoad = function (texture) {
-  
   var n = texture.image.src.slice(-11,-4);
 
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
 
-  const times_horizontal;
-  const times_vert;
+  var times_horizontal; 
+  var times_vert; 
+
   var objGeometry;
-  
   if(n == 'ground1'){
-    objGeometry = new THREE.PlaneGeometry(6,1000,32);
+    objGeometry = new THREE.PlaneGeometry(6, 1000, 32);
     times_horizontal = 3;
     times_vert = 500;
   } else {
-    objGeoemtry = new THREE.PlaneGeometry(1000,3,32);
+    objGeometry = new THREE.PlaneGeometry(1000, 3, 32);
     times_horizontal = 100;
     times_vert = 1;
   }
@@ -433,24 +358,26 @@ var onLoad = function (texture) {
   });
 
   var mesh = new THREE.Mesh(objGeometry, objMaterial);
-  if(n == 'ground1'){
+  
+  if(n =='ground1'){
     mesh.rotation.x = 300.0222;
   } else {
-    mesh.position.set(-3,1.5,0);
+    mesh.position.set(-3, 1.5, 0);
     mesh.rotation.y = 300.025;
-    
+
     var clone_side = mesh.clone();
     clone_side.position.x = 3;
-    clone_side.rotation.y = - 300.025;
+    clone_side.rotation.y = -300.025;
     scene.add(clone_side);
+
   }
+
   scene.add(mesh);
-  
 }
 
 // Function called when download progresses
 var onProgress = function (xhr) {
-//console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+  console.log((xhr.loaded / xhr.total * 100) + '% loaded');
 };
 
 // Function called when download errors
@@ -460,9 +387,10 @@ var onError = function (xhr) {
 
 var loader1 = new THREE.TextureLoader();
 loader1.load('./ground1.jpg', onLoad, onProgress, onError);
-loader1.load('./side.jpg', onLoad, onProgress, on Error);
+loader1.load('./side.jpg', onLoad, onProgress, onError);
 
-function render(){
+function render(){ 
+  //scene.add( cylinder );
   renderer.render(scene, camera);
 }
 

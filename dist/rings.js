@@ -9,7 +9,7 @@ function coin_curve(ring, start, group){
   var coin_curve = [];
   var yy;
   var clone;
-  var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
+  var x = Math.floor(Math.random() * 4.5) - 2.25;
   for(var i = 0 ; i < size; i++){
     clone = ring.clone();
     if(i <= 2) yy = i*3/4 + 0.5;
@@ -26,7 +26,7 @@ function coin_curve(ring, start, group){
 
 function coin_line(ring, start, group){
   var coin_line = [];
-  var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
+  var x = Math.floor(Math.random() * 4.5) - 2.25;
   for(var i = 0; i < size; i++){
     var clone = ring.clone();
     clone.id = group*size + i;
@@ -57,11 +57,10 @@ function randomCoinInitialization(ring){
   }
 }
 
-
 function ringRepositioning(ring, parentid, id, group){
   // First of the line
   if(id == 0){
-    var x = (Math.random() < 0.5 ? -1 : 1)*Math.random()*3;
+    var x = Math.floor(Math.random() * 4.5) - 2.25;
     ring.position.x = x;
     ring.position.z += max_distance + min_gap;
 
@@ -88,4 +87,45 @@ function ringRepositioning(ring, parentid, id, group){
       if(scene.getObjectById(ring.id) == null) scene.add(ring);
     }
   }
+}
+
+function check_ring(){
+  var res, group;
+  for(var i = 0; i < rings.length ; i++){
+    r = rings[i];
+    var id = i%size;
+    var parent = i - id;
+    group = Math.floor(i/size);
+
+    if(scene.getObjectById(r.id) == null){
+      ringRepositioning(r,parent,id);
+      continue;
+    }
+    try {
+      if(sonic.position.z >= r.position.z + 2) ringRepositioning(r, parent, id, group ); 
+        z = sonic.position.z <= r.position.z + error;
+        z1 = sonic.position.z >= r.position.z - error;
+
+        y = sonic.position.y <= r.position.y + error;
+        y2 = sonic.position.y >= r.position.y - error;
+
+        x = sonic.position.x <= r.position.x + error;
+        x2 = sonic.position.x >= r.position.x - error;
+        if(z && z1 && x && x2 && y && y2){
+          res = r;
+          break;
+        } else {
+          res = -1;
+        }
+      } catch(err){
+      }
+    }
+    if(res !=-1){
+      score += 10;
+      scene.remove(res);
+      var i = rings.indexOf(r);
+      var id = i%size;
+      var parent = i- id;
+      ringRepositioning(r, parent, id, group);
+    }
 }
