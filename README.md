@@ -12,7 +12,7 @@
 
 ## Fix minori:
 
-- ~~il resto del mondo rimane nero ? ~~
+- ~~il resto del mondo rimane nero ?~~
 
 - cosetti per andare più veloce / tempo per punti 
 
