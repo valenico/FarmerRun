@@ -4,7 +4,7 @@
 
 - Corsa infinita (capire se allungare la strada/fare dei livelli/evitare che sonic cada nel vuoto alla fine)
 
-- Ostacoli + Eggman
+- Ostacoli + Eggman (capire bene le velocità da usare rispetto alla velocità di sonic)
 
 - ~~check sulla posizione.x di sonic che altrimenti può andare nel vuoto~~
 
@@ -12,7 +12,7 @@
 
 ## Fix minori:
 
-- il resto del mondo rimane nero ? 
+- ~~il resto del mondo rimane nero ? ~~
 
 - cosetti per andare più veloce / tempo per punti 
 
