@@ -196,7 +196,7 @@ function lerp(current, target, fraction){
   return array_of_points;
 }
 
-s = 0.3;
+s = 0.1;
 run_speed = 0.03;
 // the array is fucking ordered! leg dx up, low -- leg sx up, low
 run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_speed).concat(lerp(5.5,4,run_speed)), 
@@ -242,10 +242,29 @@ function check_eggman(oldv){
   return false;
 }
 
+var times = 1; 
+
 function animate(){
   if(typeof(sonic) != 'undefined'){
     sonic.position.z += s;
     camera.position.z += s;
+    //sonic.position.z = 500;
+    //camera.position.z = 500-5;
+
+    if(sonic.position.z >= 500*times + 50){
+      if(times % 2 == 0){
+        ground2.position.z += 1000;
+        side3.position.z += 1000;
+        side4.position.z += 1000;
+
+      }
+      else{ 
+        ground1.position.z += 1000;
+        side1.position.z += 1000;
+        side2.position.z += 1000;
+      }
+      times += 1;
+    }
 
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
     sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = run[0][t];
@@ -328,6 +347,9 @@ function animate(){
 
 }
 
+var ground1 = null, ground2 = null;
+var side1 = null, side2 = null, side3 = null, side4 = null;
+
 // Metodo con cui carica la texture
 var onLoad = function (texture) {
   var n = texture.image.src.slice(-11,-4);
@@ -357,22 +379,42 @@ var onLoad = function (texture) {
     shading: THREE.FlatShading
   });
 
-  var mesh = new THREE.Mesh(objGeometry, objMaterial);
-  
   if(n =='ground1'){
-    mesh.rotation.x = 300.0222;
-  } else {
-    mesh.position.set(-2.98, 1.5, 0);
-    mesh.rotation.y = 300.022225;
+    ground1 = new THREE.Mesh(objGeometry, objMaterial);
+    ground1.rotation.x = 300.0222;
+    scene.add(ground1);      
 
-    var clone_side = mesh.clone();
-    clone_side.position.x = 2.98;
-    clone_side.rotation.y = -300.022225;
-    scene.add(clone_side);
+    ground2 = ground1.clone();
+    ground2.position.z = 1000-0.5;
+    scene.add(ground2);
+  
+  } else {
+    side1 = new THREE.Mesh(objGeometry, objMaterial);
+    side1.position.set(-2.98, 1.5, 0);
+    side1.rotation.y = 300.022225;
+
+    side2 = side1.clone();
+    side2.position.x = 2.98;
+    side2.rotation.y = -300.022225;
+
+    side3 = side1.clone();
+    side3.position.x = -2.98;
+    side3.rotation.y = -300.022225;
+    side3.position.z = 1000;
+
+    side4 = side1.clone();
+    side4.position.x = 2.98;
+    side4.rotation.y = -300.022225;
+    side4.position.z = 1000;
+
+    scene.add(side1);
+    scene.add(side2);
+    scene.add(side3);
+    scene.add(side4);
 
   }
 
-  scene.add(mesh);
+  
 }
 
 // Function called when download progresses
