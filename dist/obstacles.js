@@ -77,6 +77,25 @@ function repositioningObstacle(index, from){
     } 
 }
 
+function collision(){
+    if(invincibility) return;
+    for(var l = 0; l < n_obs; l++){
+        var z1 = sonic.position.z <= obs[l].position.z + error; 
+        var z2 = sonic.position.z >= obs[l].position.z - error;
+        if(obs[l].rotation.z != 80.1){
+            var x1 = sonic.position.x >= obs[l].position.x - error;
+            var x2 = sonic.position.x <= obs[l].position.x + error;
+        } else {
+            var x1 = sonic.position.x >= obs[l].position.x - error*2.5;
+            var x2 = sonic.position.x <= obs[l].position.x + error*2.5;
+        }
+        if(z1 && z2 && x1 && x2){
+            score -=100;
+            damage_feedback();
+        }
+    }
+}
+
 function delete_obs(){
     for(var k = 0; k < obs.length; k++){
         if(obs[k].position.z < sonic.position.z - 2){
