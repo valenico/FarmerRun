@@ -79,6 +79,7 @@ function repositioningObstacle(index, from){
 
 function collision(){
     if(invincibility) return;
+    var s = true;
     for(var l = 0; l < n_obs; l++){
         var z1 = sonic.position.z <= obs[l].position.z + error; 
         var z2 = sonic.position.z >= obs[l].position.z - error;
@@ -88,8 +89,9 @@ function collision(){
         } else {
             var x1 = sonic.position.x >= obs[l].position.x - error*2.5;
             var x2 = sonic.position.x <= obs[l].position.x + error*2.5;
+            s = sonic.position.y <= 0.75;
         }
-        if(z1 && z2 && x1 && x2){
+        if(z1 && z2 && x1 && x2 && s){
             score -=100;
             damage_feedback();
         }
