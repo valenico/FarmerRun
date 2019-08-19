@@ -165,7 +165,7 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 });
 
 loader.load('./../models/ring.glb', function(gltf) {
-    generate_obstacles();
+    generate_obstacle();
     var ring = gltf.scene;
     ring.scale.set(0.005,0.005,0.005);
     randomCoinInitialization(ring);
