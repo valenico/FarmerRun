@@ -165,6 +165,7 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 });
 
 loader.load('./../models/ring.glb', function(gltf) {
+    generate_obstacles();
     var ring = gltf.scene;
     ring.scale.set(0.005,0.005,0.005);
     randomCoinInitialization(ring);
@@ -246,9 +247,7 @@ var times = 1;
 
 function animate(){
   if(typeof(sonic) != 'undefined'){
-    // two functions to try obstacles
-    // delete_obs(); // reposition of obstacles behind sonic
-    // generate_obs(); // this is needed only the first time to generate the initial obstacles, but ndo la metto che altrove non funziona?!
+    delete_obs(); // reposition of obstacles behind sonic
     sonic.position.z += s;
     camera.position.z += s;
     //sonic.position.z = 500;
