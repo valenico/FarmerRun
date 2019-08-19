@@ -17,8 +17,8 @@ function generate_obstacle(){
         for(var i = 0; i < rings.length; i++){
             var z1 = pz >= rings[i].position.z + 2; 
             var z2 = pz <= rings[i].position.z - 2;
-            var x1 = px <= rings[i].position.x - 2;
-            var x2 = px >= rings[i].position.z + 2;
+            var x1 = px <= rings[i].position.x - 3;
+            var x2 = px >= rings[i].position.x + 3;
             if(z1 && z2 && x1 && x2){
                 put = false;
                 break;
@@ -27,8 +27,8 @@ function generate_obstacle(){
         for(var l = 0; l < n_obs; l++){
             var z1 = pz >= obs[l].position.z + 2; 
             var z2 = pz <= obs[l].position.z - 2;
-            var x1 = px <= obs[l].position.x - 2;
-            var x2 = px >= obs[l].position.z + 2;
+            var x1 = px <= obs[l].position.x - 3;
+            var x2 = px >= obs[l].position.x + 3;
             if(z1 && z2 && x1 && x2){
                 put = false;
                 break;
@@ -51,8 +51,8 @@ function repositioningObstacle(index, from){
     for(var i = 0; i < rings.length; i++){
         var z1 = pz >= rings[i].position.z + 2; 
         var z2 = pz <= rings[i].position.z - 2;
-        var x1 = px <= rings[i].position.x - 2;
-        var x2 = px >= rings[i].position.z + 2;
+        var x1 = px <= rings[i].position.x - 3;
+        var x2 = px >= rings[i].position.x + 3;
         if(z1 && z2 && x1 && x2){
             put = false;
             break;
@@ -61,8 +61,8 @@ function repositioningObstacle(index, from){
     for(var l = 0; l < n_obs; l++){
         var z1 = pz >= obs[l].position.z + 2; 
         var z2 = pz <= obs[l].position.z - 2;
-        var x1 = px <= obs[l].position.x - 2;
-        var x2 = px >= obs[l].position.z + 2;
+        var x1 = px <= obs[l].position.x - 3;
+        var x2 = px >= obs[l].position.x + 3;
         if(z1 && z2 && x1 && x2){
             put = false;
             break;
