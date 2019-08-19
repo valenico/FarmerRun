@@ -200,7 +200,7 @@ function lerp(current, target, fraction){
   return array_of_points;
 }
 
-s = 0.02;
+s = 0.05;
 run_speed = 0.03;
 // the array is fucking ordered! leg dx up, low -- leg sx up, low
 run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_speed).concat(lerp(5.5,4,run_speed)), 
@@ -223,7 +223,7 @@ text2.style.top = 50 + 'px';
 text2.style.left = 50 + 'px';
 document.body.appendChild(text2);
 
-var egg_speed = 0.06;
+var egg_speed = 0.12;
 var egg = true;
 var is_time = false;
 var hitting = false;
@@ -340,8 +340,8 @@ function animate(){
       }
 
       if(hitting){
-        eggman.position.z -= (n_hit == 10) ? 0.1 : 0.05; //going back towards sonic
-        if(eggman.position.z <= sonic.position.z){ // after going to him, we set time and variable, he'll go back to its z position
+        eggman.position.z -= egg_speed; //going back towards sonic
+        if(eggman.position.z <= camera.position.z + 1){ // after going to him, we set time and variable, he'll go back to its z position
           n_hit +=1;
           hitting = false;
         }
@@ -351,7 +351,7 @@ function animate(){
 
       // we must decide how make it go away, even with a cycle of movements 
       if(n_hit == 11){
-        eggman.position.z -= 0.1;
+        eggman.position.z = camera.position.z;
         n_hit = 0;
         is_time = false;
         egg = true;
@@ -367,6 +367,7 @@ function animate(){
     t = (t >= run[0].length) ? 0 : t+=1;
 
     check_ring();
+    collision();
     text2.innerHTML = score;
     if(eggman.position.z > sonic.position.z){
       egglight.visible = false; 
