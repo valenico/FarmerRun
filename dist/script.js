@@ -383,7 +383,7 @@ var onLoad = function (texture) {
 
   if(n =='ground1'){
     ground1 = new THREE.Mesh(objGeometry, objMaterial);
-    ground1.rotation.x = 300.0222;
+    ground1.rotation.x = 300.0221;
     scene.add(ground1);      
 
     ground2 = ground1.clone();
@@ -393,7 +393,7 @@ var onLoad = function (texture) {
   } else {
     side1 = new THREE.Mesh(objGeometry, objMaterial);
     side1.position.set(-2.98, 1.5, 0);
-    side1.rotation.y = 300.022225;
+    side1.rotation.y = 300.022222;
 
     side2 = side1.clone();
     side2.position.x = 2.98;
@@ -406,7 +406,7 @@ var onLoad = function (texture) {
 
     side4 = side1.clone();
     side4.position.x = 2.98;
-    side4.rotation.y = -300.022225;
+    side4.rotation.y = -300.02199;
     side4.position.z = 1000;
 
     scene.add(side1);
