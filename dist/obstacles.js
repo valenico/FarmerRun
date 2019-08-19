@@ -89,7 +89,7 @@ function collision(){
         } else {
             var x1 = sonic.position.x >= obs[l].position.x - error*2.5;
             var x2 = sonic.position.x <= obs[l].position.x + error*2.5;
-            s = sonic.position.y <= 0.75;
+            s = sonic.position.y <= 0.5;
         }
         if(z1 && z2 && x1 && x2 && s){
             score -=100;
