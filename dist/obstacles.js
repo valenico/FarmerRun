@@ -105,3 +105,31 @@ function delete_obs(){
         }
     }
 }
+
+var rubble;
+loader.load('./../models/rubble/scene.gltf', function(gltf){
+    rubble = gltf.scene;
+    rubble.scale.set(0.005,0.005,0.005);
+    rubble.rotation.y = 80.1;
+    rubble.visible = false;
+    scene.add(rubble);
+});
+
+function break_walls(){
+    for(var l = 0; l < n_obs; l++){
+        var z1 = eggman.position.z <= obs[l].position.z + error; 
+        var z2 = eggman.position.z >= obs[l].position.z - error;
+        if(obs[l].rotation.z == 80.1){ // horizontal
+            var x1 = eggman.position.x >= obs[l].position.x - error*2.5;
+            var x2 = eggman.position.x <= obs[l].position.x + error*2.5;
+        } else { // vertical 
+            var x1 = eggman.position.x >= obs[l].position.x - error;
+            var x2 = eggman.position.x <= obs[l].position.x + error;
+        }
+        if(z1 && z2 && x1 && x2){
+            repositioningObstacle( l , sonic.position.z);
+            rubble.position.set(eggman.position.x, 0, eggman.position.z);
+            rubble.visible = true;
+        }
+    }
+}
