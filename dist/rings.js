@@ -98,7 +98,7 @@ function check_ring(){
     group = Math.floor(i/size);
 
     if(scene.getObjectById(r.id) == null){
-      ringRepositioning(r,parent,id);
+      ringRepositioning(r,parent,id, group);
       continue;
     }
     try {
