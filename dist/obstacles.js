@@ -1,6 +1,8 @@
-var d = 10;
+var d = 30;
 var obs = new Array();
+var min_dist = 25;
 var n_obs = 0;
+var max_obs = 5;
 
 // creation of a column object as obstacle, to clone/move 
 var cgeometry = new THREE.CylinderBufferGeometry( 0.5 , 0.5, 2.5, 32 );
@@ -8,19 +10,33 @@ var cmaterial = new THREE.MeshLambertMaterial( {color: 'gray'} );
 var cylinder = new THREE.Mesh( cgeometry, cmaterial );
 
 function generate_obstacle(){  
-    while(n_obs <= 5){
-        var posz = (Math.random() + 5)*d + sonic.position.z;
-        var posx = (Math.random() > 0.5 ? -1 : 1)*Math.random()*2.5;
+    for(; n_obs <= max_obs; ){
+        var pz = Math.random()*d;
+        var px = (Math.random() > 0.5 ? -1 : 1)*2.5*Math.random();
         var put = true; 
         for(var i = 0; i < rings.length; i++){
-            if((rings[i].position.z <= posz + 0.5 || rings[i].position.z >= posz - 0.5) && (rings[i].position.x <= posx + 0.5 || rings[i].position.z >= posx - 0.5)){
+            var z1 = pz >= rings[i].position.z + 2; 
+            var z2 = pz <= rings[i].position.z - 2;
+            var x1 = px <= rings[i].position.x - 2;
+            var x2 = px >= rings[i].position.z + 2;
+            if(z1 && z2 && x1 && x2){
+                put = false;
+                break;
+            }
+        } 
+        for(var l = 0; l < n_obs; l++){
+            var z1 = pz >= obs[l].position.z + 2; 
+            var z2 = pz <= obs[l].position.z - 2;
+            var x1 = px <= obs[l].position.x - 2;
+            var x2 = px >= obs[l].position.z + 2;
+            if(z1 && z2 && x1 && x2){
                 put = false;
                 break;
             }
         }
         if(put){
             c = cylinder.clone();
-            c.position.set(posx, 1.25 , posz);
+            c.position.set(px, 1.25 , pz);
             obs.push(c);
             scene.add(c);
             n_obs++;
@@ -29,22 +45,32 @@ function generate_obstacle(){
 }
 
 function repositioningObstacle(index, from){
-    var posz = (Math.random() + 5)*d + from;
-    var posx = (Math.random() > 0.5 ? -1 : 1)*Math.random()*2.5;
+    var pz = Math.random()*d + from + min_dist;
+    var px = (Math.random() > 0.5 ? -1 : 1)*Math.random()*2.5;
     var put= true;
     for(var i = 0; i < rings.length; i++){
-        if((rings[i].position.z <= posz + 0.5 || rings[i].position.z >= posz - 0.5) && (rings[i].position.x <= posx + 0.5 || rings[i].position.z >= posx - 0.5)){
+        var z1 = pz >= rings[i].position.z + 2; 
+        var z2 = pz <= rings[i].position.z - 2;
+        var x1 = px <= rings[i].position.x - 2;
+        var x2 = px >= rings[i].position.z + 2;
+        if(z1 && z2 && x1 && x2){
+            put = false;
+            break;
+        }
+    }
+    for(var l = 0; l < n_obs; l++){
+        var z1 = pz >= obs[l].position.z + 2; 
+        var z2 = pz <= obs[l].position.z - 2;
+        var x1 = px <= obs[l].position.x - 2;
+        var x2 = px >= obs[l].position.z + 2;
+        if(z1 && z2 && x1 && x2){
             put = false;
             break;
         }
     }
     if(put){
-        obs[index].position.set(posx, 1.25, posz);
-    } else {
-        //repositioningObstacle(index, posz);
-        obs[index].position.set(posx, 1.25, posz + 15);
-    }
-    
+        obs[index].position.set(px, 1.25, pz);
+    } 
 }
 
 function delete_obs(){
