@@ -10,7 +10,9 @@
 
 - **REQUIREMENT** texture differenti? contano quelle fatte da immagini? facciamo attenzione a crearne qualcuna almeno
 
-- animazioni quando eggman colpisce/inciampo sugli ostacoli (?) da definire
+- ~~animazioni quando eggman colpisce/inciampo sugli ostacoli (?) da definire~~
+
+- nel riposizionamento dei ring, fare un check sugli ostacoli 
 
 ## Fix minori:
 
