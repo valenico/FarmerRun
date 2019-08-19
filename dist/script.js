@@ -262,6 +262,7 @@ function check_eggman(oldv){
 function animate(){
   if(typeof(sonic) != 'undefined'){
     delete_obs(); // reposition of obstacles behind sonic
+    break_walls();
     sonic.position.z += s;
     camera.position.z += s;
     //sonic.position.z = 500;
