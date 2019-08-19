@@ -74,7 +74,9 @@ function repositioningObstacle(index, from){
     if(put){
         obs[index].rotation.z = or;
         obs[index].position.set(px, or == 80.1 ? 0.25 : 1.25, pz);
-    } 
+    } else {
+        repositioningObstacle(index, from);
+    }
 }
 
 function collision(){
