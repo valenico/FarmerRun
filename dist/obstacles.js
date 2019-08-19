@@ -12,6 +12,7 @@ var cylinder = new THREE.Mesh( cgeometry, cmaterial );
 function generate_obstacle(){  
     for(; n_obs <= max_obs; ){
         var pz = Math.random()*d;
+        var r = Math.random() > 0.5 ? cylinder.rotation.z : 80.1;
         var px = (Math.random() > 0.5 ? -1 : 1)*2.5*Math.random();
         var put = true; 
         for(var i = 0; i < rings.length; i++){
@@ -36,7 +37,8 @@ function generate_obstacle(){
         }
         if(put){
             c = cylinder.clone();
-            c.position.set(px, 1.25 , pz);
+            c.rotation.z = r;
+            c.position.set(px, r == cylinder.rotation.z ? 1.25 : 0.25 , pz);
             obs.push(c);
             scene.add(c);
             n_obs++;
@@ -46,6 +48,7 @@ function generate_obstacle(){
 
 function repositioningObstacle(index, from){
     var pz = Math.random()*d + from + min_dist;
+    var r = Math.random() > 0.5 ? cylinder.rotation.z : 80.1;
     var px = (Math.random() > 0.5 ? -1 : 1)*Math.random()*2.5;
     var put= true;
     for(var i = 0; i < rings.length; i++){
@@ -69,13 +72,14 @@ function repositioningObstacle(index, from){
         }
     }
     if(put){
-        obs[index].position.set(px, 1.25, pz);
+        obs[index].rotation.z = r;
+        obs[index].position.set(px, r == 80.1 ? 0.25 : 1.25, pz);
     } 
 }
 
 function delete_obs(){
     for(var k = 0; k < obs.length; k++){
-        if(obs[k].position.z < sonic.position.z ){
+        if(obs[k].position.z < sonic.position.z - 2){
             repositioningObstacle( k , sonic.position.z );
         }
     }
