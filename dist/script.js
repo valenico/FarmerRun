@@ -62,9 +62,11 @@ function render () {
 }
 */ 
 /*////////////////////////////////////////*/
+
 var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
+
 //function renderScene(){ renderer.render( scene, camera ); }
 //renderCalls.push(renderScene);
 
@@ -138,6 +140,7 @@ loader.crossOrigin = true;
 
 loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic = gltf.scene;
+    sonic.name = "sonic";
     sonic.position.set(0, 0, -0.75);
 
     sonic.getObjectByName(sonic_dic.Indice_lower_sx).rotation.z = 2;
@@ -161,7 +164,7 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic.getObjectByName(sonic_dic.Pollice_lower_dx).rotation.z = 2;
     sonic.getObjectByName(sonic_dic.Pollice_upper_dx).rotation.z = 1;
 
-    scene.add( sonic );
+    scene.add(sonic);
 });
 
 loader.load('./../models/ring.glb', function(gltf) {
@@ -197,7 +200,7 @@ function lerp(current, target, fraction){
   return array_of_points;
 }
 
-s = 0.1;
+s = 0.02;
 run_speed = 0.03;
 // the array is fucking ordered! leg dx up, low -- leg sx up, low
 run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_speed).concat(lerp(5.5,4,run_speed)), 
@@ -210,7 +213,7 @@ eggman_moves_x = lerp( 0 , -2.25, run_speed/6).concat(lerp(-2.25,2.25,run_speed/
 
 var t_egg = 0;
 var t_jump = 0;
-var error = 0.5;
+var error = 1;
 
 var text2 = document.createElement('h1');
 text2.style.position = 'absolute';
@@ -229,6 +232,17 @@ var n_hit = 0;
 var wait = 0;
 var e = false;
 
+var damage = false;
+var current_frame;
+var invincibility_frames = 20; // duration of a "tic", the actual number of invincibility frames is 3*invincibility_frames
+
+var times = 1; 
+
+function damage_feedback(){
+  damage = true;
+  current_frame = 0;
+}
+
 function check_eggman(oldv){
   if(oldv || (wait != 0 && wait < 80)){
     wait +=1;
@@ -243,7 +257,6 @@ function check_eggman(oldv){
   return false;
 }
 
-var times = 1; 
 
 function animate(){
   if(typeof(sonic) != 'undefined'){
@@ -253,6 +266,7 @@ function animate(){
     //sonic.position.z = 500;
     //camera.position.z = 500-5;
 
+    // Infinite road
     if(sonic.position.z >= 500*times + 50){
       if(times % 2 == 0){
         ground2.position.z += 1000;
@@ -266,6 +280,26 @@ function animate(){
         side2.position.z += 1000;
       }
       times += 1;
+    }
+
+    // Damage feedback
+    if(damage == true){ 
+
+      if(scene.getObjectByName(sonic.name) != null && (current_frame == 0 || current_frame == 2*invincibility_frames)){
+        scene.remove(sonic);
+        console.log("BECCATO");
+      }
+      else if(scene.getObjectByName(sonic.name) == null && (current_frame == invincibility_frames || current_frame == 3*invincibility_frames-1)){
+        scene.add(sonic);
+        console.log("ORA VEDO");
+      }
+
+      current_frame += 1;
+
+      if(current_frame >= 3 * invincibility_frames) {
+        damage = false;
+        current_frame = 0;
+      }
     }
 
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
@@ -323,7 +357,10 @@ function animate(){
       }
 
       e = check_eggman(e);
-      if(e && score > 20) score-=30;
+      if(e && score > 20){
+        score-=30;
+        damage_feedback();
+      }
       //else if(e && score == 0) window.alert("GAME OVER");
     } 
     t = (t >= run[0].length) ? 0 : t+=1;
