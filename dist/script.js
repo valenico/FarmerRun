@@ -168,10 +168,10 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 });
 
 loader.load('./../models/ring.glb', function(gltf) {
-    generate_obstacle();
     var ring = gltf.scene;
     ring.scale.set(0.005,0.005,0.005);
     randomCoinInitialization(ring);
+    generate_obstacle();
 });
 
 var egglight = new THREE.PointLight( 'red', 50, 1 , 2);
@@ -213,7 +213,7 @@ eggman_moves_x = lerp( 0 , -2.25, run_speed/6).concat(lerp(-2.25,2.25,run_speed/
 
 var t_egg = 0;
 var t_jump = 0;
-var error = 1;
+var error = 0.5;
 
 var text2 = document.createElement('h1');
 text2.style.position = 'absolute';
