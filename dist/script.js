@@ -232,18 +232,19 @@ var n_hit = 0;
 var wait = 0;
 var e = false;
 
-var damage = false;
+var invincibility = false;
 var current_frame;
 var invincibility_frames = 20; // duration of a "tic", the actual number of invincibility frames is 3*invincibility_frames
 
 var times = 1; 
 
 function damage_feedback(){
-  damage = true;
+  invincibility = true;
   current_frame = 0;
 }
 
 function check_eggman(oldv){
+  if(invincibility) return false;
   if(oldv || (wait != 0 && wait < 80)){
     wait +=1;
   } else {
@@ -283,7 +284,7 @@ function animate(){
     }
 
     // Damage feedback
-    if(damage == true){ 
+    if(invincibility == true){ 
 
       if(scene.getObjectByName(sonic.name) != null && (current_frame == 0 || current_frame == 2*invincibility_frames)){
         scene.remove(sonic);
@@ -297,7 +298,7 @@ function animate(){
       current_frame += 1;
 
       if(current_frame >= 3 * invincibility_frames) {
-        damage = false;
+        invincibility = false;
         current_frame = 0;
       }
     }
