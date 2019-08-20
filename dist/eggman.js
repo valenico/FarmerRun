@@ -11,8 +11,7 @@ var t_egg = 0;
 var t_jump = 0;
 
 var egg_speed = 0.12;
-var egg = true;
-var is_time = false;
+var egg = false;
 var hitting = false;
 var n_hit = 0;
 
@@ -32,20 +31,17 @@ function check_eggman(oldv){
 }
 
 function eggman_spawn(){
-    if(egg){
-      is_time = Math.random() > 0.995;
-      if(is_time){
-        egg = false;
-        eggman.position.z = sonic.position.z - 5;
-        egglight.position.set(eggman.position.x , 0 , sonic.position.z - 0.1 );
-        egglight.visible = true; 
-        pointLightHelper.visible = true;
-      }
+    if(!egg){
+      egg = true;
+      eggman.position.z = sonic.position.z - 5;
+      egglight.position.set(eggman.position.x , 0 , sonic.position.z - 0.1 );
+      egglight.visible = true; 
+      pointLightHelper.visible = true;
     }
 }
 
 function eggman_moves(){
-    if(is_time){
+    if(egg){
       eggman.position.x = eggman_moves_x[t_egg]
       egglight.position.set(eggman.position.x, 0, sonic.position.z - 0.1 );
       
@@ -70,8 +66,7 @@ function eggman_moves(){
       if(n_hit == 11){
         eggman.position.z = camera.position.z;
         n_hit = 0;
-        is_time = false;
-        egg = true;
+        egg = false;
       }
 
       if(!invincibility) {
