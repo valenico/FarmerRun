@@ -71,8 +71,8 @@ function eggman_moves(){
 
       if(!invincibility) {
         e = check_eggman(e);
-        if(e && score > 20){
-          score-=30;
+        if(e){
+          check_lives();
           damage_feedback();
         }
       }
