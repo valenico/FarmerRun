@@ -284,7 +284,7 @@ function animate(){
     sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1.5;
     sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
 
-    eggman_spawn();
+    if(sonic.position.z%150 <= 1) eggman_spawn();
     eggman_moves();
 
     t = (t >= run[0].length) ? 0 : t+=1;
