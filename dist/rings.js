@@ -63,12 +63,12 @@ function check_line(group, startx, startz){
   var zz = startz;
   for(i = 0; i < size; i++){
     for(j = 0; j < obs.length; j++){
-      var z1 = zz <= obs[j].position.z + 0.5; 
-      var z2 = zz >= obs[j].position.z - 0.5;
-      var x1 = xx >= obs[j].position.x - 0.5;
-      var x2 = xx <= obs[j].position.x + 0.5;
-      var y1 = yy <= obs[j].position.y + 0.5;
-      var y2 = yy >= obs[j].position.y - 0.5;
+      var z1 = zz <= obs[j].position.z + 2; 
+      var z2 = zz >= obs[j].position.z - 2;
+      var x1 = xx >= obs[j].position.x - 2;
+      var x2 = xx <= obs[j].position.x + 2;
+      var y1 = yy <= obs[j].position.y + 1;
+      var y2 = yy >= obs[j].position.y - 1;
 
       if(z1 && z2 && x1 && x2 && y1 && y2){
         return false;
@@ -97,7 +97,6 @@ function ringRepositioning(ring, parentid, id, group){
     var z = ring.position.z + max_distance + min_gap;
     x = Math.floor(Math.random() * 4.5) - 2.25;
     if(!check_line(group, x, z)){
-      console.log("NOPEEE");
       ringRepositioning(ring, parentid, id, group);
     }
     else {
