@@ -174,11 +174,6 @@ loader.load('./../models/ring.glb', function(gltf) {
     generate_obstacle();
 });
 
-var egglight = new THREE.PointLight( 'red', 50, 1 , 2);
-var pointLightHelper = new THREE.PointLightHelper( egglight , 1 );
-egglight.visible = false;
-pointLightHelper.visible = false;
-
 loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
   eggman = gltf.scene;
   eggman.position.set(0, 0, -100);
@@ -202,6 +197,8 @@ function lerp(current, target, fraction){
 
 s = 0.1;
 run_speed = 0.03;
+
+var error = 0.5;
 // the array is fucking ordered! leg dx up, low -- leg sx up, low
 run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_speed).concat(lerp(5.5,4,run_speed)), 
   lerp(8, 6, run_speed).concat(lerp(6,8,run_speed)),lerp(5.5 , 4, run_speed).concat(lerp(4,5.5,run_speed)),
@@ -211,9 +208,6 @@ run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_sp
 jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1.5 , 0 , 0.04));
 eggman_moves_x = lerp( 0 , -2.25, run_speed/6).concat(lerp(-2.25,2.25,run_speed/3)).concat(lerp(2.25,0,run_speed/6));
 
-var t_egg = 0;
-var t_jump = 0;
-var error = 0.5;
 
 var text2 = document.createElement('h1');
 text2.style.position = 'absolute';
@@ -222,15 +216,6 @@ text2.innerHTML = score;
 text2.style.top = 50 + 'px';
 text2.style.left = 50 + 'px';
 document.body.appendChild(text2);
-
-var egg_speed = 0.12;
-var egg = true;
-var is_time = false;
-var hitting = false;
-var n_hit = 0;
-
-var wait = 0;
-var e = false;
 
 var invincibility = false;
 var current_frame;
@@ -242,22 +227,6 @@ function damage_feedback(){
   invincibility = true;
   current_frame = 0;
 }
-
-function check_eggman(oldv){
-  if(invincibility) return false;
-  if(oldv || (wait != 0 && wait < 80)){
-    wait +=1;
-  } else {
-    v = eggman.position.z <= sonic.position.z + error;
-    v2 = eggman.position.z >= sonic.position.z - error;
-    v3 = eggman.position.x <= sonic.position.x + error;
-    v4 = eggman.position.x >= sonic.position.x - error;
-    wait = 0;
-    if(v && v4 && v2 && v3) return true;
-  }
-  return false;
-}
-
 
 function animate(){
   if(typeof(sonic) != 'undefined'){
@@ -285,21 +254,19 @@ function animate(){
     }
 
     // Damage feedback
-    if(invincibility == true){ 
-
+    if(invincibility == true){
       if(scene.getObjectByName(sonic.name) != null && (current_frame == 0 || current_frame == 2*invincibility_frames)){
         scene.remove(sonic);      }
       else if(scene.getObjectByName(sonic.name) == null && (current_frame == invincibility_frames || current_frame == 3*invincibility_frames-1)){
         scene.add(sonic);
       }
-
       current_frame += 1;
-
       if(current_frame >= 3 * invincibility_frames) {
         invincibility = false;
         current_frame = 0;
       }
     }
+
 
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
     sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = run[0][t];
@@ -315,62 +282,17 @@ function animate(){
     sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1.5;
     sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
 
-    if(egg){
-      is_time = Math.random() > 0.995;
-      if(is_time){
-        egg = false;
-        eggman.position.z = sonic.position.z - 5;
-        egglight.position.set(eggman.position.x , 0 , sonic.position.z - 0.1 );
-        egglight.visible = true; 
-        pointLightHelper.visible = true;
-      }
-    }
+    eggman_spawn();
+    eggman_moves();
 
-    if(is_time){
-      eggman.position.x = eggman_moves_x[t_egg]
-      egglight.position.set(eggman.position.x, 0, sonic.position.z - 0.1 );
-      
-      //here that should be a random movement towards sonic to hit him
-      if(eggman.position.z >= sonic.position.z + 4){ //we're in front of sonic
-        hitting = Math.random() > 0.95; //probability of trying to hit
-      } else if(hitting == false){
-        eggman.position.z += egg_speed;
-      }
-
-      if(hitting){
-        eggman.position.z -= egg_speed; //going back towards sonic
-        if(eggman.position.z <= camera.position.z + 1){ // after going to him, we set time and variable, he'll go back to its z position
-          n_hit +=1;
-          hitting = false;
-        }
-      }
-
-      t_egg = (t_egg >= eggman_moves_x.length) ? 0 : t_egg+1;
-
-      // we must decide how make it go away, even with a cycle of movements 
-      if(n_hit == 11){
-        eggman.position.z = camera.position.z;
-        n_hit = 0;
-        is_time = false;
-        egg = true;
-      }
-
-      e = check_eggman(e);
-      if(e && score > 20){
-        score-=30;
-        damage_feedback();
-      }
-      //else if(e && score == 0) window.alert("GAME OVER");
-    } 
     t = (t >= run[0].length) ? 0 : t+=1;
 
-    check_ring();
+    check_ring(); 
     collision();
+
     text2.innerHTML = score;
-    if(eggman.position.z > sonic.position.z){
-      egglight.visible = false; 
-      pointLightHelper.visible = false;
-    } 
+
+    turn_off_eggman();
   } 
 
   if(jump){
