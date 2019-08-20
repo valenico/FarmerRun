@@ -253,8 +253,10 @@ function animate(){
       times += 1;
     }
 
+    getshield();
+    update_shield();
     // Damage feedback
-    if(invincibility == true){
+    if(invincibility == true && shield_on == false){
       if(scene.getObjectByName(sonic.name) != null && (current_frame == 0 || current_frame == 2*invincibility_frames)){
         scene.remove(sonic);      }
       else if(scene.getObjectByName(sonic.name) == null && (current_frame == invincibility_frames || current_frame == 3*invincibility_frames-1)){
@@ -293,6 +295,7 @@ function animate(){
     text2.innerHTML = score;
 
     turn_off_eggman();
+    spawn_shield(sonic.position.z);
   } 
 
   if(jump){
