@@ -1,6 +1,6 @@
 var max_distance = 50;
 var min_gap = 12.5;
-var probability = 0.35;
+var probability = 0.7;
 var rings = new Array();
 var size = 5;
 var lines_type = new Array(5);
@@ -57,18 +57,54 @@ function randomCoinInitialization(ring){
   }
 }
 
+function check_line(group, startx, startz){
+  var xx = startx;
+  var yy = 0.5;
+  var zz = startz;
+  for(i = 0; i < size; i++){
+    for(j = 0; j < obs.length; j++){
+      var z1 = zz <= obs[j].position.z + 1; 
+      var z2 = zz >= obs[j].position.z - 1;
+      var x1 = xx >= obs[j].position.x - 1;
+      var x2 = xx <= obs[j].position.x + 1;
+      var y1 = yy <= obs[j].position.y + 1;
+      var y2 = yy >= obs[j].position.y - 1;
+
+      if(z1 && z2 && x1 && x2 && y1 && y2){
+        return false;
+      }
+    }
+
+    if(lines_type[group] == 1){        
+        if(i <= 2) yy = i*3/4 + 0.5;
+        else if(i == 3) yy = 2*3/4 + 0.5 - 3/4;
+        else yy = 0.5;
+    }
+    zz += 1;
+  }
+  return true;
+}
+
+
 function ringRepositioning(ring, parentid, id, group){
   // First of the line
   if(id == 0){
-    var x = Math.floor(Math.random() * 4.5) - 2.25;
-    ring.position.x = x;
-    ring.position.z += max_distance + min_gap;
-
     var p = Math.random();
     if(p < probability) lines_type[group] = 1;
     else lines_type[group] = 0;
 
-    if(scene.getObjectById(ring.id) == null) scene.add(ring);
+    var x;
+    var z = ring.position.z + max_distance + min_gap;
+    x = Math.floor(Math.random() * 4.5) - 2.25;
+    if(!check_line(group, x, z)){
+      ringRepositioning(ring, parentid, id, group);
+    }
+    else {
+      ring.position.x = x;
+      ring.position.z = z;
+
+      if(scene.getObjectById(ring.id) == null) scene.add(ring);
+    }
   }
   // Following rings
   else{

@@ -200,7 +200,7 @@ function lerp(current, target, fraction){
   return array_of_points;
 }
 
-s = 0.05;
+s = 0.1;
 run_speed = 0.03;
 // the array is fucking ordered! leg dx up, low -- leg sx up, low
 run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_speed).concat(lerp(5.5,4,run_speed)), 
@@ -288,12 +288,9 @@ function animate(){
     if(invincibility == true){ 
 
       if(scene.getObjectByName(sonic.name) != null && (current_frame == 0 || current_frame == 2*invincibility_frames)){
-        scene.remove(sonic);
-        console.log("BECCATO");
-      }
+        scene.remove(sonic);      }
       else if(scene.getObjectByName(sonic.name) == null && (current_frame == invincibility_frames || current_frame == 3*invincibility_frames-1)){
         scene.add(sonic);
-        console.log("ORA VEDO");
       }
 
       current_frame += 1;
@@ -389,8 +386,8 @@ function animate(){
 
 }
 
-var ground1 = null, ground2 = null;
-var side1 = null, side2 = null, side3 = null, side4 = null;
+var ground1, ground2;
+var side1, side2, side3, side4;
 
 // Metodo con cui carica la texture
 var onLoad = function (texture) {
