@@ -52,13 +52,36 @@ function repositioningObstacle(index, from){
     var px = (Math.random() > 0.5 ? -1 : 1)*Math.random()*2.5;
     var put= true;
     for(var i = 0; i < rings.length; i++){
-        var z1 = pz <= rings[i].position.z + 2; 
-        var z2 = pz >= rings[i].position.z - 2;
-        var x1 = px >= rings[i].position.x - 3;
-        var x2 = px <= rings[i].position.x + 3;
-        if(z1 && z2 && x1 && x2){
-            put = false;
-            break;
+        var group = Math.floor(i/size);
+        if(or != 80.1 || lines_type[group] == 0){ //tall obstacle OR flat rings line
+            var z1 = pz <= rings[i].position.z + 2; 
+            var z2 = pz >= rings[i].position.z - 2;
+            var x1 = px >= rings[i].position.x - 2;
+            var x2 = px <= rings[i].position.x + 2;
+            if(z1 && z2 && x1 && x2){
+                console.log("RINGSSSSS");
+                put = false;
+                break;
+            }
+        }
+        else { // short obstacles AND curve rings line
+            var id = i%size;
+            var parent = i - id;
+            var z1 = pz <= rings[parent].position.z + 1; 
+            var z2 = pz >= rings[parent].position.z - 1;
+            var x1 = px >= rings[parent].position.x - 3;
+            var x2 = px <= rings[parent].position.x + 3;
+
+            var z3 = pz <= rings[parent+4].position.z + 2; 
+            var z4 = pz >= rings[parent+4].position.z - 2;
+            var x3 = px >= rings[parent+4].position.x - 3;
+            var x4 = px <= rings[parent+4].position.x + 3;
+            if(z1 && z2 && x1 && x2 && z3 && z4 && x3 && x4){
+
+                console.log("COLLISIONNN");
+                put = false;
+                break;
+            }
         }
     }
     for(var l = 0; l < n_obs; l++){
@@ -67,6 +90,7 @@ function repositioningObstacle(index, from){
         var x1 = px >= obs[l].position.x - 3;
         var x2 = px <= obs[l].position.x + 3;
         if(z1 && z2 && x1 && x2){
+            console.log("OBSTACLEE");
             put = false;
             break;
         }
@@ -75,6 +99,7 @@ function repositioningObstacle(index, from){
         obs[index].rotation.z = or;
         obs[index].position.set(px, or == 80.1 ? 0.25 : 1.25, pz);
     } else {
+        //console.log("NOPEEE");
         repositioningObstacle(index, from);
     }
 }
