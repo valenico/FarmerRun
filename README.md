@@ -27,3 +27,7 @@
 - ~~mani mentre corre più aereodinamiche ? dovrebbe essere un valore fisso di rotazione y~~
 
 - mettere un 'PLAY' all'inizio così sicuro cliccano lo schermo e si possono muvoere (?)
+
+- avendo un sistema a vite, potrebbe essere utile fargli trovare una vita ogni tanto 
+
+- sistemare inizio corsa (troppi ostacoli subito, o inziia invincibile o bisogna aumentare le prime distanze)
