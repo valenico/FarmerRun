@@ -65,8 +65,8 @@ function check_line(group, startx, startz){
     for(j = 0; j < obs.length; j++){
       var z1 = zz <= obs[j].position.z + 2; 
       var z2 = zz >= obs[j].position.z - 2;
-      var x1 = xx >= obs[j].position.x - 2;
-      var x2 = xx <= obs[j].position.x + 2;
+      var x1 = xx >= obs[j].position.x - 4;
+      var x2 = xx <= obs[j].position.x + 4;
       var y1 = yy <= obs[j].position.y + 1;
       var y2 = yy >= obs[j].position.y - 1;
 
