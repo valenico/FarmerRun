@@ -119,7 +119,7 @@ function onDocumentKeyDown(event) {
 
   light = new THREE.SpotLight( 0xffffff, 2);
   light.position.set( -0.5, 17, -1  );
-  light.castShadows = true;
+  light.castShadow = true;
   scene.add( light );
 
     //Set up shadow properties for the light
@@ -145,7 +145,7 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic = gltf.scene;
     sonic.name = "sonic";
     sonic.position.set(0, 0, -0.75);
-    sonic.castShadows = true;
+    sonic.castShadow = true;
     sonic.receiveShadow = false;
 
     light.target = sonic;
