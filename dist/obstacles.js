@@ -6,9 +6,9 @@ var max_obs = 5;
 
 // creation of a column object as obstacle, to clone/move 
 
-var tex = new THREE.TextureLoader().load( "./../Images/column2.png" );
+var tex = new THREE.TextureLoader().load( "./../Images/marble.jpg" );
 var cgeometry = new THREE.CylinderBufferGeometry( 0.4 , 0.4, 2, 32 );
-var cmaterial = new THREE.MeshLambertMaterial( {color: 'gray',
+var cmaterial = new THREE.MeshLambertMaterial( {color: 0xa1a1a1,
                                                 map:tex
                                              });
 var cylinder = new THREE.Mesh( cgeometry, cmaterial );
