@@ -1,3 +1,19 @@
+var heart_loader = new THREE.GLTFLoader();
+heart_loader.crossOrigin = true;
+
+var heart;
+var can_get_heart = false;
+var max_hearts = 3;
+var num_hearts = max_hearts;
+
+heart_loader.load( './../models/heart/scene.gltf', function ( gltf ) {
+    heart = gltf.scene;
+    heart.name = "heart";
+    heart.position.set(0, 1, 5);
+    heart.scale.set(0.4,0.4,0.4);
+    scene.add(heart);
+});
+
 var life1 = document.createElement('img');
 life1.style.position = 'absolute';
 life1.src = './../Images/life.png';
@@ -34,5 +50,16 @@ function check_lives(){
         return;
     } else {
         window.alert("Game Over!");
+    }
+
+function getHeart(){
+    var z = sonic.position.z <= heart.position.z + error;
+    var z1 = sonic.position.z >= heart.position.z - error;
+    var y = sonic.position.y <= heart.position.y + error;
+    var y2 = sonic.position.y >= heart.position.y - error;
+    var x = sonic.position.x <= heart.position.x + error;
+    var x2 = sonic.position.x >= heart.position.x - error;
+    if(z && z1 && y && y2 && x && x2 && !max_hearts){
+
     }
 }

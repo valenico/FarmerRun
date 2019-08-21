@@ -222,8 +222,6 @@ function animate(){
     break_walls();
     sonic.position.z += s;
     camera.position.z += s;
-    //sonic.position.z = 500;
-    //camera.position.z = 500-5;
 
     // Infinite road
     if(sonic.position.z >= 500*times + 50){
@@ -244,7 +242,7 @@ function animate(){
  
     getshield();
     update_shield();
-    
+
     // Damage feedback
     if(invincibility == true && shield_on == false){
       if(scene.getObjectByName(sonic.name) != null && (current_frame == 0 || current_frame == 2*invincibility_frames)){
