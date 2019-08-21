@@ -244,6 +244,7 @@ function animate(){
  
     getshield();
     update_shield();
+    
     // Damage feedback
     if(invincibility == true && shield_on == false){
       if(scene.getObjectByName(sonic.name) != null && (current_frame == 0 || current_frame == 2*invincibility_frames)){

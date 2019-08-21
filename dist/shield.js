@@ -16,7 +16,7 @@ scene.add(shield);
 var shield_on = false;
 
 function spawn_shield(start){
-    if(shield_to_spawn && Math.random() > 0.1){
+    if(shield_to_spawn && Math.random() > 0.999){
         var px = (Math.random() > 0.5 ? -1 : 1)*Math.random()*2.5;
         var py = (Math.random() + 0.5);
         var pz = Math.random()*distance + min_distance + start;
@@ -64,16 +64,16 @@ function spawn_shield(start){
 }
 
 function getshield(){
-    var z = sonic.position.z <= shield.position.z + 1;
-    var z1 = sonic.position.z >= shield.position.z - 1;
-    var y = sonic.position.y <= shield.position.y + 1;
-    var y2 = sonic.position.y >= shield.position.y - 1;
-    var x = sonic.position.x <= shield.position.x + 1;
-    var x2 = sonic.position.x >= shield.position.x - 1;
+    var z = sonic.position.z <= shield.position.z + error;
+    var z1 = sonic.position.z >= shield.position.z - error;
+    var y = sonic.position.y <= shield.position.y + error;
+    var y2 = sonic.position.y >= shield.position.y - error;
+    var x = sonic.position.x <= shield.position.x + error;
+    var x2 = sonic.position.x >= shield.position.x - error;
     if(z && z1 && y && y2 && x && x2 && !shield_on){
         invincibility = true;
         shield_on = true;
-        if(scene.getObjectByName("sonic") == null) scene.add("sonic");
+        if(scene.getObjectByName("sonic") == null) scene.add(sonic);
 
     }
 }
@@ -91,6 +91,7 @@ function update_shield(){
     if(shield_on){
         shield.position.set(sonic.position.x, sonic.position.y + 0.5, sonic.position.z);
         shield_time +=1;
+        if(scene.getObjectByName("sonic") == null) scene.add(sonic);
     } else if(shield_on == false && shield_to_spawn == false && shield.position.z < sonic.position.z){
         shield_to_spawn = true;
         shield.visible = false;
