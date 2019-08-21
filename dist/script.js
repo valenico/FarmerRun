@@ -58,6 +58,8 @@ var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
 
+var items_probability = 0.999;
+
 function init() {
 
   scene = new THREE.Scene();

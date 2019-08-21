@@ -1,10 +1,10 @@
-var distance = 15;
+var distance = 30;
 var min_distance = 10;
 var shield_time = 0;
 var shield_to_spawn = true;
 var sgeometry = new THREE.SphereGeometry( 0.5 , 32, 32 );
 var smaterial = new THREE.MeshPhongMaterial({
-  color: 0x87cefa,
+  color: 0x0c67fb,
   opacity: 0.35,
   transparent : true,
 });
@@ -16,7 +16,7 @@ scene.add(shield);
 var shield_on = false;
 
 function spawn_shield(start){
-    if(shield_to_spawn && Math.random() > 0.999){
+    if(shield_to_spawn && Math.random() > items_probability){
         var px = (Math.random() > 0.5 ? -1 : 1)*Math.random()*2.5;
         var py = (Math.random() + 0.5);
         var pz = Math.random()*distance + min_distance + start;
@@ -64,12 +64,12 @@ function spawn_shield(start){
 }
 
 function getshield(){
-    var z = sonic.position.z <= shield.position.z + error;
-    var z1 = sonic.position.z >= shield.position.z - error;
-    var y = sonic.position.y <= shield.position.y + error;
-    var y2 = sonic.position.y >= shield.position.y - error;
-    var x = sonic.position.x <= shield.position.x + error;
-    var x2 = sonic.position.x >= shield.position.x - error;
+    var z = sonic.position.z <= shield.position.z + 0.7;
+    var z1 = sonic.position.z >= shield.position.z - 0.7;
+    var y = sonic.position.y <= shield.position.y + 0.7;
+    var y2 = sonic.position.y >= shield.position.y - 0.7;
+    var x = sonic.position.x <= shield.position.x + 0.7;
+    var x2 = sonic.position.x >= shield.position.x - 0.7;
     if(z && z1 && y && y2 && x && x2 && !shield_on){
         invincibility = true;
         shield_on = true;

@@ -11,11 +11,6 @@ loader.load( './../Models/heart/scene.gltf', function ( gltf ) {
     scene.add(heart)
 });
 
-
-var distance = 15;
-var min_distance = 10;
-
-
 var life1 = document.createElement('img');
 life1.style.position = 'absolute';
 life1.src = './../Images/life.png';
@@ -43,7 +38,7 @@ document.body.appendChild(life3);
 
 
 function heartSpawn(start){
-    if(Math.random() > 0.1){
+    if(Math.random() > items_probability){
         var px =  Math.floor(Math.random() * 4.5) - 2.25;
         var py = (Math.random() + 0.5);
         var pz = Math.random()*distance + min_distance + start;
@@ -129,12 +124,12 @@ function getHeart(){
         return;
     }
 
-    var z = sonic.position.z <= heart.position.z + error;
-    var z1 = sonic.position.z >= heart.position.z - error;
-    var y = sonic.position.y <= heart.position.y + error;
-    var y2 = sonic.position.y >= heart.position.y - error;
-    var x = sonic.position.x <= heart.position.x + error;
-    var x2 = sonic.position.x >= heart.position.x - error;
+    var z = sonic.position.z <= heart.position.z + 0.7;
+    var z1 = sonic.position.z >= heart.position.z - 0.7;
+    var y = sonic.position.y <= heart.position.y + 0.7;
+    var y2 = sonic.position.y >= heart.position.y - 0.7;
+    var x = sonic.position.x <= heart.position.x + 0.7;
+    var x2 = sonic.position.x >= heart.position.x - 0.7;
     if(z && z1 && y && y2 && x && x2 && can_get_heart){
         check_lives();
         heartSpawn(sonic.position.z);
