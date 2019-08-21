@@ -1,12 +1,9 @@
-var heart_loader = new THREE.GLTFLoader();
-heart_loader.crossOrigin = true;
-
 var heart;
 var can_get_heart = false;
 var max_hearts = 3;
 var num_hearts = max_hearts;
 
-heart_loader.load( './../models/heart/scene.gltf', function ( gltf ) {
+loader.load( './../models/heart/scene.gltf', function ( gltf ) {
     heart = gltf.scene;
     heart.name = "heart";
     heart.position.set(0, 1, 5);
@@ -51,6 +48,7 @@ function check_lives(){
     } else {
         window.alert("Game Over!");
     }
+}
 
 function getHeart(){
     var z = sonic.position.z <= heart.position.z + error;
