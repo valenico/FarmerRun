@@ -1,5 +1,6 @@
 const backgroundColor = 0xe0ffff;
 
+
 /// Dictionary for body parts of sonic ///
 var score = 0;
 const sonic_dic = { 
@@ -57,7 +58,6 @@ var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
 
-
 function init() {
 
   scene = new THREE.Scene();
@@ -80,7 +80,7 @@ function init() {
     renderer.setSize( window.innerWidth, window.innerHeight );
   }, false );
 
-  document.body.appendChild( renderer.domElement);
+   document.body.appendChild( renderer.domElement);
 
   controls = new THREE.OrbitControls( camera );
 
@@ -315,8 +315,8 @@ var onLoad = function (texture) {
 
   var objGeometry;
   if(n == 'ground1'){
-    objGeometry = new THREE.PlaneGeometry(6, 1000, 32);
-    times_horizontal = 3;
+    objGeometry = new THREE.PlaneGeometry(6,1000, 32);
+    times_horizontal = 2;
     times_vert = 500;
   } else {
     objGeometry = new THREE.PlaneGeometry(1000, 3, 32);
@@ -329,7 +329,7 @@ var onLoad = function (texture) {
   var objMaterial = new THREE.MeshPhongMaterial({
     map: texture,
     side: THREE.DoubleSide,
-    shading: THREE.FlatShading
+    shading: THREE.FlatShading,
   });
 
   if(n =='ground1'){
@@ -381,7 +381,7 @@ var onError = function (xhr) {
 };
 
 var loader1 = new THREE.TextureLoader();
-loader1.load('./../Images/ground1.jpg', onLoad, onProgress, onError);
+loader1.load('./ground1.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/side.jpg', onLoad, onProgress, onError);
 
 function render(){ 

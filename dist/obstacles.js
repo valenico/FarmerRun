@@ -6,10 +6,10 @@ var max_obs = 5;
 
 // creation of a column object as obstacle, to clone/move 
 
-var tex = new THREE.TextureLoader().load( "./../Images/column1.png" );
-var cgeometry = new THREE.CylinderBufferGeometry( 0.5 , 0.5, 2.5, 32 );
+var tex = new THREE.TextureLoader().load( "./../Images/column2.png" );
+var cgeometry = new THREE.CylinderBufferGeometry( 0.4 , 0.4, 2, 32 );
 var cmaterial = new THREE.MeshLambertMaterial( {color: 'gray',
-                                                map:tex 
+                                                map:tex
                                              });
 var cylinder = new THREE.Mesh( cgeometry, cmaterial );
 
@@ -43,7 +43,7 @@ function generate_obstacle(){
         if(put){
             c = cylinder.clone();
             c.rotation.z = or;
-            c.position.set(px, or == cylinder.rotation.z ? 1.25 : 0.25 , pz);
+            c.position.set(px, or == cylinder.rotation.z ? 1 : 0.25 , pz);
             obs.push(c);
             scene.add(c);
             n_obs++;
@@ -98,7 +98,7 @@ function repositioningObstacle(index, from){
     }
     if(put){
         obs[index].rotation.z = or;
-        obs[index].position.set(px, or == 80.1 ? 0.25 : 1.25, pz);
+        obs[index].position.set(px, or == 80.1 ? 0.25 : 1, pz);
     } else {
         repositioningObstacle(index, from);
     }
