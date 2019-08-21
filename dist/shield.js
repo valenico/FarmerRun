@@ -16,40 +16,45 @@ scene.add(shield);
 var shield_on = false;
 
 function spawn_shield(start){
-    if(shield_to_spawn && Math.random() > 0.999){
+    if(shield_to_spawn && Math.random() > 0.1){
         var px = (Math.random() > 0.5 ? -1 : 1)*Math.random()*2.5;
+        var py = (Math.random() + 0.5);
         var pz = Math.random()*distance + min_distance + start;
 
         var put = true;
         for(var i = 0 ; i < rings.length; i++){
-            var z = shield.position.z <= rings[i].position.z + error;
-            var z1 = shield.position.z >= rings[i].position.z - error;
-            var x = shield.position.x <= rings[i].position.x + error;
-            var x2 = shield.position.x >= rings[i].position.x - error;
-            if(z && z1 && x && x2){
+            var z = pz <= rings[i].position.z + error;
+            var z1 = pz >= rings[i].position.z - error;
+            var y = py <= rings[i].position.y + error;
+            var y1  = py >= rings[i].position.y - error;
+            var x = px <= rings[i].position.x + error;
+            var x2 = px >= rings[i].position.x - error;
+            if(z && z1 && x && x2 && y && y1){
                 put = false;
                 break;
             }
         }
 
         for(i = 0 ; i < obs.length; i++){
-            var z = shield.position.z <= obs[i].position.z + error;
-            var z1 = shield.position.z >= obs[i].position.z - error;
+            var z = pz <= obs[i].position.z + error;
+            var z1 = pz >= obs[i].position.z - error;
             if(obs[i].rotation.z == 80.1){ // horizontal
-                var x1 = eggman.position.x >= obs[i].position.x - error*2.5;
-                var x2 = eggman.position.x <= obs[i].position.x + error*2.5;
+                var x1 = px >= obs[i].position.x - error*2.5;
+                var x2 = px <= obs[i].position.x + error*2.5;
+                var y = py < 0.5 + error;
             } else { // vertical 
-                var x1 = eggman.position.x >= obs[i].position.x - error;
-                var x2 = eggman.position.x <= obs[i].position.x + error;
+                var x1 = px >= obs[i].position.x - error;
+                var x2 = px <= obs[i].position.x + error;
+                var y = true;
             }
-            if(z && z1 && x1 && x2){
+            if(z && z1 && x1 && x2 && y){
                 put = false;
                 break;
             }
         }
         
         if(put){
-            shield.position.set(px, 0.5, pz);
+            shield.position.set(px, py, pz);
             shield.visible = true;
             shield_to_spawn = false;
         } else {
@@ -59,15 +64,17 @@ function spawn_shield(start){
 }
 
 function getshield(){
-    var z = sonic.position.z <= shield.position.z + error;
-    var z1 = sonic.position.z >= shield.position.z - error;
-    var y = sonic.position.y <= shield.position.y + error;
-    var y2 = sonic.position.y >= shield.position.y - error;
-    var x = sonic.position.x <= shield.position.x + error;
-    var x2 = sonic.position.x >= shield.position.x - error;
+    var z = sonic.position.z <= shield.position.z + 1;
+    var z1 = sonic.position.z >= shield.position.z - 1;
+    var y = sonic.position.y <= shield.position.y + 1;
+    var y2 = sonic.position.y >= shield.position.y - 1;
+    var x = sonic.position.x <= shield.position.x + 1;
+    var x2 = sonic.position.x >= shield.position.x - 1;
     if(z && z1 && y && y2 && x && x2 && !shield_on){
         invincibility = true;
         shield_on = true;
+        if(scene.getObjectByName("sonic") == null) scene.add("sonic");
+
     }
 }
 

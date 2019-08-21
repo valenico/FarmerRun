@@ -16,7 +16,7 @@ document.body.appendChild(life2);
 
 var life3 = document.createElement('img');
 life3.style.position = 'absolute';
-life3.src = './life.png';
+life3.src = './../Images/life.png';
 life3.style.height = 40 + 'px';
 life3.style.top = 20 + 'px';
 life3.style.right = 140 + 'px';
@@ -24,13 +24,13 @@ document.body.appendChild(life3);
 
 function check_lives(){
     if(life3.src.slice(-10,-4) != 'nolife'){
-        life3.src = './nolife.png';
+        life3.src = './../Images/nolife.png';
         return;
     } else if(life2.src.slice(-10,-4) != 'nolife'){
-        life2.src = './nolife.png';
+        life2.src = './../Images/nolife.png';
         return;
     } else if(life1.src.slice(-10,-4) != 'nolife'){
-        life1.src = './nolife.png';
+        life1.src = './../Images/nolife.png';
         return;
     } else {
         window.alert("Game Over!");

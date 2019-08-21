@@ -241,6 +241,7 @@ function animate(){
       times += 1;
     }
 
+ 
     getshield();
     update_shield();
     // Damage feedback
@@ -256,7 +257,6 @@ function animate(){
         current_frame = 0;
       }
     }
-    if(shield_on && scene.getObjectByName("sonic") == null) scene.add("sonic");
 
 
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
