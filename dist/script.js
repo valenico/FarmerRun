@@ -199,9 +199,10 @@ eggman_moves_x = lerp( 0 , -2.25, run_speed/6).concat(lerp(-2.25,2.25,run_speed/
 var text2 = document.createElement('h1');
 text2.style.position = 'absolute';
 text2.style.color = "black";
-text2.innerHTML = score;
-text2.style.top = 50 + 'px';
-text2.style.left = 50 + 'px';
+text2.innerHTML = "Score: " + score;
+text2.style.height = 40 + 'px';
+text2.style.top = 20 + 'px';
+text2.style.left = 40 + 'px';
 document.body.appendChild(text2);
 
 var invincibility = false;
@@ -280,7 +281,7 @@ function animate(){
     check_ring(); 
     collision();
 
-    text2.innerHTML = score;
+    text2.innerHTML = "Score: " + score;
 
     turn_off_eggman();
     spawn_shield(sonic.position.z);
