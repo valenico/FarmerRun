@@ -14,6 +14,7 @@ var egg_speed = 0.12;
 var egg = false;
 var hitting = false;
 var n_hit = 0;
+var max_hit = 5;
 
 
 function check_eggman(oldv){
@@ -63,7 +64,7 @@ function eggman_moves(){
       t_egg = (t_egg >= eggman_moves_x.length) ? 0 : t_egg+1;
 
       // we must decide how make it go away, even with a cycle of movements 
-      if(n_hit == 11){
+      if(n_hit == max_hit){
         eggman.position.z = camera.position.z;
         n_hit = 0;
         egg = false;
