@@ -3,50 +3,50 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 668,
+      "count": 540,
       "max": [
-        1.3000001907348633,
-        5.6000003814697266,
-        3
+        40.200477600097656,
+        19.834323883056641,
+        68.787376403808594
       ],
       "min": [
-        0,
-        0,
-        0
+        -40.129734039306641,
+        -19.750080108642578,
+        1.6320075988769531
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 1,
-      "byteOffset": 8016,
+      "byteOffset": 6480,
       "componentType": 5126,
-      "count": 668,
+      "count": 540,
       "max": [
-        1,
-        1,
-        1
+        0.99239957332611084,
+        0.9990578293800354,
+        0.99336344003677368
       ],
       "min": [
-        -1,
-        -1,
-        -1
+        -0.99557912349700928,
+        -0.99750173091888428,
+        -0.98720329999923706
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 668,
+      "count": 540,
       "max": [
-        0.81176471710205078,
-        0.33725491166114807,
-        0.33725491166114807,
+        1,
+        1,
+        1,
         1
       ],
       "min": [
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
         1
       ],
       "type": "VEC4"
@@ -54,9 +54,9 @@
     {
       "bufferView": 0,
       "componentType": 5125,
-      "count": 1128,
+      "count": 540,
       "max": [
-        667
+        539
       ],
       "min": [
         0
@@ -66,10 +66,10 @@
   ],
   "asset": {
     "extras": {
-      "author": "VRtualArtist (https://sketchfab.com/TAPshooter)",
+      "author": "VladislavFehu (https://sketchfab.com/VladislavFehu)",
       "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
-      "source": "https://sketchfab.com/models/6346f72430a444169133a828a14e2fbb",
-      "title": "Heart (VoxVR)"
+      "source": "https://sketchfab.com/models/dd3b881a34904991878dc6a5a05aa1f6",
+      "title": "Love Low Poly"
     },
     "generator": "Sketchfab-3.18.7",
     "version": "2.0"
@@ -77,23 +77,23 @@
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 4512,
+      "byteLength": 2160,
       "byteOffset": 0,
       "name": "floatBufferViews",
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 16032,
-      "byteOffset": 4512,
+      "byteLength": 12960,
+      "byteOffset": 2160,
       "byteStride": 12,
       "name": "floatBufferViews",
       "target": 34962
     },
     {
       "buffer": 0,
-      "byteLength": 10688,
-      "byteOffset": 20544,
+      "byteLength": 8640,
+      "byteOffset": 15120,
       "byteStride": 16,
       "name": "floatBufferViews",
       "target": 34962
@@ -101,7 +101,7 @@
   ],
   "buffers": [
     {
-      "byteLength": 31232,
+      "byteLength": 23760,
       "uri": "scene.bin"
     }
   ],
@@ -113,16 +113,16 @@
         0,
         0
       ],
-      "name": "material_0",
+      "name": "Material_30",
       "pbrMetallicRoughness": {
         "baseColorFactor": [
-          1,
-          1,
-          1,
+          0.42352899999999999,
+          0.019607800000000002,
+          0.019607800000000002,
           1
         ],
         "metallicFactor": 0,
-        "roughnessFactor": 1
+        "roughnessFactor": 0.59999999999999998
       }
     }
   ],
@@ -178,12 +178,36 @@
         0,
         1,
         0,
-        3.5199999809265137,
-        -4.570000171661377,
-        0.69999998807907104,
+        0,
+        0,
+        33.415012359619141,
         1
       ],
-      "name": "90601478c96a4eeebebe76d00fc5b652.obj.cleaner.gles"
+      "name": "Love"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -0,
+        -0,
+        -33.415012359619141,
+        1
+      ],
+      "name": "3DSMeshMatrix"
     },
     {
       "mesh": 0,

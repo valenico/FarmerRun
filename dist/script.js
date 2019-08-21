@@ -313,7 +313,7 @@ var onLoad = function (texture) {
   var times_vert; 
 
   var objGeometry;
-  if(n == 'ground1'){
+  if(n == 'ground2'){
     objGeometry = new THREE.PlaneGeometry(6,1000, 32);
     times_horizontal = 2;
     times_vert = 500;
@@ -331,7 +331,7 @@ var onLoad = function (texture) {
     shading: THREE.FlatShading,
   });
 
-  if(n =='ground1'){
+  if(n =='ground2'){
     ground1 = new THREE.Mesh(objGeometry, objMaterial);
     ground1.rotation.x = 300.0221;
     scene.add(ground1);      
@@ -380,7 +380,7 @@ var onError = function (xhr) {
 };
 
 var loader1 = new THREE.TextureLoader();
-loader1.load('./ground1.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/ground2.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/side.jpg', onLoad, onProgress, onError);
 
 function render(){ 

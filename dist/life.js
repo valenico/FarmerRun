@@ -3,7 +3,7 @@ var can_get_heart = false;
 var max_hearts = 3;
 var num_hearts = max_hearts;
 
-loader.load( './scene.gltf', function ( gltf ) {
+loader.load( './../Models/heart/scene.gltf', function ( gltf ) {
     heart = gltf.scene;
     heart.name = "heart";
     heart.position.set(0, -5, 5);
