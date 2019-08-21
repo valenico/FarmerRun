@@ -53,22 +53,9 @@ const sonic_dic = {
 
 };
 
-/*////////////////////////////////////////*/
-
-/*var renderCalls = []; 
-function render () {
-  requestAnimationFrame( render );
-  renderCalls.forEach((callback)=>{ callback(); });
-}
-*/ 
-/*////////////////////////////////////////*/
-
 var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
-
-//function renderScene(){ renderer.render( scene, camera ); }
-//renderCalls.push(renderScene);
 
 
 function init() {
@@ -268,6 +255,7 @@ function animate(){
         current_frame = 0;
       }
     }
+    if(shield_on && scene.getObjectByName("sonic") == null) scene.add("sonic");
 
 
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
