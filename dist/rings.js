@@ -65,12 +65,18 @@ function check_line(group, startx, startz){
     for(j = 0; j < obs.length; j++){
       var z1 = zz <= obs[j].position.z + 2; 
       var z2 = zz >= obs[j].position.z - 2;
-      var x1 = xx >= obs[j].position.x - 4;
-      var x2 = xx <= obs[j].position.x + 4;
-      var y1 = yy <= obs[j].position.y + 1;
-      var y2 = yy >= obs[j].position.y - 1;
+      if(obs[i].rotation.z == 80.1){ // horizontal
+        var x1 = xx >= obs[i].position.x - error*2.5;
+        var x2 = xx <= obs[i].position.x + error*2.5;
+        var y = yy < 0.5 + error;
+      }
+      else{
+          var x1 = xx >= obs[i].position.x - error;
+          var x2 = xx <= obs[i].position.x + error;
+          var y = true;
+      }
 
-      if(z1 && z2 && x1 && x2 && y1 && y2){
+      if(z1 && z2 && x1 && x2 && y){
         return false;
       }
     }
