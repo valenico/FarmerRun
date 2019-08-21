@@ -16,7 +16,7 @@ var cylinder = new THREE.Mesh( cgeometry, cmaterial );
 
 function generate_obstacle(){  
     for(; n_obs <= max_obs; ){
-        var pz = Math.random()*d;
+        var pz = Math.random()*d +min_dist;
         var or = Math.random() > 0.5 ? cylinder.rotation.z : 80.1;
         var px = (Math.random() > 0.5 ? -1 : 1)*2.5*Math.random();
         var put = true; 
