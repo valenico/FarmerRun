@@ -5,9 +5,14 @@ var n_obs = 0;
 var max_obs = 5;
 
 // creation of a column object as obstacle, to clone/move 
+
+var tex = new THREE.TextureLoader().load( "./../Images/column1.png" );
 var cgeometry = new THREE.CylinderBufferGeometry( 0.5 , 0.5, 2.5, 32 );
-var cmaterial = new THREE.MeshLambertMaterial( {color: 'gray'} );
+var cmaterial = new THREE.MeshLambertMaterial( {color: 'gray',
+                                                map:tex 
+                                             });
 var cylinder = new THREE.Mesh( cgeometry, cmaterial );
+
 
 function generate_obstacle(){  
     for(; n_obs <= max_obs; ){

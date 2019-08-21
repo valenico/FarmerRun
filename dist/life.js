@@ -1,6 +1,6 @@
 var life1 = document.createElement('img');
 life1.style.position = 'absolute';
-life1.src = './life.png';
+life1.src = './../Images/life.png';
 life1.style.height = 40 + 'px';
 life1.style.top = 20 + 'px';
 life1.style.right = 40 + 'px';
@@ -8,7 +8,7 @@ document.body.appendChild(life1);
 
 var life2 = document.createElement('img');
 life2.style.position = 'absolute';
-life2.src = './life.png';
+life2.src = './../Images/life.png';
 life2.style.height = 40 + 'px';
 life2.style.top = 20 + 'px';
 life2.style.right = 90 + 'px';

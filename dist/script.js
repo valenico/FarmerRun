@@ -381,8 +381,8 @@ var onError = function (xhr) {
 };
 
 var loader1 = new THREE.TextureLoader();
-loader1.load('./ground1.jpg', onLoad, onProgress, onError);
-loader1.load('./side.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/ground1.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/side.jpg', onLoad, onProgress, onError);
 
 function render(){ 
   //scene.add( cylinder );
