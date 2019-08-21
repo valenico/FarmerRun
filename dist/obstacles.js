@@ -119,7 +119,7 @@ function collision(){
             s = sonic.position.y <= 0.5;
         }
         if(z1 && z2 && x1 && x2 && s){
-            check_lives();
+            getDamage();
             damage_feedback();
         }
     }

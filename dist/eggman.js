@@ -73,7 +73,7 @@ function eggman_moves(){
       if(!invincibility) {
         e = check_eggman(e);
         if(e){
-          check_lives();
+          getDamage();
           damage_feedback();
         }
       }

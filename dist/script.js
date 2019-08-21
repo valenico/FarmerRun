@@ -239,7 +239,7 @@ function animate(){
       times += 1;
     }
 
- 
+    getHeart();
     getshield();
     update_shield();
 
