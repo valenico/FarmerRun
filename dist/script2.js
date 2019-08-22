@@ -63,7 +63,6 @@ var jump = false;
 
 var ground1, ground2;
 var side1, side2, side3, side4;
-var city1, city2, city3, city4;
 
 var items_probability = 0.999;
 
@@ -118,7 +117,7 @@ function onDocumentKeyDown(event) {
     }
   };
 
-  var light1 = new THREE.AmbientLight( 0xffffff,0.5,1);
+  var light1 = new THREE.AmbientLight( 0xffffff, 1, 1);
   light1.position.set( 30, 10, 30  );
   scene.add(light1);
 
@@ -133,12 +132,6 @@ function onDocumentKeyDown(event) {
   light.shadow.camera.near = 0.5;       // default
   light.shadow.camera.far = 8000;     // default
   light.shadow.camera.fov = 30;
-
-  /*var res = generateCities();
-  scene.add(res[0]);
-  scene.add(res[1]);
-  scene.add(res[2]);
-  scene.add(res[3]);*/
 
   var img = new Image();
   img.src = "./../Images/heightmap.png";
@@ -160,111 +153,9 @@ function onDocumentKeyDown(event) {
   plane.rotation.x = 300.0221;
   plane.position.set( 125 , -0.01 ,100);
   scene.add(plane);
+  }
 }
 
-var max_buildings = 150;
-
-function generateTextureCanvas(){
-		// build a small canvas 32x64 and paint it in white
-		var canvas	= document.createElement( 'canvas' );
-		canvas.width	= 32;
-		canvas.height	= 64;
-		var context	= canvas.getContext( '2d' );
-		// plain it in white
-		context.fillStyle	= '#ffffff';
-		context.fillRect( 0, 0, 32, 64 );
-		// draw the window rows - with a small noise to simulate light variations in each room
-		for( var y = 2; y < 64; y += 2 ){
-			for( var x = 0; x < 32; x += 2 ){
-				var value	= Math.floor( Math.random() * 64 );
-				context.fillStyle = 'rgb(' + [value, value, value].join( ',' )  + ')';
-				context.fillRect( x, y, 2, 1 );
-			}
-		}
-
-		// build a bigger canvas and copy the small one in it
-		// This is a trick to upscale the texture without filtering
-		var canvas2	= document.createElement( 'canvas' );
-		canvas2.width	= 512;
-		canvas2.height	= 1024;
-		var context	= canvas2.getContext( '2d' );
-		// disable smoothing
-		context.imageSmoothingEnabled		= false;
-		context.webkitImageSmoothingEnabled	= false;
-		context.mozImageSmoothingEnabled	= false;
-		// then draw the image
-		context.drawImage( canvas, 0, 0, canvas2.width, canvas2.height );
-		// return the just built canvas2
-		return canvas2;
-	}
-
-var buildings_texture = new THREE.Texture(generateTextureCanvas());
-
-var light	= new THREE.Color( 0xffffff );
-var shadow	= new THREE.Color( 0x303050 );
-
-function generateCities(){
-	city1 = new THREE.Group();
-	city2 = new THREE.Group();
-	city3 = new THREE.Group();
-	city4 = new THREE.Group();
-
-	var geometry = new THREE.CubeGeometry( 1, 1, 1 );
-	geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
-
-	buildings_texture.needsUpdate = true;
-	var cmaterial = new THREE.MeshLambertMaterial( { map: buildings_texture });
-	var buildingMesh = new THREE.Mesh( geometry, cmaterial );
-
-	// base colors for vertexColors. light is for vertices at the top, shaddow is for the ones at the bottom
-	var cityGeometry = new THREE.Geometry();
-
-	var building;
-	for( var i = 0; i < max_buildings; i ++ ){
-			city1.add(generateBuilding(buildingMesh, 0, 0));
-		    city2.add(generateBuilding(buildingMesh, 1, 0));
-		    city3.add(generateBuilding(buildingMesh, 0, 500));
-		    city4.add(generateBuilding(buildingMesh, 1, 500));
-	}
-	city1.add(side1);
-	city2.add(side2);
-	city3.add(side3);
-	city4.add(side4);
-
-	return [city1, city2, city3, city4];
-}
-
-function generateBuilding(buildingMesh, side, start){
-	var building = buildingMesh.clone();
-	if(side == 0) building.position.x	= Math.floor( Math.random() * 30 ) + 20 ;
-	else building.position.x	= (- Math.floor( Math.random() * 30 ) - 20) ;
-	building.position.z	= start + Math.floor( Math.random() * 500 );
-	// put a random rotation
-	
-	// put a random scale
-	building.scale.x	= Math.random() * Math.random() * Math.random() * Math.random() * 50 + 8;
-	building.scale.y	= (Math.random() * Math.random() * Math.random() * building.scale.x) * 8 + 8;
-	building.scale.z	= building.scale.x;
-	if(building.scale.x < 30) building.rotation.y	= Math.random()*Math.PI*2;
-
-	var value	= 1 - Math.random() * Math.random();
-	var baseColor	= new THREE.Color().setRGB( value + Math.random() * 0.1, value, value + Math.random() * 0.1 );
-	// set topColor/bottom vertexColors as adjustement of baseColor
-	var topColor	= baseColor.clone().multiply( light );
-	var bottomColor	= baseColor.clone().multiply( shadow );
-	// set .vertexColors for each face
-	var geometry	= building.geometry;		
-	for ( var j = 0, jl = geometry.faces.length; j < jl; j ++ ) {
-		if ( j === 2 ) {
-			// set face.vertexColors on root face
-			geometry.faces[ j ].vertexColors = [ baseColor, baseColor, baseColor, baseColor ];
-		} else {
-			// set face.vertexColors on sides faces
-			geometry.faces[ j ].vertexColors = [ topColor, bottomColor, bottomColor, topColor ];
-		}
-	}
-	return building;
-}
 
 
 var loader = new THREE.GLTFLoader();
@@ -377,14 +268,14 @@ function animate(){
     if(sonic.position.z >= 250*times){
       if(times % 2 == 0){
         ground2.position.z += 500;
-        city3.position.z += 500;
-        city4.position.z += 500;
+        side3.position.z += 500;
+        side4.position.z += 500;
 
       }
       else{ 
         ground1.position.z += 500;
-        city1.position.z += 500;
-        city2.position.z += 500;
+        side1.position.z += 500;
+        side2.position.z += 500;
       }
       times += 1;
     }
