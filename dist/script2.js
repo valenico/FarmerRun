@@ -310,7 +310,7 @@ function lerp(current, target, fraction){
   return array_of_points;
 }
 
-s = 1;
+s = 0.1;
 run_speed = 0.03;
 
 var error = 0.5;
