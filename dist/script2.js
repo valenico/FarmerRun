@@ -60,6 +60,11 @@ var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
 
+
+var ground1, ground2;
+var side1, side2, side3, side4;
+var city1, city2, city3, city4;
+
 var items_probability = 0.999;
 
 function init() {
@@ -129,14 +134,117 @@ function onDocumentKeyDown(event) {
   light.shadow.camera.far = 8000;     // default
   light.shadow.camera.fov = 30;
 
+  var res = generateCities();
+  scene.add(res[0]);
+  scene.add(res[1]);
+  scene.add(res[2]);
+  scene.add(res[3]);
 }
 
-/* creation of a column object as obstacle, to clone/move 
-var cgeometry = new THREE.CylinderBufferGeometry( 0.5 , 0.5, 2.5, 32 );
-var cmaterial = new THREE.MeshLambertMaterial( {color: 'gray'} );
-var cylinder = new THREE.Mesh( cgeometry, cmaterial );
-cylinder.position.set(2, 1.25 , 6);
-*/
+var max_buildings = 150;
+
+function generateTextureCanvas(){
+		// build a small canvas 32x64 and paint it in white
+		var canvas	= document.createElement( 'canvas' );
+		canvas.width	= 32;
+		canvas.height	= 64;
+		var context	= canvas.getContext( '2d' );
+		// plain it in white
+		context.fillStyle	= '#ffffff';
+		context.fillRect( 0, 0, 32, 64 );
+		// draw the window rows - with a small noise to simulate light variations in each room
+		for( var y = 2; y < 64; y += 2 ){
+			for( var x = 0; x < 32; x += 2 ){
+				var value	= Math.floor( Math.random() * 64 );
+				context.fillStyle = 'rgb(' + [value, value, value].join( ',' )  + ')';
+				context.fillRect( x, y, 2, 1 );
+			}
+		}
+
+		// build a bigger canvas and copy the small one in it
+		// This is a trick to upscale the texture without filtering
+		var canvas2	= document.createElement( 'canvas' );
+		canvas2.width	= 512;
+		canvas2.height	= 1024;
+		var context	= canvas2.getContext( '2d' );
+		// disable smoothing
+		context.imageSmoothingEnabled		= false;
+		context.webkitImageSmoothingEnabled	= false;
+		context.mozImageSmoothingEnabled	= false;
+		// then draw the image
+		context.drawImage( canvas, 0, 0, canvas2.width, canvas2.height );
+		// return the just built canvas2
+		return canvas2;
+	}
+
+var buildings_texture = new THREE.Texture(generateTextureCanvas());
+
+var light	= new THREE.Color( 0xffffff );
+var shadow	= new THREE.Color( 0x303050 );
+
+function generateCities(){
+	city1 = new THREE.Group();
+	city2 = new THREE.Group();
+	city3 = new THREE.Group();
+	city4 = new THREE.Group();
+
+	var geometry = new THREE.CubeGeometry( 1, 1, 1 );
+	geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) );
+
+	buildings_texture.needsUpdate = true;
+	var cmaterial = new THREE.MeshLambertMaterial( { map: buildings_texture });
+	var buildingMesh = new THREE.Mesh( geometry, cmaterial );
+
+	// base colors for vertexColors. light is for vertices at the top, shaddow is for the ones at the bottom
+	var cityGeometry = new THREE.Geometry();
+
+	var building;
+	for( var i = 0; i < max_buildings; i ++ ){
+			city1.add(generateBuilding(buildingMesh, 0, 0));
+		    city2.add(generateBuilding(buildingMesh, 1, 0));
+		    city3.add(generateBuilding(buildingMesh, 0, 500));
+		    city4.add(generateBuilding(buildingMesh, 1, 500));
+	}
+	city1.add(side1);
+	city2.add(side2);
+	city3.add(side3);
+	city4.add(side4);
+
+	return [city1, city2, city3, city4];
+}
+
+function generateBuilding(buildingMesh, side, start){
+	var building = buildingMesh.clone();
+	if(side == 0) building.position.x	= Math.floor( Math.random() * 30 ) + 20 ;
+	else building.position.x	= (- Math.floor( Math.random() * 30 ) - 20) ;
+	building.position.z	= start + Math.floor( Math.random() * 500 );
+	// put a random rotation
+	
+	// put a random scale
+	building.scale.x	= Math.random() * Math.random() * Math.random() * Math.random() * 50 + 8;
+	building.scale.y	= (Math.random() * Math.random() * Math.random() * building.scale.x) * 8 + 8;
+	building.scale.z	= building.scale.x;
+	if(building.scale.x < 30) building.rotation.y	= Math.random()*Math.PI*2;
+
+	var value	= 1 - Math.random() * Math.random();
+	var baseColor	= new THREE.Color().setRGB( value + Math.random() * 0.1, value, value + Math.random() * 0.1 );
+	// set topColor/bottom vertexColors as adjustement of baseColor
+	var topColor	= baseColor.clone().multiply( light );
+	var bottomColor	= baseColor.clone().multiply( shadow );
+	// set .vertexColors for each face
+	var geometry	= building.geometry;		
+	for ( var j = 0, jl = geometry.faces.length; j < jl; j ++ ) {
+		if ( j === 2 ) {
+			// set face.vertexColors on root face
+			geometry.faces[ j ].vertexColors = [ baseColor, baseColor, baseColor, baseColor ];
+		} else {
+			// set face.vertexColors on sides faces
+			geometry.faces[ j ].vertexColors = [ topColor, bottomColor, bottomColor, topColor ];
+		}
+	}
+	return building;
+}
+
 
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
@@ -202,7 +310,7 @@ function lerp(current, target, fraction){
   return array_of_points;
 }
 
-s = 0.1;
+s = 1;
 run_speed = 0.03;
 
 var error = 0.5;
@@ -245,17 +353,17 @@ function animate(){
     light.position.z += s;
 
     // Infinite road
-    if(sonic.position.z >= 500*times + 50){
+    if(sonic.position.z >= 250*times){
       if(times % 2 == 0){
-        ground2.position.z += 1000;
-        side3.position.z += 1000;
-        side4.position.z += 1000;
+        ground2.position.z += 500;
+        city3.position.z += 500;
+        city4.position.z += 500;
 
       }
       else{ 
-        ground1.position.z += 1000;
-        side1.position.z += 1000;
-        side2.position.z += 1000;
+        ground1.position.z += 500;
+        city1.position.z += 500;
+        city2.position.z += 500;
       }
       times += 1;
     }
@@ -320,12 +428,10 @@ function animate(){
 
 }
 
-var ground1, ground2;
-var side1, side2, side3, side4;
 
 // Metodo con cui carica la texture
 var onLoad = function (texture) {
-  var n = texture.image.src.slice(-11,-4);
+  var n = texture.image.src.slice(-8,-4);
 
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
@@ -334,14 +440,14 @@ var onLoad = function (texture) {
   var times_vert; 
 
   var objGeometry;
-  if(n == 'ground2'){
-    objGeometry = new THREE.PlaneGeometry(6,1000, 32);
-    times_horizontal = 2;
-    times_vert = 500;
+  if(n == 'road'){
+    objGeometry = new THREE.PlaneGeometry(6,500, 32);
+    times_horizontal = 1;
+    times_vert = 50;
   } else {
-    objGeometry = new THREE.PlaneGeometry(1000, 3, 32);
-    times_horizontal = 100;
-    times_vert = 1;
+    objGeometry = new THREE.PlaneGeometry(60, 500, 32);
+    times_horizontal = 5;
+    times_vert = 300;
   }
 
   texture.repeat.set(times_horizontal, times_vert);
@@ -352,7 +458,7 @@ var onLoad = function (texture) {
     shading: THREE.FlatShading,
   });
 
-  if(n =='ground2'){
+  if(n =='road'){
     ground1 = new THREE.Mesh(objGeometry, objMaterial);
     ground1.rotation.x = 300.0221;
     ground1.receiveShadow = true;
@@ -360,27 +466,27 @@ var onLoad = function (texture) {
 
     ground2 = ground1.clone();
     ground2.receiveShadow = true;
-    ground2.position.z = 1000-0.5;
+    ground2.position.z = 500-0.5;
     scene.add(ground2);
   
   } else {
     side1 = new THREE.Mesh(objGeometry, objMaterial);
-    side1.position.set(-2.98, 1.5, 0);
-    side1.rotation.y = 300.022222;
+    side1.rotation.x = 300.0221;
+    side1.position.x = 33;
 
     side2 = side1.clone();
-    side2.position.x = 2.98;
-    side2.rotation.y = -300.022225;
+    side2.rotation.x = 300.0221;
+    side2.position.x = -33;
 
     side3 = side1.clone();
-    side3.position.x = -2.98;
-    side3.rotation.y = -300.022225;
-    side3.position.z = 1000;
+    side3.rotation.x = 300.0221;
+    side3.position.x = 33;
+    side3.position.z = 500;
 
     side4 = side1.clone();
-    side4.position.x = 2.98;
-    side4.rotation.y = -300.02199;
-    side4.position.z = 1000;
+    side4.rotation.x = 300.0221;
+    side4.position.x = -33;
+    side4.position.z = 500;
 
     scene.add(side1);
     scene.add(side2);
@@ -403,8 +509,8 @@ var onError = function (xhr) {
 };
 
 var loader1 = new THREE.TextureLoader();
-loader1.load('./../Images/ground2.jpg', onLoad, onProgress, onError);
-loader1.load('./../Images/side.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/asphalt2.jpg', onLoad, onProgress, onError);
 
 function render(){ 
   //scene.add( cylinder );
