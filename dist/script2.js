@@ -134,11 +134,32 @@ function onDocumentKeyDown(event) {
   light.shadow.camera.far = 8000;     // default
   light.shadow.camera.fov = 30;
 
-  var res = generateCities();
+  /*var res = generateCities();
   scene.add(res[0]);
   scene.add(res[1]);
   scene.add(res[2]);
-  scene.add(res[3]);
+  scene.add(res[3]);*/
+
+  var img = new Image();
+  img.src = "./../Images/heightmap.png";
+  img.onload = function () {
+  
+  //get height data from img
+  var data = getHeightData(img);
+  
+    // plane
+  var geometry = new THREE.PlaneGeometry( 512 , 512, 512, 512);
+  var t = new THREE.TextureLoader().load('./../Images/hill_text.jpg');
+  var material = new THREE.MeshLambertMaterial( {map:t} );
+  plane = new THREE.Mesh( geometry, material );
+     
+  //set height of vertices
+  for ( var i = 0; i<plane.geometry.vertices.length; i++ ) {
+       plane.geometry.vertices[i].z = data[i];
+  }
+  plane.rotation.x = 300.0221;
+  plane.position.set( 125 , -0.01 ,100);
+  scene.add(plane);
 }
 
 var max_buildings = 150;
