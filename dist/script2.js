@@ -140,7 +140,7 @@ function onDocumentKeyDown(event) {
   //get height data from img
   var data = getHeightData(img);
   
-    // plane
+  // plane
   var geometry = new THREE.PlaneGeometry( 512 , 512, 512, 512);
   var t = new THREE.TextureLoader().load('./../Images/hill_text.jpg');
   var material = new THREE.MeshLambertMaterial( {map:t} );
@@ -151,11 +151,37 @@ function onDocumentKeyDown(event) {
        plane.geometry.vertices[i].z = data[i];
   }
   plane.rotation.x = 300.0221;
-  plane.position.set( 125 , -0.01 ,100);
+  plane.rotation.z = 1;
+  plane.position.set( 125 , - 1 , 300 );
   scene.add(plane);
   }
 }
 
+function getHeightData(img) {
+  var canvas = document.createElement( 'canvas' );
+  canvas.width = 128;
+  canvas.height = 128;
+  var context = canvas.getContext( '2d' );
+
+  var size = 128 * 128, data = new Float32Array( size );
+
+  context.drawImage(img,0,0);
+
+  for ( var i = 0; i < size; i ++ ) {
+      data[i] = 0
+  }
+
+  var imgd = context.getImageData(0, 0, 128, 128);
+  var pix = imgd.data;
+
+  var j=0;
+  for (var i = 0, n = pix.length; i < n; i += (4)) {
+      var all = pix[i]+pix[i+1]+pix[i+2];
+      data[j++] = all/30;
+  }
+
+  return data;
+}
 
 
 var loader = new THREE.GLTFLoader();
