@@ -70,7 +70,7 @@ var jump = false;
 
 
 var FLOOR_RES = 20;
-var FLOOR_THICKNESS = 15;
+var FLOOR_THICKNESS = 17;
 var snoise = new ImprovedNoise();
 var noiseScale = 3;
 var noiseSeed = Math.random() * 100;
@@ -259,6 +259,7 @@ function animate(){
     camera.position.z += s;
     light.position.z += s;
     bg.position.z += s;
+    heart.rotation.y += 0.05;
 
     // Infinite road
     if(sonic.position.z >= 250*times + 10){
@@ -293,6 +294,8 @@ function animate(){
         current_frame = 0;
       }
     }
+
+    checkClouds();
 
 
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
@@ -336,6 +339,8 @@ function animate(){
 
 }
 
+var cloud;
+
 // Metodo con cui carica la texture
 var onLoad = function (texture) {
   var n = texture.image.src.slice(-8,-4);
@@ -355,10 +360,15 @@ var onLoad = function (texture) {
     objGeometry = new THREE.PlaneGeometry( 300 , 30 , 32);
     times_horizontal = 3;
     times_vert = 1;
+  } else if( n == "ud10"){
+    objGeometry = new THREE.PlaneGeometry( 10 , 10 , 32);
+    times_horizontal = 1;
+    times_vert = 1;
+
   } else {
     objGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
-    times_horizontal = 5;
-    times_vert = 300;
+    times_horizontal = 40;
+    times_vert = 200;
   }
 
   texture.repeat.set(times_horizontal, times_vert);
@@ -390,6 +400,16 @@ var onLoad = function (texture) {
     bg = new THREE.Mesh(objGeometry, objMaterial);
     bg.position.set( 0 , 12, 100);
     scene.add(bg);      
+  } else if( n == "ud10"){
+    var objMaterial = new THREE.MeshPhongMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+      shading: THREE.FlatShading,
+      transparent: true,
+    });
+    cloud = new THREE.Mesh(objGeometry, objMaterial);
+
+    spawnClouds(cloud);
   } else {
     side1 = createSide(objGeometry,texture, 53 , 0);
     side2 = createSide(objGeometry,texture, -53 , 0);
@@ -405,11 +425,34 @@ var onLoad = function (texture) {
   
 }
 
+var max_clouds = 150;
+var clouds = new Array(max_clouds);
+
+function spawnClouds(cloudMesh){
+  for(i = 0; i < max_clouds; i++){
+    var clone = cloud.clone();
+    var x = Math.floor(Math.random()*120 - 60);
+    var y = Math.floor(Math.random()* 5 + 15);
+    var z = Math.floor(Math.random()*400);
+    clone.position.set(x, y , z);
+    clouds[i] = clone;
+    scene.add(clone);
+  }
+}
+
+function checkClouds(){
+  for(i = 0; i < clouds.length; i++){
+    if(clouds[i].position.z + 3 < sonic.position.z){
+      clouds[i].position.set(Math.floor(Math.random()*120 - 60), Math.floor(Math.random()* 5 + 15), 400 + Math.floor(Math.random()*150));
+    }
+  }
+}
+
 function createSide(floorGeometry,texture,posx, posz){
   var floorMaterial = new THREE.MeshLambertMaterial({
-      //map: texture,
-      color: 0x0ff747, //diffuse              
-      emissive: 0x000000, 
+      map: texture,
+      //color: 0x0ff747, //diffuse              
+      //emissive: 0x000000, 
       shading: THREE.FlatShading, 
       side: THREE.DoubleSide,
     });
@@ -452,13 +495,15 @@ var onProgress = function (xhr) {
 
 // Function called when download errors
 var onError = function (xhr) {
-  console.log('An error happened');
+  console.log(xhr);
 };
 
 var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
-loader1.load('./../Images/asphalt2.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/hill_text.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/skyline.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/cloud10.png', onLoad, onProgress, onError);
+
 
 function render(){ 
   //scene.add( cylinder );
