@@ -399,7 +399,7 @@ var onLoad = function (texture) {
     });
 
     bg = new THREE.Mesh(objGeometry, objMaterial);
-    bg.position.set( 0 , 65, 250);
+    bg.position.set( 0 , 69, 250);
     scene.add(bg);  
     
   } else if( n == "ud10"){
@@ -475,7 +475,7 @@ function createSide(floorGeometry,texture,posx, posz){
     for( var j = 0; j < FLOOR_RES + 1; j++) {
       ipos = i + offset;
       if(posx > 0){
-        if(j < 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
+        if(j < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
         else if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
         else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;        
       } else {
