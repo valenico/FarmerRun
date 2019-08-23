@@ -138,8 +138,8 @@ function onDocumentKeyDown(event) {
   light1.position.set( 30, 10, 30  );
   scene.add(light1);
 
-  light = new THREE.SpotLight( 0xffffff, 2);
-  light.position.set( -0.5, 17, -1  );
+  light = new THREE.SpotLight( 0xffffff, 1.2, 0, 1.2);
+  light.position.set( -0.5, 20, -5  );
   light.castShadow = true;
   scene.add( light );
 
@@ -161,7 +161,7 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic.name = "sonic";
     sonic.position.set(0, 0, -0.75);
     sonic.castShadow = true;
-    sonic.receiveShadow = false;
+    sonic.receiveShadow = true;
 
     light.target = sonic;
 
@@ -370,6 +370,8 @@ function spawnClouds(cloudMesh, start){
     var z = 10 + aux;
     clone.position.set(x, y , z);
     clone.scale.x = 3;
+
+    clone.scale = Math.random()*2 + 0.3;
     clouds[i] = clone;
     scene.add(clone);
     aux += 8;
@@ -391,7 +393,9 @@ function cloudRepositioning(cloud){
   var z = sonic.position.z + 400 + Math.floor(Math.random()*150);
 
   if(cloudsCollision(x,y,z)) cloudRepositioning(cloud);
-  else cloud.position.set(x,y,z);
+  else{
+    cloud.position.set(x,y,z);
+    cloud.scale = Math.random()*2 + 0.3;}
 
 }
 
@@ -414,7 +418,7 @@ var onLoad = function (texture) {
     objGeometry = new THREE.PlaneGeometry(6,500, 32);
     times_horizontal = 1;
     times_vert = 50;
-  } else if(n =='cope'){
+  } else if(n =='ope1'){
     objGeometry = new THREE.PlaneGeometry( 800 , 150 , 32);
     times_horizontal = 1;
     times_vert = 1;
@@ -449,7 +453,7 @@ var onLoad = function (texture) {
     scene.add(ground2);
   
 
-  } else if(n=='cope'){
+  } else if(n=='ope1'){
     var objMaterial = new THREE.MeshPhongMaterial({
       map: texture,
       side: THREE.DoubleSide,
@@ -540,7 +544,7 @@ var onError = function (xhr) {
 var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/hill_text.jpg', onLoad, onProgress, onError);
-loader1.load('./../Images/landscope.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/landscope1.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/cloud10.png', onLoad, onProgress, onError);
 
 

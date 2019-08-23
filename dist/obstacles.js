@@ -12,6 +12,8 @@ var cmaterial = new THREE.MeshLambertMaterial( {color: 0xa1a1a1,
                                                 map:tex
                                              });
 var cylinder = new THREE.Mesh( cgeometry, cmaterial );
+cylinder.castShadow = true;
+cylinder.receiveShadow = true;
 
 
 function generate_obstacle(){  
