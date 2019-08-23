@@ -152,7 +152,6 @@ function onDocumentKeyDown(event) {
 
 }
 
-
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
 
@@ -398,9 +397,6 @@ function cloudRepositioning(cloud){
     cloud.scale = Math.random()*2 + 0.3;}
 
 }
-
-
-
 
 
 // Metodo con cui carica la texture

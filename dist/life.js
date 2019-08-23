@@ -1,16 +1,7 @@
 var heart;
 var can_get_heart = false;
-var max_hearts = 3;
+var max_hearts = Number(document.URL.substr(-1,1));
 var num_hearts = max_hearts;
-
-loader.load( './../Models/heart/scene.gltf', function ( gltf ) {
-    heart = gltf.scene;
-    heart.name = "heart";
-    heart.visible = true;
-    heart.position.set(0, -5, 5);
-    heart.scale.set(0.007, 0.007, 0.007);
-    scene.add(heart)
-});
 
 var life1 = document.createElement('img');
 life1.style.position = 'absolute';
@@ -18,7 +9,6 @@ life1.src = './../Images/life.png';
 life1.style.height = 40 + 'px';
 life1.style.top = 20 + 'px';
 life1.style.right = 40 + 'px';
-document.body.appendChild(life1);
 
 var life2 = document.createElement('img');
 life2.style.position = 'absolute';
@@ -26,7 +16,6 @@ life2.src = './../Images/life.png';
 life2.style.height = 40 + 'px';
 life2.style.top = 20 + 'px';
 life2.style.right = 90 + 'px';
-document.body.appendChild(life2);
 
 var life3 = document.createElement('img');
 life3.style.position = 'absolute';
@@ -34,7 +23,27 @@ life3.src = './../Images/life.png';
 life3.style.height = 40 + 'px';
 life3.style.top = 20 + 'px';
 life3.style.right = 140 + 'px';
-document.body.appendChild(life3);
+
+loader.load( './../Models/heart/scene.gltf', function ( gltf ) {
+    heart = gltf.scene;
+    heart.name = "heart";
+    heart.visible = true;
+    heart.position.set(0, -5, 5);
+    heart.scale.set(0.007, 0.007, 0.007);
+
+    if(max_hearts == 3){
+        document.body.appendChild(life3);
+        document.body.appendChild(life2);
+        document.body.appendChild(life1);
+    } else if(max_hearts == 2){
+        document.body.appendChild(life1);
+        document.body.appendChild(life2);
+    } else {
+        document.body.appendChild(life1);
+    }
+
+    scene.add(heart)
+});
 
 function heartSpawn(start){
     if(Math.random() > items_probability){
@@ -93,18 +102,36 @@ function heartSpawn(start){
 
 
 function getDamage(){
-    if(life3.src.slice(-10,-4) != 'nolife'){
-        life3.src = './../Images/nolife.png';
-        can_get_heart = true;
-        return;
-    } else if(life2.src.slice(-10,-4) != 'nolife'){
-        life2.src = './../Images/nolife.png';
-        return;
-    } else if(life1.src.slice(-10,-4) != 'nolife'){
-        life1.src = './../Images/nolife.png';
-        return;
+    
+    if(max_hearts == 3){
+        if(life3.src.slice(-10,-4) != 'nolife'){
+            life3.src = './../Images/nolife.png';
+            can_get_heart = true;
+            return;
+        } else if(life2.src.slice(-10,-4) != 'nolife'){
+            life2.src = './../Images/nolife.png';
+            return;
+        } else if(life1.src.slice(-10,-4) != 'nolife'){
+            life1.src = './../Images/nolife.png';
+            window.alert("Game Over!");
+            return;
+        }
+    } else if(max_hearts == 2){
+        if(life3.src.slice(-10,-4) != 'nolife'){
+            life3.src = './../Images/nolife.png';
+            can_get_heart = true;
+            return;
+        } else if(life2.src.slice(-10,-4) != 'nolife'){
+            life2.src = './../Images/nolife.png';
+            window.alert("Game Over!");
+            return;
+        } 
     } else {
-        window.alert("Game Over!");
+        if(life3.src.slice(-10,-4) != 'nolife'){
+            life3.src = './../Images/nolife.png';
+            window.alert("Game Over!");
+            return;
+        }
     }
 }
 
