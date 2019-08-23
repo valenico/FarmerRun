@@ -445,7 +445,7 @@ var onLoad = function (texture) {
 
     ground2 = ground1.clone();
     ground2.receiveShadow = true;
-    ground2.position.z = 500-0.5;
+    ground2.position.z = 500;
     scene.add(ground2);
   
 
