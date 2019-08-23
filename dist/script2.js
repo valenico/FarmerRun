@@ -399,7 +399,7 @@ var onLoad = function (texture) {
     });
 
     bg = new THREE.Mesh(objGeometry, objMaterial);
-    bg.position.set( 0 , 70, 250);
+    bg.position.set( 0 , 65, 250);
     scene.add(bg);  
     
   } else if( n == "ud10"){
