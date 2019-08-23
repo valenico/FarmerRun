@@ -356,9 +356,9 @@ var onLoad = function (texture) {
     objGeometry = new THREE.PlaneGeometry(6,500, 32);
     times_horizontal = 1;
     times_vert = 50;
-  } else if(n =='line'){
-    objGeometry = new THREE.PlaneGeometry( 300 , 30 , 32);
-    times_horizontal = 3;
+  } else if(n =='cope'){
+    objGeometry = new THREE.PlaneGeometry( 800 , 150 , 32);
+    times_horizontal = 1;
     times_vert = 1;
   } else if( n == "ud10"){
     objGeometry = new THREE.PlaneGeometry( 10 , 10 , 32);
@@ -390,7 +390,8 @@ var onLoad = function (texture) {
     ground2.position.z = 500-0.5;
     scene.add(ground2);
   
-  } else if(n=='line'){
+
+  } else if(n=='cope'){
     var objMaterial = new THREE.MeshPhongMaterial({
       map: texture,
       side: THREE.DoubleSide,
@@ -398,8 +399,9 @@ var onLoad = function (texture) {
     });
 
     bg = new THREE.Mesh(objGeometry, objMaterial);
-    bg.position.set( 0 , 12, 100);
-    scene.add(bg);      
+    bg.position.set( 0 , 70, 250);
+    scene.add(bg);  
+    
   } else if( n == "ud10"){
     var objMaterial = new THREE.MeshPhongMaterial({
       map: texture,
@@ -501,7 +503,7 @@ var onError = function (xhr) {
 var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/hill_text.jpg', onLoad, onProgress, onError);
-loader1.load('./../Images/skyline.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/landscope.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/cloud10.png', onLoad, onProgress, onError);
 
 
