@@ -235,7 +235,7 @@ text2.style.position = 'absolute';
 text2.style.color = "black";
 text2.innerHTML = "Score: " + score;
 text2.style.height = 40 + 'px';
-text2.style.top = 20 + 'px';
+text2.style.top = 0 + 'px';
 text2.style.left = 40 + 'px';
 document.body.appendChild(text2);
 

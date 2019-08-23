@@ -105,7 +105,7 @@ function update_shield(){
         shield.visible = false;
     }
 
-    if(shield_time == 240 && shield_on){
+    if(shield_time == 480 && shield_on){
         remove_shield();
     }
 }
