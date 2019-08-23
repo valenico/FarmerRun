@@ -9,6 +9,8 @@
         border: 5px solid #E8F22F;
         text-decoration: none;
         padding: 20px;
+        width: 150px;
+        height: 40px ;
         border-radius: 50px;
         display: inline-block;
         transition: all 0.4s ease 0s;
@@ -17,16 +19,47 @@
         transform: scale(1.5);
     }
 
+    .instructions {
+      text-align: center;
+      font-size:x-large;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .column {
+      flex: 50%;
+    }
+
   </style>
   <title> Sonic Run </title>
 </head>
 <body> 
-    <p style="text-align: center"><img src='./../Images/logo.png' /></p>
-    <p style="text-align: center">Select the difficulty of your game. An easy game allows you to get hit three times before a game over; the hard game gives you only one shot.</p> 
+    <p style="text-align: center"> <img src='./../Images/logo.png' /> </p>
+    <div class='row'>
+      <div class='column'>
+          <p><img style="margin-left: 100px" height="200px" src='./../Images/eggman2.png'></p>
+          <p><img style="margin-left: 200px" height="600px" src='./../Images/sonic2.png' /></p>
+      </div>
+      <div class='column'>
+        <div class='instructions'>
+          <h2>How to Play:</h2>
+          <p> You can move LEFT ( A ), RIGHT ( D ) and JUMP ( spacebar ). </p>
+          <img src='./../Images/commands.png' alt='Game control commands.' width='250px'/>
+          <p> During the game you can collect <b>rings</b> to get points, <b>hearts</b> to get back lives and <b>shields</b> to get invulnerability for some time. </p>
+          <p> <b>Eggman</b>- your enemy! - is coming for you, you will be warned about him with a <span style="color: red"> red pyramid </span> which moves along his trajectory so that you can avoid him even when he's behind you. </p>
+          <p> You loose life when <u>you hit an obstacle or when Eggman hits you</u>. After you've been hit you're invulnerable for some seconds, use that time to escape from every danger! </p>
+          <p> In the upper left corner you can see your <b>score</b>, in the upper right corner you can see your <b>lives</b>. When you loose one or more lives, the corresponding number of hearts turn gray </p>
+          <p>Select the difficulty of your game. An easy game allows you to get hit three times before a game over; the hard game gives you only one shot.</p> 
+        </div>
+      </div>
+    </div>
+          
     <div style="text-align: center">
-        <a class="b" id='easy' >Easy</a> &nbsp; &nbsp; &nbsp;
-        <a class="b" id='medium' >Medium</a> &nbsp; &nbsp; &nbsp;
-        <a class="b" id='hard' >Hard</a>
+        <a class="b" id='easy' > <span style="text-align: center; font-size:xx-large"> Easy </span></a> &nbsp; &nbsp; &nbsp;
+        <a class="b" id='medium' ><span style="text-align: center; font-size:xx-large"> Medium</span> </a> &nbsp; &nbsp; &nbsp;
+        <a class="b" id='hard' ><span style="text-align: center; font-size:xx-large">  Hard </span></a>
     </div>
 </body>
 </html>
