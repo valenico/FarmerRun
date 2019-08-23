@@ -58,31 +58,32 @@ function repositioningObstacle(index, from){
     var put= true;
     for(var i = 0; i < rings.length; i++){
         var group = Math.floor(i/size);
-        if(or != 80.1 || lines_type[group] == 0){ //tall obstacle OR flat rings line
+        
+        if(lines_type[group] == 0){ //linea di anelli dritta
             var z1 = pz <= rings[i].position.z + 2; 
             var z2 = pz >= rings[i].position.z - 2;
-            var x1 = px >= rings[i].position.x - 2;
-            var x2 = px <= rings[i].position.x + 2;
-            if(z1 && z2 && x1 && x2){
-                put = false;
-                break;
+            var x1 = px >= rings[i].position.x - 3;
+            var x2 = px <= rings[i].position.x + 3;
+            var y = true;
+        } else {
+            if(or == 80.1){ // curve line and flat obstacle
+                var z1 = pz <= rings[i].position.z + 1; 
+                var z2 = pz >= rings[i].position.z - 1;
+                var x1 = px >= rings[i].position.x - 3;
+                var x2 = px <= rings[i].position.x + 3;
+                var y = rings[i].position.y == 0.5;
+            } else { //curve line and tall obstacle
+                var z1 = pz <= rings[i].position.z + 2; 
+                var z2 = pz >= rings[i].position.z - 2;
+                var x1 = px >= rings[i].position.x - 3;
+                var x2 = px <= rings[i].position.x + 3;
+                var y = true;
             }
-        } else { // short obstacles AND curve rings line
-            //var id = i%size;
-            //var parent = i - id;
-            var z1 = pz <= rings[i].position.z + 2; 
-            var z2 = pz >= rings[i].position.z - 2;
-            var x1 = px >= rings[i].position.x - 4;
-            var x2 = px <= rings[i].position.x + 4;
+        }
 
-            //var z3 = pz <= rings[parent+4].position.z + 2; 
-            //var z4 = pz >= rings[parent+4].position.z - 2;
-            //var x3 = px >= rings[parent+4].position.x - 4;
-            //var x4 = px <= rings[parent+4].position.x + 4;
-            if(z1 && z2 && x1 && x2){ //&& z3 && z4 && x3 && x4){
-                put = false;
-                break;
-            }
+        if(z1 && z2 && x1 && x2 && y){
+            put = false;
+            break;
         }
     }
     for(var l = 0; l < n_obs; l++){
