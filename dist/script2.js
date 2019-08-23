@@ -70,7 +70,7 @@ var jump = false;
 
 
 var FLOOR_RES = 20;
-var FLOOR_THICKNESS = 10;
+var FLOOR_THICKNESS = 15;
 var snoise = new ImprovedNoise();
 var noiseScale = 3;
 var noiseSeed = Math.random() * 100;
@@ -79,6 +79,7 @@ var stepCount = 0;
 
 var ground1, ground2;
 var side1, side2, side3, side4;
+var bg;
 
 var items_probability = 0.999;
 
@@ -133,7 +134,7 @@ function onDocumentKeyDown(event) {
     }
   };
 
-  var light1 = new THREE.AmbientLight( 0xffffff, 1, 1);
+  var light1 = new THREE.AmbientLight( 0xffffff, 1.4 , 1);
   light1.position.set( 30, 10, 30  );
   scene.add(light1);
 
@@ -257,6 +258,7 @@ function animate(){
     sonic.position.z += s;
     camera.position.z += s;
     light.position.z += s;
+    bg.position.z += s;
 
     // Infinite road
     if(sonic.position.z >= 250*times + 10){
@@ -334,7 +336,6 @@ function animate(){
 
 }
 
-
 // Metodo con cui carica la texture
 var onLoad = function (texture) {
   var n = texture.image.src.slice(-8,-4);
@@ -350,6 +351,10 @@ var onLoad = function (texture) {
     objGeometry = new THREE.PlaneGeometry(6,500, 32);
     times_horizontal = 1;
     times_vert = 50;
+  } else if(n =='line'){
+    objGeometry = new THREE.PlaneGeometry( 300 , 30 , 32);
+    times_horizontal = 3;
+    times_vert = 1;
   } else {
     objGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
     times_horizontal = 5;
@@ -375,6 +380,16 @@ var onLoad = function (texture) {
     ground2.position.z = 500-0.5;
     scene.add(ground2);
   
+  } else if(n=='line'){
+    var objMaterial = new THREE.MeshPhongMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+     // shading: THREE.FlatShading,
+    });
+
+    bg = new THREE.Mesh(objGeometry, objMaterial);
+    bg.position.set( 0 , 12, 100);
+    scene.add(bg);      
   } else {
     side1 = createSide(objGeometry,texture, 53 , 0);
     side2 = createSide(objGeometry,texture, -53 , 0);
@@ -443,6 +458,7 @@ var onError = function (xhr) {
 var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/asphalt2.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/skyline.jpg', onLoad, onProgress, onError);
 
 function render(){ 
   //scene.add( cylinder );
