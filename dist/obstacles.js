@@ -67,20 +67,19 @@ function repositioningObstacle(index, from){
                 put = false;
                 break;
             }
-        }
-        else { // short obstacles AND curve rings line
-            var id = i%size;
-            var parent = i - id;
-            var z1 = pz <= rings[parent].position.z + 2; 
-            var z2 = pz >= rings[parent].position.z - 2;
-            var x1 = px >= rings[parent].position.x - 3;
-            var x2 = px <= rings[parent].position.x + 3;
+        } else { // short obstacles AND curve rings line
+            //var id = i%size;
+            //var parent = i - id;
+            var z1 = pz <= rings[i].position.z + 2; 
+            var z2 = pz >= rings[i].position.z - 2;
+            var x1 = px >= rings[i].position.x - 4;
+            var x2 = px <= rings[i].position.x + 4;
 
-            var z3 = pz <= rings[parent+4].position.z + 2; 
-            var z4 = pz >= rings[parent+4].position.z - 2;
-            var x3 = px >= rings[parent+4].position.x - 3;
-            var x4 = px <= rings[parent+4].position.x + 3;
-            if(z1 && z2 && x1 && x2 && z3 && z4 && x3 && x4){
+            //var z3 = pz <= rings[parent+4].position.z + 2; 
+            //var z4 = pz >= rings[parent+4].position.z - 2;
+            //var x3 = px >= rings[parent+4].position.x - 4;
+            //var x4 = px <= rings[parent+4].position.x + 4;
+            if(z1 && z2 && x1 && x2){ //&& z3 && z4 && x3 && x4){
                 put = false;
                 break;
             }
