@@ -133,29 +133,59 @@ function onDocumentKeyDown(event) {
   light.shadow.camera.far = 8000;     // default
   light.shadow.camera.fov = 30;
 
-  var img = new Image();
-  img.src = "./../Images/heightmap.png";
-  img.onload = function () {
   
   //get height data from img
-  var data = getHeightData(img);
-  
-  // plane
-  var geometry = new THREE.PlaneGeometry( 512 , 512, 512, 512);
-  var t = new THREE.TextureLoader().load('./../Images/hill_text.jpg');
-  var material = new THREE.MeshLambertMaterial( {map:t} );
-  plane = new THREE.Mesh( geometry, material );
-     
-  //set height of vertices
-  for ( var i = 0; i<plane.geometry.vertices.length; i++ ) {
-       plane.geometry.vertices[i].z = data[i];
-  }
-  plane.rotation.x = 300.0221;
-  plane.rotation.z = 1;
-  plane.position.set( 125 , - 1 , 300 );
-  scene.add(plane);
-  }
+  createPlane();
 }
+var WRConfig = {
+  //const dimensions
+  FLOOR_WIDTH: 100,  // size of floor in x direction
+  FLOOR_DEPTH: 500,  //size of floor in z direction
+  MOVE_STEP: 500    //z distance to move before recreating a new floor strip
+
+};
+
+var FLOOR_RES = 20;
+var snoise = new ImprovedNoise();
+var noiseScale = 3;
+var noiseSeed = Math.random() * 100;
+var FLOOR_THICKNESS = 10;
+var stepCount = 0; 
+
+function createPlane(){
+  var floorGroup = new THREE.Object3D();
+
+  var floorMaterial = new THREE.MeshLambertMaterial({
+      color: 0x0ff747, //diffuse              
+      emissive: 0x000000, 
+      shading: THREE.FlatShading, 
+      side: THREE.DoubleSide,
+    });
+
+  //add extra x width
+  floorGeometry = new THREE.PlaneGeometry( WRConfig.FLOOR_WIDTH, WRConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
+  var floorMesh = new THREE.Mesh( floorGeometry, floorMaterial );
+  floorGroup.add( floorMesh );
+  floorMesh.rotation.x = Math.PI/2;
+  floorMesh.position.y = 0;
+  floorMesh.position.x = 53;
+  floorGroup.position.z = 10;
+
+  var i;
+  var ipos;
+  var offset = stepCount *WRConfig.MOVE_STEP/WRConfig.FLOOR_DEPTH * FLOOR_RES;
+
+  for( i = 0; i < FLOOR_RES + 1; i++) {
+    for( var j = 0; j < FLOOR_RES + 1; j++) {
+      ipos = i + offset;
+      floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;
+    }
+  }
+  floorGeometry.verticesNeedUpdate = true;
+  scene.add(floorMesh);
+
+}
+
 
 function getHeightData(img) {
   var canvas = document.createElement( 'canvas' );
@@ -426,8 +456,8 @@ var onLoad = function (texture) {
     side4.position.x = -33;
     side4.position.z = 500;
 
-    scene.add(side1);
-    scene.add(side2);
+    //scene.add(side1);
+    //scene.add(side2);
     scene.add(side3);
     scene.add(side4);
 
@@ -458,3 +488,4 @@ function render(){
 // fine metodo texture
 init();
 animate();
+
