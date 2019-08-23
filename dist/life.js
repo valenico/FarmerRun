@@ -6,6 +6,7 @@ var num_hearts = max_hearts;
 loader.load( './../Models/heart/scene.gltf', function ( gltf ) {
     heart = gltf.scene;
     heart.name = "heart";
+    heart.visible = true;
     heart.position.set(0, -5, 5);
     heart.scale.set(0.007, 0.007, 0.007);
     scene.add(heart)
@@ -34,8 +35,6 @@ life3.style.height = 40 + 'px';
 life3.style.top = 20 + 'px';
 life3.style.right = 140 + 'px';
 document.body.appendChild(life3);
-
-
 
 function heartSpawn(start){
     if(Math.random() > items_probability){
@@ -74,8 +73,17 @@ function heartSpawn(start){
                 break;
             }
         }
+
+        var x1 = px <= shield.position.x + error;
+        var x2 = px >= shield.position.x - error;
+        var z1 = pz <= shield.position.z + error;
+        var z2 = pz >= shield.position.z - error;
+        var y1 = py <= shield.position.y + error;
+        var y2 = py >= shield.position.y - error;
+        if(x1 && x2 && z1 && z2 && y1 && y2) put = false;
         
         if(put){
+            heart.visible = true;
             heart.position.set(px, py, pz);
         } else {
             heartSpawn(start);
@@ -126,12 +134,14 @@ function getHeart(){
 
     var z = sonic.position.z <= heart.position.z + 0.7;
     var z1 = sonic.position.z >= heart.position.z - 0.7;
-    var y = sonic.position.y <= heart.position.y + 0.7;
-    var y2 = sonic.position.y >= heart.position.y - 0.7;
+    var y = sonic.position.y <= heart.position.y + error*2;
+    var y2 = sonic.position.y >= heart.position.y - error*2;
     var x = sonic.position.x <= heart.position.x + 0.7;
     var x2 = sonic.position.x >= heart.position.x - 0.7;
     if(z && z1 && y && y2 && x && x2 && can_get_heart){
         check_lives();
+        heart.position.z -= 2;
+        heart.visible = false;
         heartSpawn(sonic.position.z);
     }
 }

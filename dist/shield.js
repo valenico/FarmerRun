@@ -52,6 +52,14 @@ function spawn_shield(start){
                 break;
             }
         }
+
+        var x1 = px <= heart.position.x + error;
+        var x2 = px >= heart.position.x - error;
+        var z1 = pz <= heart.position.z + error;
+        var z2 = pz >= heart.position.z - error;
+        var y1 = py <= heart.position.y + error;
+        var y2 = py >= heart.position.y - error;
+        if(x1 && x2 && z1 && z2 && y1 && y2) put = false;
         
         if(put){
             shield.position.set(px, py, pz);
@@ -66,8 +74,8 @@ function spawn_shield(start){
 function getshield(){
     var z = sonic.position.z <= shield.position.z + 0.7;
     var z1 = sonic.position.z >= shield.position.z - 0.7;
-    var y = sonic.position.y <= shield.position.y + 0.7;
-    var y2 = sonic.position.y >= shield.position.y - 0.7;
+    var y = sonic.position.y <= shield.position.y + error*2;
+    var y2 = sonic.position.y >= shield.position.y - error*2;
     var x = sonic.position.x <= shield.position.x + 0.7;
     var x2 = sonic.position.x >= shield.position.x - 0.7;
     if(z && z1 && y && y2 && x && x2 && !shield_on){
