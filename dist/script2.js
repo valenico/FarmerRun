@@ -53,12 +53,28 @@ const sonic_dic = {
   Avambraccio_sx : "ForeArm_L_021",
   Polso_sx : "Wrist_L_033",
   Mano_sx : "Hand_L_022",
+};
+
+
+var SideConfig = {
+  //const dimensions
+  FLOOR_WIDTH: 100,  // size of floor in x direction
+  FLOOR_DEPTH: 500,  //size of floor in z direction
+  MOVE_STEP: 500    //z distance to move before recreating a new floor strip
 
 };
 
 var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
+
+
+var FLOOR_RES = 20;
+var FLOOR_THICKNESS = 10;
+var snoise = new ImprovedNoise();
+var noiseScale = 3;
+var noiseSeed = Math.random() * 100;
+var stepCount = 0; 
 
 
 var ground1, ground2;
@@ -133,84 +149,6 @@ function onDocumentKeyDown(event) {
   light.shadow.camera.far = 8000;     // default
   light.shadow.camera.fov = 30;
 
-  
-  //get height data from img
-  createPlane();
-}
-var WRConfig = {
-  //const dimensions
-  FLOOR_WIDTH: 100,  // size of floor in x direction
-  FLOOR_DEPTH: 500,  //size of floor in z direction
-  MOVE_STEP: 500    //z distance to move before recreating a new floor strip
-
-};
-
-var FLOOR_RES = 20;
-var snoise = new ImprovedNoise();
-var noiseScale = 3;
-var noiseSeed = Math.random() * 100;
-var FLOOR_THICKNESS = 10;
-var stepCount = 0; 
-
-function createPlane(){
-  var floorGroup = new THREE.Object3D();
-
-  var floorMaterial = new THREE.MeshLambertMaterial({
-      color: 0x0ff747, //diffuse              
-      emissive: 0x000000, 
-      shading: THREE.FlatShading, 
-      side: THREE.DoubleSide,
-    });
-
-  //add extra x width
-  floorGeometry = new THREE.PlaneGeometry( WRConfig.FLOOR_WIDTH, WRConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
-  var floorMesh = new THREE.Mesh( floorGeometry, floorMaterial );
-  floorGroup.add( floorMesh );
-  floorMesh.rotation.x = Math.PI/2;
-  floorMesh.position.y = 0;
-  floorMesh.position.x = 53;
-  floorGroup.position.z = 10;
-
-  var i;
-  var ipos;
-  var offset = stepCount *WRConfig.MOVE_STEP/WRConfig.FLOOR_DEPTH * FLOOR_RES;
-
-  for( i = 0; i < FLOOR_RES + 1; i++) {
-    for( var j = 0; j < FLOOR_RES + 1; j++) {
-      ipos = i + offset;
-      floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;
-    }
-  }
-  floorGeometry.verticesNeedUpdate = true;
-  scene.add(floorMesh);
-
-}
-
-
-function getHeightData(img) {
-  var canvas = document.createElement( 'canvas' );
-  canvas.width = 128;
-  canvas.height = 128;
-  var context = canvas.getContext( '2d' );
-
-  var size = 128 * 128, data = new Float32Array( size );
-
-  context.drawImage(img,0,0);
-
-  for ( var i = 0; i < size; i ++ ) {
-      data[i] = 0
-  }
-
-  var imgd = context.getImageData(0, 0, 128, 128);
-  var pix = imgd.data;
-
-  var j=0;
-  for (var i = 0, n = pix.length; i < n; i += (4)) {
-      var all = pix[i]+pix[i+1]+pix[i+2];
-      data[j++] = all/30;
-  }
-
-  return data;
 }
 
 
@@ -413,20 +351,20 @@ var onLoad = function (texture) {
     times_horizontal = 1;
     times_vert = 50;
   } else {
-    objGeometry = new THREE.PlaneGeometry(60, 500, 32);
+    objGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
     times_horizontal = 5;
     times_vert = 300;
   }
 
   texture.repeat.set(times_horizontal, times_vert);
 
-  var objMaterial = new THREE.MeshPhongMaterial({
-    map: texture,
-    side: THREE.DoubleSide,
-    shading: THREE.FlatShading,
-  });
-
   if(n =='road'){
+    var objMaterial = new THREE.MeshPhongMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+      shading: THREE.FlatShading,
+    });
+
     ground1 = new THREE.Mesh(objGeometry, objMaterial);
     ground1.rotation.x = 300.0221;
     ground1.receiveShadow = true;
@@ -438,32 +376,58 @@ var onLoad = function (texture) {
     scene.add(ground2);
   
   } else {
-    side1 = new THREE.Mesh(objGeometry, objMaterial);
-    side1.rotation.x = 300.0221;
-    side1.position.x = 33;
-
-    side2 = side1.clone();
-    side2.rotation.x = 300.0221;
-    side2.position.x = -33;
-
-    side3 = side1.clone();
-    side3.rotation.x = 300.0221;
-    side3.position.x = 33;
-    side3.position.z = 500;
-
-    side4 = side1.clone();
-    side4.rotation.x = 300.0221;
-    side4.position.x = -33;
-    side4.position.z = 500;
-
-    //scene.add(side1);
-    //scene.add(side2);
+    side1 = createSide(objGeometry,texture, 53 , 0);
+    side2 = createSide(objGeometry,texture, -53 , 0);
+    side3 = createSide(objGeometry,texture, 53 , 500);
+    side4 = createSide(objGeometry,texture,-53 , 500);
+    scene.add(side1);
+    scene.add(side2);
     scene.add(side3);
     scene.add(side4);
 
   }
 
   
+}
+
+function createSide(floorGeometry,texture,posx, posz){
+  var floorMaterial = new THREE.MeshLambertMaterial({
+      //map: texture,
+      color: 0x0ff747, //diffuse              
+      emissive: 0x000000, 
+      shading: THREE.FlatShading, 
+      side: THREE.DoubleSide,
+    });
+
+  //add extra x width
+  var floorGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
+  var floorMesh = new THREE.Mesh( floorGeometry, floorMaterial );
+  floorMesh.rotation.x = Math.PI/2;
+  floorMesh.position.y = 0;
+  floorMesh.position.x = posx;
+  floorMesh.position.z = posz;
+
+  var i;
+  var ipos;
+  var offset = stepCount *SideConfig.MOVE_STEP/SideConfig.FLOOR_DEPTH * FLOOR_RES;
+
+  for( i = 0; i < FLOOR_RES + 1; i++) {
+    for( var j = 0; j < FLOOR_RES + 1; j++) {
+      ipos = i + offset;
+      if(posx > 0){
+        if(j < 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
+        else if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
+        else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;        
+      } else {
+        if(j > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
+        else if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
+        else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;
+      }
+    }
+  }
+  floorGeometry.verticesNeedUpdate = true;
+  return floorMesh;
+
 }
 
 // Function called when download progresses
