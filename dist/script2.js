@@ -341,6 +341,64 @@ function animate(){
 
 var cloud;
 
+var max_clouds = 100;
+var clouds = new Array(max_clouds);
+
+
+function cloudsCollision(x, y, z){
+  for(i = 0; i < clouds.length; i++){
+    var x1 = x <= clouds[i].position.x + 10;
+    var x2 = x >= clouds[i].position.x - 10;
+    var y1 = y <= clouds[i].position.y + 5;
+    var y1 = y >= clouds[i].position.y - 5;
+    var z1 = z <= clouds[i].position.z + 10;
+    var z2 = z >= clouds[i].position.z - 10;
+
+    if(x1 && x2 && y1 && y2 && z1 && z2) return true;
+  }
+  return false;
+}
+
+
+
+function spawnClouds(cloudMesh, start){
+  var aux = start;
+  for(i = 0; i < max_clouds; i++){
+    var clone = cloud.clone();
+    var x = Math.floor(Math.random()*180 - 90);
+    var y = Math.floor(Math.random()* 5 + 15);
+    var z = 10 + aux;
+    clone.position.set(x, y , z);
+    clone.scale.x = 3;
+    clouds[i] = clone;
+    scene.add(clone);
+    aux += 8;
+  }
+}
+
+function checkClouds(){
+  for(i = 0; i < clouds.length; i++){
+    if(clouds[i].position.z + 3 < sonic.position.z){
+      cloudRepositioning(clouds[i]);
+    }
+  }
+}
+
+
+function cloudRepositioning(cloud){
+  var x = Math.floor(Math.random()*180 - 90);
+  var y = Math.floor(Math.random()* 5 + 15);
+  var z = sonic.position.z + 400 + Math.floor(Math.random()*150);
+
+  if(cloudsCollision(x,y,z)) cloudRepositioning(cloud);
+  else cloud.position.set(x,y,z);
+
+}
+
+
+
+
+
 // Metodo con cui carica la texture
 var onLoad = function (texture) {
   var n = texture.image.src.slice(-8,-4);
@@ -411,7 +469,7 @@ var onLoad = function (texture) {
     });
     cloud = new THREE.Mesh(objGeometry, objMaterial);
 
-    spawnClouds(cloud);
+    spawnClouds(cloud, 0);
   } else {
     side1 = createSide(objGeometry,texture, 53 , 0);
     side2 = createSide(objGeometry,texture, -53 , 0);
@@ -427,28 +485,7 @@ var onLoad = function (texture) {
   
 }
 
-var max_clouds = 150;
-var clouds = new Array(max_clouds);
 
-function spawnClouds(cloudMesh){
-  for(i = 0; i < max_clouds; i++){
-    var clone = cloud.clone();
-    var x = Math.floor(Math.random()*120 - 60);
-    var y = Math.floor(Math.random()* 5 + 15);
-    var z = Math.floor(Math.random()*400);
-    clone.position.set(x, y , z);
-    clouds[i] = clone;
-    scene.add(clone);
-  }
-}
-
-function checkClouds(){
-  for(i = 0; i < clouds.length; i++){
-    if(clouds[i].position.z + 3 < sonic.position.z){
-      clouds[i].position.set(Math.floor(Math.random()*120 - 60), Math.floor(Math.random()* 5 + 15), 400 + Math.floor(Math.random()*150));
-    }
-  }
-}
 
 function createSide(floorGeometry,texture,posx, posz){
   var floorMaterial = new THREE.MeshLambertMaterial({
