@@ -259,7 +259,7 @@ function animate(){
     light.position.z += s;
 
     // Infinite road
-    if(sonic.position.z >= 250*times){
+    if(sonic.position.z >= 250*times + 10){
       if(times % 2 == 0){
         ground2.position.z += 500;
         side3.position.z += 500;
