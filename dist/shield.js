@@ -105,7 +105,19 @@ function update_shield(){
         shield.visible = false;
     }
 
-    if(shield_time == 480 && shield_on){
+    if(shield_time == 480){
         remove_shield();
-    }
+    } else if( shield_time == 420){
+        scene.remove(shield);
+    } else if( shield_time == 430){
+        scene.add(shield);
+    } else if( shield_time == 440){
+        scene.remove(shield);
+    } else if( shield_time == 450){
+        scene.add(shield);
+    } else if( shield_time == 460){
+        scene.remove(shield);
+    } else if( shield_time == 470){
+        scene.add(shield);
+    } 
 }

@@ -274,7 +274,7 @@ function animate(){
     //sonic.position.z += s;
     //camera.position.z += s;
     //light.position.z += s;
-    bg.position.z += s;
+    //bg.position.z += s;
     heart.rotation.y += 0.05;
 
     // Infinite road
