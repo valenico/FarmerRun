@@ -1,4 +1,4 @@
-const backgroundColor = 0xe0ffff;
+const backgroundColor = 0x000000;
 
 
 /// Dictionary for body parts of sonic ///
