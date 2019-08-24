@@ -338,67 +338,6 @@ function animate(){
 
 }
 
-var cloud;
-
-var max_clouds = 100;
-var clouds = new Array(max_clouds);
-
-
-function cloudsCollision(x, y, z){
-  for(i = 0; i < clouds.length; i++){
-    var x1 = x <= clouds[i].position.x + 10;
-    var x2 = x >= clouds[i].position.x - 10;
-    var y1 = y <= clouds[i].position.y + 5;
-    var y1 = y >= clouds[i].position.y - 5;
-    var z1 = z <= clouds[i].position.z + 10;
-    var z2 = z >= clouds[i].position.z - 10;
-
-    if(x1 && x2 && y1 && y2 && z1 && z2) return true;
-  }
-  return false;
-}
-
-
-
-function spawnClouds(cloudMesh, start){
-  var aux = start;
-  for(i = 0; i < max_clouds; i++){
-    var clone = cloud.clone();
-    var x = Math.floor(Math.random()*180 - 90);
-    var y = Math.floor(Math.random()* 5 + 15);
-    var z = 10 + aux;
-    clone.position.set(x, y , z);
-    clone.scale.x = 3;
-
-    clone.scale = Math.random()*2 + 0.3;
-    clouds[i] = clone;
-    scene.add(clone);
-    aux += 8;
-  }
-}
-
-function checkClouds(){
-  for(i = 0; i < clouds.length; i++){
-    if(clouds[i].position.z + 3 < sonic.position.z){
-      cloudRepositioning(clouds[i]);
-    }
-  }
-}
-
-
-function cloudRepositioning(cloud){
-  var x = Math.floor(Math.random()*180 - 90);
-  var y = Math.floor(Math.random()* 5 + 15);
-  var z = sonic.position.z + 400 + Math.floor(Math.random()*150);
-
-  if(cloudsCollision(x,y,z)) cloudRepositioning(cloud);
-  else{
-    cloud.position.set(x,y,z);
-    cloud.scale = Math.random()*2 + 0.3;}
-
-}
-
-
 // Metodo con cui carica la texture
 var onLoad = function (texture) {
   var n = texture.image.src.slice(-8,-4);
@@ -468,7 +407,6 @@ var onLoad = function (texture) {
       transparent: true,
     });
     cloud = new THREE.Mesh(objGeometry, objMaterial);
-
     spawnClouds(cloud, 0);
   } else {
     side1 = createSide(objGeometry,texture, 53 , 0);
@@ -541,11 +479,8 @@ var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/hill_text.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/landscope1.jpg', onLoad, onProgress, onError);
-loader1.load('./../Images/cloud10.png', onLoad, onProgress, onError);
-
 
 function render(){ 
-  //scene.add( cylinder );
   renderer.render(scene, camera);
 }
 

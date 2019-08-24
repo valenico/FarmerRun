@@ -8,21 +8,28 @@ life1.style.position = 'absolute';
 life1.src = './../Images/life.png';
 life1.style.height = 40 + 'px';
 life1.style.top = 20 + 'px';
-life1.style.right = 40 + 'px';
+life1.style.right = 190 + 'px';
 
 var life2 = document.createElement('img');
 life2.style.position = 'absolute';
 life2.src = './../Images/life.png';
 life2.style.height = 40 + 'px';
 life2.style.top = 20 + 'px';
-life2.style.right = 90 + 'px';
+life2.style.right = 140 + 'px';
 
 var life3 = document.createElement('img');
 life3.style.position = 'absolute';
 life3.src = './../Images/life.png';
 life3.style.height = 40 + 'px';
 life3.style.top = 20 + 'px';
-life3.style.right = 140 + 'px';
+life3.style.right = 90 + 'px';
+
+var life4 = document.createElement('img');
+life4.style.position = 'absolute';
+life4.src = './../Images/life.png';
+life4.style.height = 40 + 'px';
+life4.style.top = 20 + 'px';
+life4.style.right = 40 + 'px';
 
 loader.load( './../Models/heart/scene.gltf', function ( gltf ) {
     heart = gltf.scene;
@@ -31,15 +38,20 @@ loader.load( './../Models/heart/scene.gltf', function ( gltf ) {
     heart.position.set(0, -5, 5);
     heart.scale.set(0.007, 0.007, 0.007);
 
-    if(max_hearts == 3){
+    if(max_hearts == 4){
+        document.body.appendChild(life4);
         document.body.appendChild(life3);
         document.body.appendChild(life2);
         document.body.appendChild(life1);
-    } else if(max_hearts == 2){
-        document.body.appendChild(life1);
+    } else if(max_hearts == 3){
+        document.body.appendChild(life4);
+        document.body.appendChild(life3);
         document.body.appendChild(life2);
+    } else if(max_hearts == 2){
+        document.body.appendChild(life4);
+        document.body.appendChild(life3);
     } else {
-        document.body.appendChild(life1);
+        document.body.appendChild(life4);
     }
 
     scene.add(heart)
@@ -103,8 +115,12 @@ function heartSpawn(start){
 
 function getDamage(){
     
-    if(max_hearts == 3){
-        if(life3.src.slice(-10,-4) != 'nolife'){
+    if(max_hearts == 4){
+        if(life4.src.slice(-10,-4) != 'nolife'){
+            life4.src = './../Images/nolife.png';
+            can_get_heart = true;
+            return;
+        } else if(life3.src.slice(-10,-4) != 'nolife'){
             life3.src = './../Images/nolife.png';
             can_get_heart = true;
             return;
@@ -116,19 +132,32 @@ function getDamage(){
             window.alert("Game Over!");
             return;
         }
-    } else if(max_hearts == 2){
-        if(life3.src.slice(-10,-4) != 'nolife'){
-            life3.src = './../Images/nolife.png';
+    } else if(max_hearts == 3){
+        if(life4.src.slice(-10,-4) != 'nolife'){
+            life4.src = './../Images/nolife.png';
             can_get_heart = true;
+            return;
+        } else if(life3.src.slice(-10,-4) != 'nolife'){
+            life3.src = './../Images/nolife.png';
             return;
         } else if(life2.src.slice(-10,-4) != 'nolife'){
             life2.src = './../Images/nolife.png';
             window.alert("Game Over!");
             return;
+        }
+    } else if(max_hearts == 2){
+        if(life4.src.slice(-10,-4) != 'nolife'){
+            life4.src = './../Images/nolife.png';
+            can_get_heart = true;
+            return;
+        } else if(life3.src.slice(-10,-4) != 'nolife'){
+            life3.src = './../Images/nolife.png';
+            window.alert("Game Over!");
+            return;
         } 
     } else {
-        if(life3.src.slice(-10,-4) != 'nolife'){
-            life3.src = './../Images/nolife.png';
+        if(life4.src.slice(-10,-4) != 'nolife'){
+            life4.src = './../Images/nolife.png';
             window.alert("Game Over!");
             return;
         }
@@ -145,6 +174,10 @@ function check_lives(){
         return;
     } else if(life3.src.slice(-10,-4) == 'nolife'){
         life3.src = './../Images/life.png';
+        can_get_heart = false;
+        return;
+    } else if(life4.src.slice(-10,-4) == 'nolife'){
+        life4.src = './../Images/life.png';
         can_get_heart = false;
         return;
     }
