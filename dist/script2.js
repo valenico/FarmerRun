@@ -206,8 +206,6 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
 });
 
 /*
-var object_loader = new THREE.OBJLoader();
-*/
 var bee;
 loader.load('./../models/beebot/scene.gltf', function(object){
   bee = object.scene;
@@ -215,7 +213,7 @@ loader.load('./../models/beebot/scene.gltf', function(object){
   bee.position.set(0, 1.5, 3);
   scene.add(bee);
 });
-
+*/
 
 function lerp(current, target, fraction){
 
@@ -271,10 +269,10 @@ function animate(){
       s += 0.000005;
       egg_speed += 0.000005;
     }
-    //sonic.position.z += s;
-    //camera.position.z += s;
-    //light.position.z += s;
-    //bg.position.z += s;
+    sonic.position.z += s;
+    camera.position.z += s;
+    light.position.z += s;
+    bg.position.z += s;
     heart.rotation.y += 0.05;
 
     // Infinite road

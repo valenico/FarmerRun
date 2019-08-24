@@ -2,6 +2,7 @@ var distance = 30;
 var min_distance = 10;
 var shield_time = 0;
 var shield_to_spawn = true;
+var vanishing = true;
 var sgeometry = new THREE.SphereGeometry( 0.5 , 32, 32 );
 var smaterial = new THREE.MeshPhongMaterial({
   color: 0x0c67fb,
@@ -107,8 +108,14 @@ function update_shield(){
 
     if(shield_time == 480){
         remove_shield();
-    } else if( shield_time == 420){
-        scene.remove(shield);
+    } else if( shield_time >= 420 && shield_time%10 == 0){
+        if(vanishing){
+            scene.remove(shield); vanishing = false;
+        } else {
+            scene.add(shield); vanishing = true;
+        }
+    }
+    /*    scene.remove(shield);
     } else if( shield_time == 430){
         scene.add(shield);
     } else if( shield_time == 440){
@@ -119,5 +126,5 @@ function update_shield(){
         scene.remove(shield);
     } else if( shield_time == 470){
         scene.add(shield);
-    } 
+    } */
 }
