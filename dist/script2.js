@@ -188,6 +188,7 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     scene.add(sonic);
 });
 
+
 loader.load('./../models/ring.glb', function(gltf) {
     var ring = gltf.scene;
     ring.scale.set(0.005,0.005,0.005);
@@ -203,6 +204,16 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
   scene.add( egglight );
   scene.add( pointLightHelper );
 });
+
+/*
+var object_loader = new THREE.OBJLoader();
+
+object_loader.load('./../models/beebot/Bee_bot.obj', function(object){
+  console.log(object);
+  object.position.set(0, 3, 3);
+  scene.add(object);
+});
+*/
 
 function lerp(current, target, fraction){
 
@@ -254,9 +265,9 @@ function animate(){
   if(typeof(sonic) != 'undefined'){
     delete_obs(); // reposition of obstacles behind sonic
     break_walls();
-    sonic.position.z += s;
-    camera.position.z += s;
-    light.position.z += s;
+    //sonic.position.z += s;
+    //camera.position.z += s;
+    //light.position.z += s;
     bg.position.z += s;
     heart.rotation.y += 0.05;
 
