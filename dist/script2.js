@@ -207,13 +207,15 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
 
 /*
 var object_loader = new THREE.OBJLoader();
-
-object_loader.load('./../models/beebot/Bee_bot.obj', function(object){
-  console.log(object);
-  object.position.set(0, 3, 3);
-  scene.add(object);
-});
 */
+var bee;
+loader.load('./../models/beebot/scene.gltf', function(object){
+  bee = object.scene;
+  bee.scale.set(0.001, 0.001, 0.001);
+  bee.position.set(0, 1.5, 3);
+  scene.add(bee);
+});
+
 
 function lerp(current, target, fraction){
 
@@ -265,6 +267,10 @@ function animate(){
   if(typeof(sonic) != 'undefined'){
     delete_obs(); // reposition of obstacles behind sonic
     break_walls();
+    if(s < 0.2){
+      s += 0.000005;
+      egg_speed += 0.000005;
+    }
     //sonic.position.z += s;
     //camera.position.z += s;
     //light.position.z += s;
