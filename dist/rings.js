@@ -6,7 +6,6 @@ var size = 5;
 var lines_type = new Array(5);
 
 function coin_curve(ring, start, group){
-  var coin_curve = [];
   var yy;
   var clone;
   var x = Math.floor(Math.random() * 4.5) - 2.25;
@@ -17,41 +16,35 @@ function coin_curve(ring, start, group){
     clone.id = group*size + i;
     clone.position.set(x , yy , start + i);
     scene.add(clone);
-    coin_curve.push(clone);
     rings.push(clone);
   }
-  return coin_curve;
 }
 
 
 function coin_line(ring, start, group){
-  var coin_line = [];
   var x = Math.floor(Math.random() * 4.5) - 2.25;
   for(var i = 0; i < size; i++){
     var clone = ring.clone();
     clone.id = group*size + i;
     clone.position.set(x , 0.5 ,start + i);
-    coin_line.push(clone);
     scene.add(clone);
     rings.push(clone);
   }
-  return coin_line;
 }
 
 
 function randomCoinInitialization(ring){
-  var coins = [];
   var gap = 0;
   for(i = 0; i < size; i++){
 
     var p = Math.random();
     gap += min_gap; 
     if(p <= probability){
-      coins = coin_curve(ring, gap, i);
+      coin_curve(ring, gap, i);
       lines_type[i] = 1;
     }
     else{
-      coins = coin_line(ring, gap, i);
+      coin_line(ring, gap, i);
       lines_type[i] = 0;
     }
   }

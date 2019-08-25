@@ -269,9 +269,9 @@ function animate(){
       s += 0.000005;
       egg_speed += 0.000005;
     }
-    //sonic.position.z += s;
-    //camera.position.z += s;
-    //light.position.z += s;
+    sonic.position.z += s;
+    camera.position.z += s;
+    light.position.z += s;
     bg.position.z += s;
     heart.rotation.y += 0.05;
 
