@@ -373,15 +373,11 @@ var onLoad = function (texture) {
     objGeometry = new THREE.PlaneGeometry( 800 , 150 , 32);
     times_horizontal = 1;
     times_vert = 1;
-  } else if (n == "text"){
+  } else if (n == "ass1"){
     objGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
-    times_horizontal = 40;
-    times_vert = 200;
-  } /*else {
-    objGeometry = new THREE.PlaneGeometry( 3 , 3 , 32);
-    times_horizontal = 1;
-    times_vert = 1;
-  }*/
+    times_horizontal = 20;
+    times_vert = 80;
+  }
 
   texture.repeat.set(times_horizontal, times_vert);
 
@@ -414,16 +410,7 @@ var onLoad = function (texture) {
     bg.position.set( 0 , 69, 250);
     scene.add(bg);  
     
-  } /*else if( n == "ud10"){
-    var objMaterial = new THREE.MeshPhongMaterial({
-      map: texture,
-      side: THREE.DoubleSide,
-      shading: THREE.FlatShading,
-      transparent: true,
-    });
-    cloud = new THREE.Mesh(objGeometry, objMaterial);
-    spawnClouds(cloud, 0);
-  } */ else if (n == "text"){
+  } else if (n == "ass1"){
     side1 = createSide(objGeometry,texture, 53 , 0);
     side2 = createSide(objGeometry,texture, -53 , 0);
     side3 = createSide(objGeometry,texture, 53 , 500);
@@ -432,19 +419,7 @@ var onLoad = function (texture) {
     scene.add(side2);
     scene.add(side3);
     scene.add(side4);
-  } /*else {
-    var objMaterial = new THREE.MeshPhongMaterial({
-      map: texture,
-      side: THREE.DoubleSide,
-      shading: THREE.FlatShading,
-      transparent: true,
-    });
-    var tree = new THREE.Mesh(objGeometry, objMaterial);
-    tree.position.set(5,2,3);
-    scene.add(tree);
-  }*/
-
-  
+  }   
 }
 
 
@@ -452,8 +427,7 @@ var onLoad = function (texture) {
 function createSide(floorGeometry,texture,posx, posz){
   var floorMaterial = new THREE.MeshLambertMaterial({
       map: texture,
-      //color: 0x0ff747, //diffuse              
-      //emissive: 0x000000, 
+      color: 0x1df348,
       shading: THREE.FlatShading, 
       side: THREE.DoubleSide,
     });
@@ -474,14 +448,14 @@ function createSide(floorGeometry,texture,posx, posz){
     for( var j = 0; j < FLOOR_RES + 1; j++) {
       ipos = i + offset;
       if(posx > 0){
-        if(j < 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*j/4;
+        if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
+        else if(j < 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*j/4;
         else if(j > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        else if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
         else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;        
       } else {
+        if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
         if(j< 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
         else if(j > FLOOR_RES - 4) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*(-j+FLOOR_RES)/4; 
-        else if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
         else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;
       }
     }
@@ -503,7 +477,7 @@ var onError = function (xhr) {
 
 var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
-loader1.load('./../Images/hill_text.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/grass1.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/landscope1.jpg', onLoad, onProgress, onError);
 // loader1.load('./../Images/tree.png', onLoad, onProgress, onError);
 
