@@ -70,7 +70,7 @@ var jump = false;
 
 
 var FLOOR_RES = 20;
-var FLOOR_THICKNESS = 17;
+var FLOOR_THICKNESS = 16;
 var snoise = new ImprovedNoise();
 var noiseScale = 3;
 var noiseSeed = Math.random() * 100;
