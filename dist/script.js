@@ -1,8 +1,10 @@
-const backgroundColor = 0xe0ffff;
+const backgroundColor = 0x000000;
 
 
 /// Dictionary for body parts of sonic ///
 var score = 0;
+var light;
+
 const sonic_dic = { 
 
   Testa : "Head_06",
@@ -51,12 +53,16 @@ const sonic_dic = {
   Avambraccio_sx : "ForeArm_L_021",
   Polso_sx : "Wrist_L_033",
   Mano_sx : "Hand_L_022",
-
 };
+
 
 var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
+
+var ground1, ground2;
+var side1, side2, side3, side4;
+var bg;
 
 var items_probability = 0.999;
 
@@ -74,7 +80,7 @@ function init() {
   renderer.toneMapping = THREE.LinearToneMapping;
   renderer.toneMappingExposure = Math.pow( 0.94, 5.0 );
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   window.addEventListener( 'resize', function () {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -85,18 +91,7 @@ function init() {
    document.body.appendChild( renderer.domElement);
 
   controls = new THREE.OrbitControls( camera );
-
-  controls.rotateSpeed = 0.3;
-  controls.zoomSpeed = 0.9;
-
-  controls.minDistance = 3;
-  controls.maxDistance = 20;
-
-  controls.minPolarAngle = 0; // radians
-  controls.maxPolarAngle = Math.PI /2; // radians
-
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
+  controls.enabled = false;
 
 document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
@@ -111,18 +106,23 @@ function onDocumentKeyDown(event) {
     }
   };
 
-  var light = new THREE.AmbientLight( 0xffffff, 2 , 1 );
-  light.position.set( 30, -10, 30 );
+  var light1 = new THREE.AmbientLight( 0xffffff, 1.4 , 1);
+  light1.position.set( 30, 10, 30  );
+  scene.add(light1);
+
+  light = new THREE.SpotLight( 0xffffff, 1.2, 0, 1.2);
+  light.position.set( -0.5, 20, -5  );
+  light.castShadow = true;
   scene.add( light );
 
-}
+    //Set up shadow properties for the light
+  light.shadow.mapSize.width = 1024;  // default
+  light.shadow.mapSize.height = 1024; // default
+  light.shadow.camera.near = 0.5;       // default
+  light.shadow.camera.far = 8000;     // default
+  light.shadow.camera.fov = 30;
 
-/* creation of a column object as obstacle, to clone/move 
-var cgeometry = new THREE.CylinderBufferGeometry( 0.5 , 0.5, 2.5, 32 );
-var cmaterial = new THREE.MeshLambertMaterial( {color: 'gray'} );
-var cylinder = new THREE.Mesh( cgeometry, cmaterial );
-cylinder.position.set(2, 1.25 , 6);
-*/
+}
 
 var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
@@ -131,6 +131,10 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic = gltf.scene;
     sonic.name = "sonic";
     sonic.position.set(0, 0, -0.75);
+    sonic.castShadow = true;
+    sonic.receiveShadow = true;
+
+    light.target = sonic;
 
     sonic.getObjectByName(sonic_dic.Indice_lower_sx).rotation.z = 2;
     sonic.getObjectByName(sonic_dic.Indice_upper_sx).rotation.z = 1;
@@ -155,6 +159,7 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
     scene.add(sonic);
 });
+
 
 loader.load('./../models/ring.glb', function(gltf) {
     var ring = gltf.scene;
@@ -197,13 +202,17 @@ run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_sp
 jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1.5 , 0 , 0.04));
 eggman_moves_x = lerp( 0 , -2.25, run_speed/6).concat(lerp(-2.25,2.25,run_speed/3)).concat(lerp(2.25,0,run_speed/6));
 
+robot_moves = [lerp(0, 1, 0.007).concat(lerp(1, 0, 0.007)), 
+               lerp(3.4, 2.7, 0.007).concat(lerp(2.7, 3.4, 0.007)), 
+               lerp(4, -4, 0.007).concat(lerp(-4, 4, 0.007))];
+
 
 var text2 = document.createElement('h1');
 text2.style.position = 'absolute';
 text2.style.color = "black";
 text2.innerHTML = "Score: " + score;
 text2.style.height = 40 + 'px';
-text2.style.top = 20 + 'px';
+text2.style.top = 0 + 'px';
 text2.style.left = 40 + 'px';
 document.body.appendChild(text2);
 
@@ -217,26 +226,33 @@ function damage_feedback(){
   invincibility = true;
   current_frame = 0;
 }
-
+k = 0;
 function animate(){
   if(typeof(sonic) != 'undefined'){
     delete_obs(); // reposition of obstacles behind sonic
     break_walls();
+    if(s < 0.2){
+      s += 0.000005;
+      egg_speed += 0.000005;
+    }
     sonic.position.z += s;
     camera.position.z += s;
+    light.position.z += s;
+    bg.position.z += s;
+    heart.rotation.y += 0.05;
 
     // Infinite road
-    if(sonic.position.z >= 500*times + 50){
+    if(sonic.position.z >= 250*times + 10){
       if(times % 2 == 0){
-        ground2.position.z += 1000;
-        side3.position.z += 1000;
-        side4.position.z += 1000;
+        ground2.position.z += 500;
+        side3.position.z += 500;
+        side4.position.z += 500;
 
       }
       else{ 
-        ground1.position.z += 1000;
-        side1.position.z += 1000;
-        side2.position.z += 1000;
+        ground1.position.z += 500;
+        side1.position.z += 500;
+        side2.position.z += 500;
       }
       times += 1;
     }
@@ -244,6 +260,8 @@ function animate(){
     getHeart();
     getshield();
     update_shield();
+
+ 
 
     // Damage feedback
     if(invincibility == true && shield_on == false){
@@ -258,6 +276,8 @@ function animate(){
         current_frame = 0;
       }
     }
+
+    checkClouds();
 
 
     sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][t];
@@ -277,6 +297,10 @@ function animate(){
     if((sonic.position.z + 3) % 150 <= 1) eggman_spawn();
     eggman_moves();
 
+    spawn_robot();
+
+    if(robot_to_spawn == false) robot_time();
+
     t = (t >= run[0].length) ? 0 : t+=1;
 
     check_ring(); 
@@ -286,6 +310,7 @@ function animate(){
 
     turn_off_eggman();
     spawn_shield(sonic.position.z);
+    treesRepositioning(sonic.position.z);
   } 
 
   if(jump){
@@ -301,12 +326,9 @@ function animate(){
 
 }
 
-var ground1, ground2;
-var side1, side2, side3, side4;
-
 // Metodo con cui carica la texture
 var onLoad = function (texture) {
-  var n = texture.image.src.slice(-11,-4);
+  var n = texture.image.src.slice(-8,-4);
 
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
@@ -315,61 +337,49 @@ var onLoad = function (texture) {
   var times_vert; 
 
   var objGeometry;
-  if(n == 'ground2'){
-    objGeometry = new THREE.PlaneGeometry(6,1000, 32);
-    times_horizontal = 2;
-    times_vert = 500;
-  } else {
-    objGeometry = new THREE.PlaneGeometry(1000, 3, 32);
-    times_horizontal = 100;
+  if(n == 'road'){
+    objGeometry = new THREE.PlaneGeometry(6,500, 32);
+    times_horizontal = 1;
+    times_vert = 50;
+  } else if(n =='ope1'){
+    objGeometry = new THREE.PlaneGeometry( 800 , 150 , 32);
+    times_horizontal = 1;
     times_vert = 1;
   }
 
   texture.repeat.set(times_horizontal, times_vert);
 
-  var objMaterial = new THREE.MeshPhongMaterial({
-    map: texture,
-    side: THREE.DoubleSide,
-    shading: THREE.FlatShading,
-  });
+  if(n =='road'){
+    var objMaterial = new THREE.MeshPhongMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+      shading: THREE.FlatShading,
+    });
 
-  if(n =='ground2'){
     ground1 = new THREE.Mesh(objGeometry, objMaterial);
     ground1.rotation.x = 300.0221;
+    ground1.receiveShadow = true;
     scene.add(ground1);      
 
     ground2 = ground1.clone();
-    ground2.position.z = 1000-0.5;
+    ground2.receiveShadow = true;
+    ground2.position.z = 500;
     scene.add(ground2);
   
-  } else {
-    side1 = new THREE.Mesh(objGeometry, objMaterial);
-    side1.position.set(-2.98, 1.5, 0);
-    side1.rotation.y = 300.022222;
 
-    side2 = side1.clone();
-    side2.position.x = 2.98;
-    side2.rotation.y = -300.022225;
+  } else if(n=='ope1'){
+    var objMaterial = new THREE.MeshPhongMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+     // shading: THREE.FlatShading,
+    });
 
-    side3 = side1.clone();
-    side3.position.x = -2.98;
-    side3.rotation.y = -300.022225;
-    side3.position.z = 1000;
-
-    side4 = side1.clone();
-    side4.position.x = 2.98;
-    side4.rotation.y = -300.02199;
-    side4.position.z = 1000;
-
-    scene.add(side1);
-    scene.add(side2);
-    scene.add(side3);
-    scene.add(side4);
-
-  }
-
-  
+    bg = new THREE.Mesh(objGeometry, objMaterial);
+    bg.position.set( 0 , 69, 250);
+    scene.add(bg);   
+  } 
 }
+
 
 // Function called when download progresses
 var onProgress = function (xhr) {
@@ -378,18 +388,19 @@ var onProgress = function (xhr) {
 
 // Function called when download errors
 var onError = function (xhr) {
-  console.log('An error happened');
+  console.log(xhr);
 };
 
 var loader1 = new THREE.TextureLoader();
-loader1.load('./../Images/ground2.jpg', onLoad, onProgress, onError);
-loader1.load('./../Images/side.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
+loader1.load('./../Images/landscope1.jpg', onLoad, onProgress, onError);
+
 
 function render(){ 
-  //scene.add( cylinder );
   renderer.render(scene, camera);
 }
 
 // fine metodo texture
 init();
 animate();
+
