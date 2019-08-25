@@ -454,7 +454,7 @@ function createSide(floorGeometry,texture,posx, posz){
         else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;        
       } else {
         if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        if(j< 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
+        else if(j< 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
         else if(j > FLOOR_RES - 4) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*(-j+FLOOR_RES)/4; 
         else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;
       }
