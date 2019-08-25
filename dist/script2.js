@@ -260,7 +260,7 @@ function damage_feedback(){
   invincibility = true;
   current_frame = 0;
 }
-
+k = 0;
 function animate(){
   if(typeof(sonic) != 'undefined'){
     delete_obs(); // reposition of obstacles behind sonic
@@ -338,6 +338,7 @@ function animate(){
 
     turn_off_eggman();
     spawn_shield(sonic.position.z);
+    treesRepositioning(sonic.position.z);
   } 
 
   if(jump){
@@ -372,21 +373,15 @@ var onLoad = function (texture) {
     objGeometry = new THREE.PlaneGeometry( 800 , 150 , 32);
     times_horizontal = 1;
     times_vert = 1;
-  } else if( n == "ud10"){
-    objGeometry = new THREE.PlaneGeometry( 10 , 10 , 32);
-    times_horizontal = 1;
-    times_vert = 1;
-
   } else if (n == "text"){
     objGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
     times_horizontal = 40;
     times_vert = 200;
-  }
-  else {
+  } /*else {
     objGeometry = new THREE.PlaneGeometry( 3 , 3 , 32);
     times_horizontal = 1;
     times_vert = 1;
-  }
+  }*/
 
   texture.repeat.set(times_horizontal, times_vert);
 
@@ -419,7 +414,7 @@ var onLoad = function (texture) {
     bg.position.set( 0 , 69, 250);
     scene.add(bg);  
     
-  } else if( n == "ud10"){
+  } /*else if( n == "ud10"){
     var objMaterial = new THREE.MeshPhongMaterial({
       map: texture,
       side: THREE.DoubleSide,
@@ -428,7 +423,7 @@ var onLoad = function (texture) {
     });
     cloud = new THREE.Mesh(objGeometry, objMaterial);
     spawnClouds(cloud, 0);
-  } else if (n == "text"){
+  } */ else if (n == "text"){
     side1 = createSide(objGeometry,texture, 53 , 0);
     side2 = createSide(objGeometry,texture, -53 , 0);
     side3 = createSide(objGeometry,texture, 53 , 500);
@@ -437,7 +432,7 @@ var onLoad = function (texture) {
     scene.add(side2);
     scene.add(side3);
     scene.add(side4);
-  } else {
+  } /*else {
     var objMaterial = new THREE.MeshPhongMaterial({
       map: texture,
       side: THREE.DoubleSide,
@@ -447,7 +442,7 @@ var onLoad = function (texture) {
     var tree = new THREE.Mesh(objGeometry, objMaterial);
     tree.position.set(5,2,3);
     scene.add(tree);
-  }
+  }*/
 
   
 }
@@ -510,8 +505,8 @@ var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/hill_text.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/landscope1.jpg', onLoad, onProgress, onError);
+// loader1.load('./../Images/tree.png', onLoad, onProgress, onError);
 
-loader1.load('./../Images/tree.png', onLoad, onProgress, onError);
 
 function render(){ 
   renderer.render(scene, camera);
