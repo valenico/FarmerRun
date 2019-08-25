@@ -175,7 +175,7 @@ function treesInit(){
               console.log("j = "+j);
               console.log("px = "+ px);
               console.log("pos y = " + side1.geometry.vertices[i * (FLOOR_RES + 1)+ j].z);
-              c.position.set(px, -side1.geometry.vertices[i * (FLOOR_RES + 1)+ j].z + 1 , pz);
+              c.position.set(px, side1.geometry.vertices[i * (FLOOR_RES + 1)+ j].z + 1 , pz);
             } else c.position.set(px, 1 , pz);
             trees.push(c);
             scene.add(c);
