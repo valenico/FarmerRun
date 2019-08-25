@@ -56,26 +56,9 @@ const sonic_dic = {
 };
 
 
-var SideConfig = {
-  //const dimensions
-  FLOOR_WIDTH: 100,  // size of floor in x direction
-  FLOOR_DEPTH: 500,  //size of floor in z direction
-  MOVE_STEP: 500    //z distance to move before recreating a new floor strip
-
-};
-
 var renderer, scene, camera, controls, sonic, eggman;
 var t = 0;
 var jump = false;
-
-
-var FLOOR_RES = 20;
-var FLOOR_THICKNESS = 16;
-var snoise = new ImprovedNoise();
-var noiseScale = 3;
-var noiseSeed = Math.random() * 100;
-var stepCount = 0; 
-
 
 var ground1, ground2;
 var side1, side2, side3, side4;
@@ -204,16 +187,6 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
   scene.add( egglight );
   scene.add( pointLightHelper );
 });
-
-/*
-var bee;
-loader.load('./../models/beebot/scene.gltf', function(object){
-  bee = object.scene;
-  bee.scale.set(0.001, 0.001, 0.001);
-  bee.position.set(0, 1.5, 3);
-  scene.add(bee);
-});
-*/
 
 function lerp(current, target, fraction){
 
@@ -373,10 +346,6 @@ var onLoad = function (texture) {
     objGeometry = new THREE.PlaneGeometry( 800 , 150 , 32);
     times_horizontal = 1;
     times_vert = 1;
-  } else if (n == "ass1"){
-    objGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
-    times_horizontal = 20;
-    times_vert = 80;
   }
 
   texture.repeat.set(times_horizontal, times_vert);
@@ -408,62 +377,10 @@ var onLoad = function (texture) {
 
     bg = new THREE.Mesh(objGeometry, objMaterial);
     bg.position.set( 0 , 69, 250);
-    scene.add(bg);  
-    
-  } else if (n == "ass1"){
-    side1 = createSide(objGeometry,texture, 53 , 0);
-    side2 = createSide(objGeometry,texture, -53 , 0);
-    side3 = createSide(objGeometry,texture, 53 , 500);
-    side4 = createSide(objGeometry,texture,-53 , 500);
-    scene.add(side1);
-    scene.add(side2);
-    scene.add(side3);
-    scene.add(side4);
-  }   
+    scene.add(bg);   
+  } 
 }
 
-
-
-function createSide(floorGeometry,texture,posx, posz){
-  var floorMaterial = new THREE.MeshLambertMaterial({
-      map: texture,
-      color: 0x1df348,
-      shading: THREE.FlatShading, 
-      side: THREE.DoubleSide,
-    });
-
-  //add extra x width
-  var floorGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
-  var floorMesh = new THREE.Mesh( floorGeometry, floorMaterial );
-  floorMesh.rotation.x = Math.PI/2;
-  floorMesh.position.y = 0;
-  floorMesh.position.x = posx;
-  floorMesh.position.z = posz;
-
-  var i;
-  var ipos;
-  var offset = stepCount *SideConfig.MOVE_STEP/SideConfig.FLOOR_DEPTH * FLOOR_RES;
-
-  for( i = 0; i < FLOOR_RES + 1; i++) {
-    for( var j = 0; j < FLOOR_RES + 1; j++) {
-      ipos = i + offset;
-      if(posx > 0){
-        if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        else if(j < 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*j/4;
-        else if(j > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;        
-      } else {
-        if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        else if(j< 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        else if(j > FLOOR_RES - 4) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*(-j+FLOOR_RES)/4; 
-        else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;
-      }
-    }
-  }
-  floorGeometry.verticesNeedUpdate = true;
-  return floorMesh;
-
-}
 
 // Function called when download progresses
 var onProgress = function (xhr) {
@@ -477,9 +394,7 @@ var onError = function (xhr) {
 
 var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
-loader1.load('./../Images/grass1.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/landscope1.jpg', onLoad, onProgress, onError);
-// loader1.load('./../Images/tree.png', onLoad, onProgress, onError);
 
 
 function render(){ 
