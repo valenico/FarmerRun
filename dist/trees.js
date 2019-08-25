@@ -138,7 +138,7 @@ function createSide(floorGeometry,texture,posx, posz){
 function treesInit(){
     for(var m = 0; m < max_trees;){
         var road_side = (Math.random() > 0.5 ? -1 : 1);
-        var px = road_side*Math.random()*10 +(road_side == -1 ? -4 : 4);
+        var px = road_side*Math.random()*10 +(road_side == -1 ? -3 : 3);
         var pz = Math.random()*tree_dist + 10;
         var put = true;
         for(var l = 0; l < trees.length; l++){

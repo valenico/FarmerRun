@@ -17,3 +17,5 @@
 - caratterizzare i paesaggi laterali (animali / piante / casette di heidi? )
 
 - città in lontananza sullo sfondo (?) 
+
+- se premi salto prima che carica la pagina da errore
