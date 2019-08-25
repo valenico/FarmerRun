@@ -91,18 +91,7 @@ function init() {
    document.body.appendChild( renderer.domElement);
 
   controls = new THREE.OrbitControls( camera );
-
-  controls.rotateSpeed = 0.3;
-  controls.zoomSpeed = 0.9;
-
-  controls.minDistance = 3;
-  controls.maxDistance = 20;
-
-  controls.minPolarAngle = 0; // radians
-  controls.maxPolarAngle = Math.PI /2; // radians
-
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
+  controls.enabled = false;
 
 document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
