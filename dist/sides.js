@@ -12,7 +12,7 @@ var p = 0;
 
 
 var FLOOR_RES = 20;
-var FLOOR_THICKNESS = 16;
+var FLOOR_THICKNESS = 10;
 var snoise = new ImprovedNoise();
 var noiseScale = 3;
 var noiseSeed = Math.random() * 100;
@@ -166,17 +166,7 @@ function treesInit(){
                 c = tree4.clone();
                 p = 0;
             }
-            if(road_side == 1){
-
-              var j = Math.floor((px-3)/5);
-              var i = Math.floor((pz/25) + 10);
-              console.log("i = " + i);
-              console.log("pz = " + pz);
-              console.log("j = "+j);
-              console.log("px = "+ px);
-              console.log("pos y = " + side1.geometry.vertices[i * (FLOOR_RES + 1)+ j].z);
-              c.position.set(px, side1.geometry.vertices[i * (FLOOR_RES + 1)+ j].z + 1 , pz);
-            } else c.position.set(px, 1 , pz);
+            c.position.set(px, 1 , pz);
             trees.push(c);
             scene.add(c);
             m++;
