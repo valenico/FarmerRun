@@ -269,9 +269,9 @@ function animate(){
       s += 0.000005;
       egg_speed += 0.000005;
     }
-    sonic.position.z += s;
-    camera.position.z += s;
-    light.position.z += s;
+    //sonic.position.z += s;
+    //camera.position.z += s;
+    //light.position.z += s;
     bg.position.z += s;
     heart.rotation.y += 0.05;
 
@@ -377,10 +377,15 @@ var onLoad = function (texture) {
     times_horizontal = 1;
     times_vert = 1;
 
-  } else {
+  } else if (n == "text"){
     objGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
     times_horizontal = 40;
     times_vert = 200;
+  }
+  else {
+    objGeometry = new THREE.PlaneGeometry( 3 , 3 , 32);
+    times_horizontal = 1;
+    times_vert = 1;
   }
 
   texture.repeat.set(times_horizontal, times_vert);
@@ -423,7 +428,7 @@ var onLoad = function (texture) {
     });
     cloud = new THREE.Mesh(objGeometry, objMaterial);
     spawnClouds(cloud, 0);
-  } else {
+  } else if (n == "text"){
     side1 = createSide(objGeometry,texture, 53 , 0);
     side2 = createSide(objGeometry,texture, -53 , 0);
     side3 = createSide(objGeometry,texture, 53 , 500);
@@ -432,7 +437,16 @@ var onLoad = function (texture) {
     scene.add(side2);
     scene.add(side3);
     scene.add(side4);
-
+  } else {
+    var objMaterial = new THREE.MeshPhongMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+      shading: THREE.FlatShading,
+      transparent: true,
+    });
+    var tree = new THREE.Mesh(objGeometry, objMaterial);
+    tree.position.set(5,2,3);
+    scene.add(tree);
   }
 
   
@@ -496,6 +510,8 @@ var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/hill_text.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/landscope1.jpg', onLoad, onProgress, onError);
+
+loader1.load('./../Images/tree.png', onLoad, onProgress, onError);
 
 function render(){ 
   renderer.render(scene, camera);
