@@ -14,15 +14,15 @@ var p = 0;
 var FLOOR_RES = 20;
 var FLOOR_THICKNESS = 10;
 var snoise = new ImprovedNoise();
-var noiseScale = 3;
+var noiseScale = 2.7;
 var noiseSeed = Math.random() * 100;
 var stepCount = 0; 
 
 var SideConfig = {
   //const dimensions
   FLOOR_WIDTH: 100,  // size of floor in x direction
-  FLOOR_DEPTH: 500,  //size of floor in z direction
-  MOVE_STEP: 500    //z distance to move before recreating a new floor strip
+  FLOOR_DEPTH: 250,  //size of floor in z direction
+  MOVE_STEP: 250    //z distance to move before recreating a new floor strip
 
 };
 
@@ -39,8 +39,8 @@ function load_grass(texture){
 
   side1 = createSide(objGeometry,texture, 53 , 0);
   side2 = createSide(objGeometry,texture, -53 , 0);
-  side3 = createSide(objGeometry,texture, 53 , 500);
-  side4 = createSide(objGeometry,texture,-53 , 500);
+  side3 = createSide(objGeometry,texture, 53 , 250);
+  side4 = createSide(objGeometry,texture,-53 , 250);
   scene.add(side1);
   scene.add(side2);
   scene.add(side3);
