@@ -4,7 +4,7 @@ var fireball_moves;
 var t_robot = 0;
 var t_fireball = 0;
 var robot_to_spawn = true;
-var shootting = false;
+var shooting = false;
 var frame_count = 0;
 var time_to_shoot = 80;
 
@@ -82,6 +82,7 @@ function spawn_robot(){
         robot_to_spawn = false;
         robot.position.x = 4;
         robot.position.z = sonic.position.z + 150;
+        shooting = false;
         t_robot = 0;
         robot_time = 0
     }
@@ -114,13 +115,13 @@ function robotEnemy(){
 
 
             var rand = Math.random();
-            if(shootting == false && rand > 0 ){ 
-                shootting = true;
+            if(shooting == false && rand > 0 ){ 
+                shooting = true;
                 frame_count = 0;
                 t_fireball = 0;
                 laser();
             }
-            if(shootting == true){
+            if(shooting == true){
                 line.geometry.vertices[0].x = robot.position.x;
                 line.geometry.vertices[0].y = robot.position.y;
                 line.geometry.vertices[0].z = robot.position.z;
@@ -131,7 +132,11 @@ function robotEnemy(){
                 line.geometry.verticesNeedUpdate = true;
 
                 if(frame_count >= time_to_shoot){
-                    if(frame_count == time_to_shoot) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 2);
+                    if(frame_count == time_to_shoot){
+                        if(robot.position.x >= 2.5) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x - 1.5, sonic.position.y - 1, sonic.position.z + 2);
+                        else if(robot.position.x <= -2.5) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x + 1.5, sonic.position.y - 1, sonic.position.z + 2);
+                        else fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 2);
+                    }
 
                     scene.remove(line);
                     fireball.position.x = fireball_moves[0][t_fireball];
@@ -146,7 +151,7 @@ function robotEnemy(){
                     t_fireball += 1;
 
                     if(t_fireball >= fireball_moves[0].length || fireball.position.z + 2 < sonic.position.z){
-                        shootting = false;         
+                        shooting = false;         
                         frame_count = 0;
                         t_fireball = 0;
                     }
@@ -167,7 +172,8 @@ function robotEnemy(){
             if(robot.position.z + 6 <= sonic.position.z) {
                 robot_to_spawn = true;
                 robot_time = 0;
-                t_fireball = 0;            }
+                t_fireball = 0; 
+                shooting = false;           }
         }
     }
 }
