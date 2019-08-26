@@ -24,7 +24,7 @@ loader.load("./../models/fireball/scene.gltf", function(gltf){
     fireball = gltf.scene;
     fireball.position.set( 0 , 1 , -5);
 
-    fireball.scale.set(0.007,0.007,0.007);
+    fireball.scale.set(0.003,0.003,0.003);
     fireball.castShadow = true;
     scene.add(fireball);
 });
@@ -78,7 +78,7 @@ function laser(){
 
 function spawn_robot(){
 
-    if((sonic.position.z + 3) % 100 <= 1){
+    if(true){
         robot_to_spawn = false;
         robot.position.x = 4;
         robot.position.z = sonic.position.z + 150;
@@ -133,9 +133,9 @@ function robotEnemy(){
 
                 if(frame_count >= time_to_shoot){
                     if(frame_count == time_to_shoot){
-                        if(robot.position.x >= 2.5) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x - 1.5, sonic.position.y - 1, sonic.position.z + 2);
-                        else if(robot.position.x <= -2.5) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x + 1.5, sonic.position.y - 1, sonic.position.z + 2);
-                        else fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 2);
+                        if(robot.position.x >= 2.5) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x - 1.5, sonic.position.y - 1, sonic.position.z + 1.5);
+                        else if(robot.position.x <= -2.5) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x + 1.5, sonic.position.y - 1, sonic.position.z + 1.5);
+                        else fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 1.5);
                     }
 
                     scene.remove(line);

@@ -3,50 +3,50 @@
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 910,
+      "count": 276,
       "max": [
-        45.064884185791016,
-        114.02794647216797,
-        54.886638641357422
+        64.976852416992188,
+        64.976852416992188,
+        64.976852416992188
       ],
       "min": [
-        -17.761651992797852,
-        55.044319152832031,
-        -7.0642762184143066
+        -64.976852416992188,
+        -64.976852416992188,
+        -64.976852416992188
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 2,
-      "byteOffset": 10920,
+      "byteOffset": 3312,
       "componentType": 5126,
-      "count": 910,
+      "count": 276,
       "max": [
-        0.99404162168502808,
-        0.99537855386734009,
-        0.99980461597442627
+        1,
+        1,
+        1
       ],
       "min": [
-        -0.99774777889251709,
-        -0.99811053276062012,
-        -0.99985069036483765
+        -1,
+        -1,
+        -1
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 910,
+      "count": 276,
       "max": [
-        0.9999045729637146,
-        0.99997138977050781,
-        0.99720597267150879,
+        0.96592581272125244,
+        0.97538912296295166,
+        0.96663790941238403,
         1
       ],
       "min": [
-        -0.98599427938461304,
-        -0.99906837940216064,
-        -0.92703860998153687,
+        -0.96592581272125244,
+        -0.99996519088745117,
+        -0.96663790941238403,
         -1
       ],
       "type": "VEC4"
@@ -54,23 +54,104 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 910,
+      "count": 276,
       "max": [
-        0.97999995946884155,
-        0.97952187061309814
+        0.24999998509883881,
+        1
       ],
       "min": [
-        0.019999999552965164,
-        0.019999999552965164
+        0,
+        0.5
       ],
       "type": "VEC2"
     },
     {
       "bufferView": 0,
       "componentType": 5125,
-      "count": 4800,
+      "count": 1584,
       "max": [
-        909
+        275
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 6624,
+      "componentType": 5126,
+      "count": 574,
+      "max": [
+        108.60340881347656,
+        108.862060546875,
+        109.06124114990234
+      ],
+      "min": [
+        -108.60340881347656,
+        -108.862060546875,
+        -109.06124114990234
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 13512,
+      "componentType": 5126,
+      "count": 574,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 4416,
+      "componentType": 5126,
+      "count": 574,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2208,
+      "componentType": 5126,
+      "count": 574,
+      "max": [
+        1.0277777910232544,
+        1
+      ],
+      "min": [
+        0.0075960755348205566,
+        0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 6336,
+      "componentType": 5125,
+      "count": 1536,
+      "max": [
+        573
       ],
       "min": [
         0
@@ -80,42 +161,42 @@
   ],
   "asset": {
     "extras": {
-      "author": "Anna Vidal (Milaein) (https://sketchfab.com/annavidal)",
+      "author": "Anthony Yanez (https://sketchfab.com/paulyanez)",
       "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
-      "source": "https://sketchfab.com/3d-models/projectile-magma-ball-915c10ddb81543eeaa122f7e159eccc5",
-      "title": "Projectile - Magma ball"
+      "source": "https://sketchfab.com/models/710a8ffbd9184e708c1db43978460509",
+      "title": "Spiny Egg (Super Mario Bros)"
     },
-    "generator": "Sketchfab-5.80.0",
+    "generator": "Sketchfab-3.54.8-rc1",
     "version": "2.0"
   },
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 19200,
+      "byteLength": 12480,
       "byteOffset": 0,
       "name": "floatBufferViews",
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 7280,
-      "byteOffset": 19200,
+      "byteLength": 6800,
+      "byteOffset": 12480,
       "byteStride": 8,
       "name": "floatBufferViews",
       "target": 34962
     },
     {
       "buffer": 0,
-      "byteLength": 21840,
-      "byteOffset": 26480,
+      "byteLength": 20400,
+      "byteOffset": 19280,
       "byteStride": 12,
       "name": "floatBufferViews",
       "target": 34962
     },
     {
       "buffer": 0,
-      "byteLength": 14560,
-      "byteOffset": 48320,
+      "byteLength": 13600,
+      "byteOffset": 39680,
       "byteStride": 16,
       "name": "floatBufferViews",
       "target": 34962
@@ -123,45 +204,92 @@
   ],
   "buffers": [
     {
-      "byteLength": 62880,
+      "byteLength": 53280,
       "uri": "scene.bin"
     }
   ],
-  "extensionsUsed": [
-    "KHR_materials_unlit"
-  ],
   "images": [
     {
-      "uri": "textures/Material_25_baseColor.png"
+      "uri": "textures/01_-_Default_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/01_-_Default_emissive.jpeg"
+    },
+    {
+      "uri": "textures/01_-_Default_normal.png"
+    },
+    {
+      "uri": "textures/02_-_Default_baseColor.png"
+    },
+    {
+      "uri": "textures/02_-_Default_normal.png"
     }
   ],
   "materials": [
     {
-      "alphaMode": "BLEND",
       "doubleSided": true,
-      "extensions": {
-        "KHR_materials_unlit": {}
+      "emissiveFactor": [
+        1,
+        1,
+        1
+      ],
+      "emissiveTexture": {
+        "index": 1,
+        "texCoord": 0
       },
-      "name": "Material_25",
+      "name": "01_-_Default",
+      "normalTexture": {
+        "index": 2,
+        "scale": 1,
+        "texCoord": 0
+      },
       "pbrMetallicRoughness": {
         "baseColorFactor": [
           1,
           1,
           1,
-          0.86147103658536583
+          1
         ],
         "baseColorTexture": {
           "index": 0,
           "texCoord": 0
         },
-        "metallicFactor": 0,
-        "roughnessFactor": 1
+        "metallicFactor": 1,
+        "roughnessFactor": 0
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "02_-_Default",
+      "normalTexture": {
+        "index": 4,
+        "scale": 1,
+        "texCoord": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 3,
+          "texCoord": 0
+        },
+        "metallicFactor": 0.74712122140000004,
+        "roughnessFactor": 0.30926067069999996
       }
     }
   ],
   "meshes": [
     {
-      "name": "Bolita fuego_Material #25_0",
+      "name": "Spiny Egg_01 - Default_0",
       "primitives": [
         {
           "attributes": {
@@ -172,6 +300,22 @@
           },
           "indices": 4,
           "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Spiny Egg_02 - Default_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9,
+          "material": 1,
           "mode": 4
         }
       ]
@@ -218,7 +362,7 @@
         0,
         1
       ],
-      "name": "f76931ad58124c77a6dab011b126c026.fbx"
+      "name": "66323d4055f9493eb334b9aa599860f1.fbx"
     },
     {
       "children": [
@@ -228,31 +372,36 @@
     },
     {
       "children": [
-        5
+        5,
+        6
       ],
       "matrix": [
-        0.81527805328369141,
+        1,
         0,
         0,
         0,
         0,
-        1.9261817741160448e-16,
-        -0.86747515201568604,
+        0.99999999999998668,
+        1.6292068494294582e-07,
         0,
         0,
-        0.88718557357788086,
-        1.9699477018028785e-16,
+        -1.6292068494294582e-07,
+        0.99999999999998668,
         0,
-        0.470428466796875,
-        -0.37921142578125,
-        1.2095870971679688,
+        -0.20040079951286316,
+        0.20040079951286316,
+        8.7597973319475386e-09,
         1
       ],
-      "name": "Bolita fuego"
+      "name": "Spiny Egg"
     },
     {
       "mesh": 0,
-      "name": "Bolita fuego_Material #25_0"
+      "name": "Spiny Egg_01 - Default_0"
+    },
+    {
+      "mesh": 1,
+      "name": "Spiny Egg_02 - Default_0"
     }
   ],
   "samplers": [
@@ -276,6 +425,22 @@
     {
       "sampler": 0,
       "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
     }
   ]
 }
