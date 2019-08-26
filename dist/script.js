@@ -185,6 +185,8 @@ loader.load( "./../models/tails/scene.gltf", function(gltf){
   tails.getObjectByName(tails_dic.Pollice_upper_dx).rotation.z = -1;
   tails.getObjectByName(tails_dic.Braccio_dx).rotation.y = -0.5;
   tails.getObjectByName(tails_dic.Braccio_sx).rotation.y = 0.5;
+  tails.position.set(0 , -3, 0);
+  scene.add(tails);
 });
 
 
@@ -258,10 +260,10 @@ function animate(){
       s += 0.000005;
       egg_speed += 0.000005;
     }
-  //  sonic.position.z += s;
-  //  camera.position.z += s;
-  //  light.position.z += s;
-  //  bg.position.z += s;
+    sonic.position.z += s;
+    camera.position.z += s;
+    light.position.z += s;
+    bg.position.z += s;
     heart.rotation.y += 0.05;
 
     // Infinite road
