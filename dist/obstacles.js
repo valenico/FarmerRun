@@ -33,11 +33,12 @@ function generate_obstacle(){
             }
         } 
         for(var l = 0; l < n_obs; l++){
-            var z1 = pz <= obs[l].position.z + 5; 
-            var z2 = pz >= obs[l].position.z - 5;
+            var z1 = pz <= obs[l].position.z + 3; 
+            var z2 = pz >= obs[l].position.z - 3;
             var x1 = px >= obs[l].position.x - 3;
             var x2 = px <= obs[l].position.x + 3;
             if(z1 && z2 && x1 && x2){
+                console.log("COLLISION");
                 put = false;
                 break;
             }
