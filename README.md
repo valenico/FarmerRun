@@ -6,18 +6,20 @@
 
 - sistemare velocità di sonic/eggman
 
-- problema con sfarfallio ! (eggman ? ground ? nse capisce)
-
-- cosetti per andare più veloce / tempo per punti 
-
 - mettere un 'PLAY' all'inizio così sicuro cliccano lo schermo e si possono muvoere (?)
-
-- aggiungere buche come ostacoli
 
 - caratterizzare i paesaggi laterali (animali / piante / casette di heidi? )
 
-- città in lontananza sullo sfondo (?) 
-
 - se premi salto prima che carica la pagina da errore
 
-- gli alberi gialli vengono sempre smezzati(?)
+
+
+## Cose che non facciamo piu o gia fatte, da confermare e eliminare:
+
+- aggiungere buche come ostacoli
+
+- città in lontananza sullo sfondo (?) 
+
+- cosetti per andare più veloce / tempo per punti 
+
+- problema con sfarfallio ! (eggman ? ground ? nse capisce) risolto giusto?
