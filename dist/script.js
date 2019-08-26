@@ -56,7 +56,7 @@ const sonic_dic = {
 };
 
 
-var renderer, scene, camera, controls, sonic, eggman;
+var renderer, scene, camera, controls, sonic, eggman, tails;
 var t = 0;
 var jump = false;
 
@@ -160,6 +160,37 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     scene.add(sonic);
 });
 
+loader.load( "./../models/tails/scene.gltf", function(gltf){
+  tails = gltf.scene;
+  tails.getObjectByName('Reference_04').rotation.y = 3.1;
+  tails.getObjectByName(tails_dic.Indice_lower_sx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Indice_upper_sx).rotation.z = -1;
+  tails.getObjectByName(tails_dic.Medio_lower_sx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Medio_upper_sx).rotation.z = -1;
+  tails.getObjectByName(tails_dic.Mignolo_lower_sx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Mignolo_upper_sx).rotation.z = -1;
+  tails.getObjectByName(tails_dic.Anulare_lower_sx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Anulare_upper_sx).rotation.z = -1;    
+  tails.getObjectByName(tails_dic.Pollice_lower_sx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Pollice_upper_sx).rotation.z = -0.5;
+  tails.getObjectByName(tails_dic.Indice_lower_dx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Indice_upper_dx).rotation.z = -1;
+  tails.getObjectByName(tails_dic.Medio_lower_dx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Medio_upper_dx).rotation.z = -1;
+  tails.getObjectByName(tails_dic.Mignolo_lower_dx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Mignolo_upper_dx).rotation.z = -1;
+  tails.getObjectByName(tails_dic.Anulare_lower_dx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Anulare_upper_dx).rotation.z = -1;
+  tails.getObjectByName(tails_dic.Pollice_lower_dx).rotation.z = -2;
+  tails.getObjectByName(tails_dic.Pollice_upper_dx).rotation.z = -1;
+  tails.getObjectByName(tails_dic.Braccio_dx).rotation.y = -0.5;
+  tails.getObjectByName(tails_dic.Braccio_sx).rotation.y = 0.5;
+
+  tails.visible = false;
+  tails.position.set(0 , -2, 0);
+  scene.add(tails);
+});
+
 
 loader.load('./../models/ring.glb', function(gltf) {
     var ring = gltf.scene;
@@ -224,7 +255,7 @@ function damage_feedback(){
 }
 k = 0;
 function animate(){
-  if(typeof(sonic) != 'undefined'){
+  if(typeof(sonic) != 'undefined' && typeof(tails) != 'undefined'){
     delete_obs(); // reposition of obstacles behind sonic
     break_walls();
     if(s < 0.2){
@@ -289,6 +320,9 @@ function animate(){
     sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = -1.5;
     sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1.5;
     sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
+
+    if(spawn_tails) spawnTails();
+    if(can_move_tails) move_tails();
 
     if((sonic.position.z + 3) % 150 <= 1) eggman_spawn();
     eggman_moves();
