@@ -172,8 +172,8 @@ function treesInit(){
                 c.position.set(px, 1.2 , pz);
                 p = 0;
             }        
-            if(road_side > 0) c.rotation.y = 0.9;
-            else c.rotation.y = -0.9;
+            if(road_side > 0) c.rotation.y = 0.6;
+            else c.rotation.y = -0.6;
             trees.push(c);
             scene.add(c);
             m++;
@@ -219,8 +219,8 @@ function treesRepositioning(start){
                     c.position.set(px, 1.2 , pz);
                     p = 0;
                 }
-                if(road_side > 0) c.rotation.y = 0.9;
-                else c.rotation.y = -0.9;
+                if(road_side > 0) c.rotation.y = 0.6;
+                else c.rotation.y = -0.6;
                 trees.push(c);
                 scene.add(c);
             } 
