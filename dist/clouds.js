@@ -18,7 +18,7 @@ loader1.load('./../Images/cloud10.png', function(texture) {
     spawnClouds(0);
 }, onProgress, onError);
 
-var max_clouds = 100;
+var max_clouds = 50;
 var clouds = new Array();
 
 function cloudsCollision(x, y, z){
@@ -40,12 +40,10 @@ function spawnClouds(start){
   for(i = 0; i < max_clouds; i++){
     var clone = cloud.clone();
     var x = Math.floor(Math.random()*180 - 90);
-    var y = Math.floor(Math.random()* 5 + 15);
+    var y = Math.floor(Math.random()* 5 + 16);
     var z = 10 + aux;
     clone.position.set(x, y , z);
-    clone.scale.x = 3;
-
-    clone.scale = Math.random()*2 + 0.3;
+    clone.scale.x = 4;
     clouds.push(clone);
     scene.add(clouds[i]);
     aux += 8;
@@ -63,12 +61,10 @@ function checkClouds(){
 
 function cloudRepositioning(cloud){
   var x = Math.floor(Math.random()*180 - 90);
-  var y = Math.floor(Math.random()* 5 + 15);
+  var y = Math.floor(Math.random()* 5 + 16);
   var z = sonic.position.z + 400 + Math.floor(Math.random()*150);
 
   if(cloudsCollision(x,y,z)) cloudRepositioning(cloud);
-  else{
-    cloud.position.set(x,y,z);
-    cloud.scale = Math.random()*2 + 0.3;}
+  else cloud.position.set(x,y,z);
 
 }

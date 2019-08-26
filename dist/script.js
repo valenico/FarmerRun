@@ -242,17 +242,17 @@ function animate(){
     heart.rotation.y += 0.05;
 
     // Infinite road
-    if(sonic.position.z >= 250*times + 10){
+    if(sonic.position.z >= 125*times + 10){
       if(times % 2 == 0){
-        ground2.position.z += 500;
-        side3.position.z += 500;
-        side4.position.z += 500;
+        ground2.position.z += 250;
+        side3.position.z += 250;
+        side4.position.z += 250;
 
       }
       else{ 
-        ground1.position.z += 500;
-        side1.position.z += 500;
-        side2.position.z += 500;
+        ground1.position.z += 250;
+        side1.position.z += 250;
+        side2.position.z += 250;
       }
       times += 1;
     }
@@ -265,13 +265,13 @@ function animate(){
 
     // Damage feedback
     if(invincibility == true && shield_on == false){
-      if(scene.getObjectByName(sonic.name) != null && (current_frame == 0 || current_frame == 2*invincibility_frames)){
+      if(scene.getObjectByName(sonic.name) != null && (current_frame == 0 || current_frame == 2*invincibility_frames || current_frame == 4*invincibility_frames)){
         scene.remove(sonic);      }
-      else if(scene.getObjectByName(sonic.name) == null && (current_frame == invincibility_frames || current_frame == 3*invincibility_frames-1)){
+      else if(scene.getObjectByName(sonic.name) == null && (current_frame == invincibility_frames || current_frame == 3*invincibility_frames || current_frame == 5*invincibility_frames-1)){
         scene.add(sonic);
       }
       current_frame += 1;
-      if(current_frame >= 3 * invincibility_frames) {
+      if(current_frame >= 5 * invincibility_frames) {
         invincibility = false;
         current_frame = 0;
       }
@@ -338,7 +338,7 @@ var onLoad = function (texture) {
 
   var objGeometry;
   if(n == 'road'){
-    objGeometry = new THREE.PlaneGeometry(6,500, 32);
+    objGeometry = new THREE.PlaneGeometry(6,250, 32);
     times_horizontal = 1;
     times_vert = 50;
   } else if(n =='ope1'){
@@ -363,7 +363,7 @@ var onLoad = function (texture) {
 
     ground2 = ground1.clone();
     ground2.receiveShadow = true;
-    ground2.position.z = 500;
+    ground2.position.z = 250;
     scene.add(ground2);
   
 

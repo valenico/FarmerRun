@@ -19,3 +19,5 @@
 - città in lontananza sullo sfondo (?) 
 
 - se premi salto prima che carica la pagina da errore
+
+- gli alberi gialli vengono sempre smezzati(?)
