@@ -96,7 +96,7 @@ function ringRepositioning(ring, parentid, id, group){
     var z = ring.position.z + max_distance + min_gap;
     x = Math.floor(Math.random() * 4.5) - 2.25;
     if(!check_line(group, x, z)){
-      ringRepositioning(ring, parentid, id, group);
+      //ringRepositioning(ring, parentid, id, group);
     }
     else {
       ring.position.x = x;

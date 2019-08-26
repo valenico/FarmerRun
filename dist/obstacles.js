@@ -33,8 +33,8 @@ function generate_obstacle(){
             }
         } 
         for(var l = 0; l < n_obs; l++){
-            var z1 = pz <= obs[l].position.z + 2; 
-            var z2 = pz >= obs[l].position.z - 2;
+            var z1 = pz <= obs[l].position.z + 5; 
+            var z2 = pz >= obs[l].position.z - 5;
             var x1 = px >= obs[l].position.x - 3;
             var x2 = px <= obs[l].position.x + 3;
             if(z1 && z2 && x1 && x2){
@@ -89,8 +89,8 @@ function repositioningObstacle(index, from){
         }
     }
     for(var l = 0; l < n_obs; l++){
-        var z1 = pz <= obs[l].position.z + 2; 
-        var z2 = pz >= obs[l].position.z - 2;
+        var z1 = pz <= obs[l].position.z + 5; 
+        var z2 = pz >= obs[l].position.z - 5;
         var x1 = px >= obs[l].position.x - 3;
         var x2 = px <= obs[l].position.x + 3;
         if(z1 && z2 && x1 && x2){
@@ -101,8 +101,10 @@ function repositioningObstacle(index, from){
     if(put){
         obs[index].rotation.z = or;
         obs[index].position.set(px, or == 80.1 ? 0.25 : 1, pz);
+        obs[index].visible = true;
     } else {
-        repositioningObstacle(index, from);
+        //repositioningObstacle(index, from);
+        obs[index].visible = false;
     }
 }
 
@@ -110,6 +112,7 @@ function collision(){
     if(invincibility) return;
     var s = true;
     for(var l = 0; l < n_obs; l++){
+        if(obs[l].visible == false) return;
         var z1 = sonic.position.z <= obs[l].position.z + error; 
         var z2 = sonic.position.z >= obs[l].position.z - error;
         if(obs[l].rotation.z != 80.1){
@@ -146,6 +149,7 @@ loader.load('./../models/rubble/scene.gltf', function(gltf){
 
 function break_walls(){
     for(var l = 0; l < n_obs; l++){
+        if(obs[l].visible == false) return;
         var z1 = eggman.position.z <= obs[l].position.z + error; 
         var z2 = eggman.position.z >= obs[l].position.z - error;
         if(obs[l].rotation.z == 80.1){ // horizontal
