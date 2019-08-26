@@ -185,10 +185,6 @@ loader.load( "./../models/tails/scene.gltf", function(gltf){
   tails.getObjectByName(tails_dic.Pollice_upper_dx).rotation.z = -1;
   tails.getObjectByName(tails_dic.Braccio_dx).rotation.y = -0.5;
   tails.getObjectByName(tails_dic.Braccio_sx).rotation.y = 0.5;
-
-  tails.visible = false;
-  tails.position.set(0 , -2, 0);
-  scene.add(tails);
 });
 
 
@@ -322,7 +318,7 @@ function animate(){
     sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
 
     if(spawn_tails) spawnTails();
-    if(can_move_tails) move_tails();
+    if(can_move_tails) move_tails(t);
 
     if((sonic.position.z + 3) % 150 <= 1) eggman_spawn();
     eggman_moves();

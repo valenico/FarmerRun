@@ -70,20 +70,20 @@ function move_tails(t){
     tails.getObjectByName(tails_dic.Braccio_dx).rotation.z = tails_run[6][t];
     tails.getObjectByName(tails_dic.Braccio_sx).rotation.z = tails_run[7][t];
     tails.position.z -= speed;
-
+    
     if(tails.position.z < sonic.position.z){
         can_move_tails = false;
         spawn_tails = true;
-        tails.visible = false;
-    }
+        scene.remove(tails);
+    } 
 } 
 
 function spawnTails(){
     if(Math.random() > items_probability){
         var side = Math.random() > 0.5 ? -1 : 1;
         tails.position.set(side*Math.random()*3, 0, sonic.position.z + 100);
-        tails.visible = true;
+        scene.add(tails);
         can_move_tails = true;
-        spawn_tails = false;
-    }
+        spawn_tails = false;   
+    } 
 }
