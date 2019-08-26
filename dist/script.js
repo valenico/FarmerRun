@@ -202,10 +202,6 @@ run = [lerp(6, 8 , run_speed).concat(lerp(8, 6, run_speed)), lerp(4, 5.5, run_sp
 jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1.5 , 0 , 0.04));
 eggman_moves_x = lerp( 0 , -2.25, run_speed/6).concat(lerp(-2.25,2.25,run_speed/3)).concat(lerp(2.25,0,run_speed/6));
 
-robot_moves = [lerp(0, 1, 0.007).concat(lerp(1, 0, 0.007)), 
-               lerp(3.4, 2.7, 0.007).concat(lerp(2.7, 3.4, 0.007)), 
-               lerp(4, -4, 0.007).concat(lerp(-4, 4, 0.007))];
-
 
 var text2 = document.createElement('h1');
 text2.style.position = 'absolute';
@@ -297,9 +293,9 @@ function animate(){
     if((sonic.position.z + 3) % 150 <= 1) eggman_spawn();
     eggman_moves();
 
-    spawn_robot();
+    if(robot_to_spawn == true) spawn_robot();
 
-    if(robot_to_spawn == false) robot_time();
+    if(robot_to_spawn == false) robotEnemy();
 
     t = (t >= run[0].length) ? 0 : t+=1;
 
