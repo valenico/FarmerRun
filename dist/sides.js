@@ -140,7 +140,7 @@ function createSide(floorGeometry,texture,posx, posz){
 function treesInit(){
     for(var m = 0; m < max_trees;){
         var road_side = (Math.random() > 0.5 ? -1 : 1);
-        var px = road_side*Math.random()*10 +(road_side == -1 ? -4 : 4);
+        var px = road_side*Math.random()*10 +(road_side == -1 ? -3 : 3);
         var pz = Math.random()*tree_dist + 10;
         var put = true;
         for(var l = 0; l < trees.length; l++){
@@ -157,18 +157,23 @@ function treesInit(){
         if(put){ 
             if( p == 0 ){
                 c = tree1.clone();
+                c.position.set(px, 1.5 , pz);
                 p++;
             } else if( p == 1 ){
                 c = tree2.clone();
+                c.position.set(px, 1.2 , pz);
                 p++;
             } else if( p == 2 ){
                 c= tree3.clone();
+                c.position.set(px, 1.2 , pz);
                 p++;
             } else {
                 c = tree4.clone();
+                c.position.set(px, 1.2 , pz);
                 p = 0;
-            }
-            c.position.set(px, 1 , pz);
+            }        
+            if(road_side > 0) c.rotation.y = 0.9;
+            else c.rotation.y = -0.9;
             trees.push(c);
             scene.add(c);
             m++;
@@ -180,7 +185,7 @@ function treesRepositioning(start){
     for(var i = 0; i < trees.length; i++){
         if(trees[i].position.z + 2 < sonic.position.z ){
             var road_side = (Math.random() > 0.5 ? -1 : 1);
-            var px = road_side*Math.random()*10 +(road_side == -1 ? -4 : 4) ;
+            var px = road_side*Math.random()*10 +(road_side == -1 ? -3 : 3) ;
             var pz = Math.random()*tree_dist + start + min_tree_dist;
             var put = true;
             for(var l = 0; l < trees.length; l++){
@@ -199,18 +204,23 @@ function treesRepositioning(start){
                 trees.splice(i,1);
                 if( p == 0 ){
                     c = tree1.clone();
+                    c.position.set(px, 1.5 , pz);
                     p++;
                 } else if( p == 1 ){
                     c = tree2.clone();
+                c.position.set(px, 1.2 , pz);
                     p++;
                 } else if( p == 2 ){
                     c= tree3.clone();
+                    c.position.set(px, 1.2 , pz);
                     p++;
                 } else {
                     c = tree4.clone();
+                    c.position.set(px, 1.2 , pz);
                     p = 0;
                 }
-                c.position.set(px, 1 , pz);
+                if(road_side > 0) c.rotation.y = 0.9;
+                else c.rotation.y = -0.9;
                 trees.push(c);
                 scene.add(c);
             } 
