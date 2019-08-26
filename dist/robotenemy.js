@@ -78,7 +78,7 @@ function laser(){
 
 function spawn_robot(){
 
-    if(true){
+    if((sonic.position.z + 3) % 100 <= 1 && robot_to_spawn == true ){
         robot_to_spawn = false;
         robot.position.x = 4;
         robot.position.z = sonic.position.z + 150;
