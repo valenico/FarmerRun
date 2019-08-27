@@ -4,6 +4,8 @@ const backgroundColor = 0x000000;
 /// Dictionary for body parts of sonic ///
 var score = 0;
 var light;
+var dead_step = 0;
+
 
 const sonic_dic = { 
 
@@ -145,6 +147,9 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic.getObjectByName(sonic_dic.Anulare_upper_dx).rotation.z = 1;
     sonic.getObjectByName(sonic_dic.Pollice_lower_dx).rotation.z = 2;
     sonic.getObjectByName(sonic_dic.Pollice_upper_dx).rotation.z = 1;
+    sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = -1.5;
+    sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1.5;
+    sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
     scene.add(sonic);
 
     document.addEventListener("keydown", onDocumentKeyDown, false);
@@ -235,7 +240,6 @@ eggman_moves_x = lerp( 0 , -2.25, run_speed/6).concat(lerp(-2.25,2.25,run_speed/
 var text2 = document.createElement('h1');
 text2.style.position = 'absolute';
 text2.style.color = "black";
-text2.innerHTML = "Score: " + score;
 text2.style.height = 40 + 'px';
 text2.style.top = 0 + 'px';
 text2.style.left = 40 + 'px';
@@ -327,9 +331,7 @@ function animate(){
     sonic.getObjectByName(sonic_dic.Avambraccio_dx).rotation.z = run[5][t];
     sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.z = run[6][t];
     sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.z = run[7][t];
-    sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = -1.5;
-    sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1.5;
-    sonic.getObjectByName(sonic_dic.Testa).rotation.z = 0.2;
+
 
     if(spawn_tails) spawnTails();
     if(can_move_tails) move_tails(t);
@@ -361,7 +363,12 @@ function animate(){
       t_jump = 0;
     }
   }
-  requestAnimationFrame(animate);
+
+  if(dead_step){
+   requestAnimationFrame(death);
+  } else {
+    requestAnimationFrame(animate);
+  }
   render();
 
 }
