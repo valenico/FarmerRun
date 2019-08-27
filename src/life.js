@@ -268,8 +268,21 @@ function death(){
         
         sonic.getObjectByName(sonic_dic.Testa).rotation.z = -0.2;
 
+        clear_area();
+
     }
 
     requestAnimationFrame(death);
     render();
+}
+
+function clear_area(){
+
+    for(var i = 0; i < rings.length; i++){
+        rings[i].visible = false;
+    }
+
+    shield.visible = false;
+    heart.visible = false;
+
 }
