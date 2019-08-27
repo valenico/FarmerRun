@@ -282,8 +282,8 @@ function clear_area(){
         rings[i].visible = false;
     }
 
-    line.visible = false;
-    fireball.visible = false;
+    if(line != null) line.visible = false;
+    if(fireball!=null) fireball.visible = false;
     shield.visible = false;
     heart.visible = false;
 
