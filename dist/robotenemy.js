@@ -29,7 +29,7 @@ loader.load("./../models/fireball/scene.gltf", function(gltf){
     scene.add(fireball);
 });
 
-/*
+/*/
 
 var geometry = new THREE.SphereGeometry( 0.2, 0.2, 32 );
 var material = new THREE.MeshPhongMaterial( {map: new THREE.TextureLoader().load( '../Images/fireball.jpg'), specular: 0xffffff, shininess: 100, emissive: 0xd62323,
@@ -152,6 +152,8 @@ function robotEnemy(){
                     fireball.position.x = fireball_moves[0][t_fireball];
                     fireball.position.y = fireball_moves[1][t_fireball];
                     fireball.position.z = fireball_moves[2][t_fireball];
+                    fireball.rotation.x += 0.5;
+                    fireball.rotation.y += 0.5;
 
                     if(!invincibility && check_fireball()){
                         getDamage();
