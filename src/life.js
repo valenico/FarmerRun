@@ -284,6 +284,7 @@ function clear_area(){
 
     if(line != null) line.visible = false;
     if(fireball!=null) fireball.visible = false;
+    eggman.visible = false;
     shield.visible = false;
     heart.visible = false;
 

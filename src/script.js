@@ -11,22 +11,14 @@ const sonic_dic = {
 
   Testa : "Head_06",
 
-  Fianchi : "Hips_05",
-  Bacino_dx : "Pelvis_R_013",
-  Bacino_sx : "Pelvis_L_08",
-
   Coscia_dx : "Thigh_R_014",
   Polpaccio_dx : "Calf_R_015",
-  Piede_dx : "Foot_R_016",
 
   Coscia_sx : "Thigh_L_09",
   Polpaccio_sx : "Calf_L_010",
-  Piede_sx : "Foot_L_011",
 
-  Spalla_dx : "Shulder_R_034",
   Braccio_dx : "UpperArm_R_035",
   Avambraccio_dx : "ForeArm_R_036",
-  Polso_dx : "Wrist_R_048",
   Mano_dx : "Hand_R_037",
 
   Indice_lower_sx: "Index2_L_024",
@@ -50,10 +42,8 @@ const sonic_dic = {
   Pollice_upper_dx: "Thumb1_R_046",
   Pollice_lower_dx: "Thumb2_R_047",
 
-  Spalla_sx : "Shulder_L_0019",
   Braccio_sx : "UpperArm_L_020",
   Avambraccio_sx : "ForeArm_L_021",
-  Polso_sx : "Wrist_L_033",
   Mano_sx : "Hand_L_022",
 };
 
