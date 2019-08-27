@@ -3,6 +3,7 @@ var can_get_heart = false;
 var max_hearts = Number(document.URL.substr(-1,1));
 var num_hearts = max_hearts;
 
+
 var life1 = document.createElement('img');
 life1.style.position = 'absolute';
 life1.src = './../Images/life.png';
@@ -158,7 +159,8 @@ function getDamage(){
     } else {
         if(life4.src.slice(-10,-4) != 'nolife'){
             life4.src = './../Images/nolife.png';
-            window.alert("Game Over!");
+            //window.alert("Game Over!");
+            dead_step += 1;
             return;
         }
     }
@@ -204,4 +206,57 @@ function getHeart(){
         heart.visible = false;
         heartSpawn(sonic.position.z);
     }
+}
+
+function death(){
+    dead_step += 1;
+
+    if(dead_step < 40){
+        sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][(t + dead_step)%run[0].length];
+        sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = run[0][(t + dead_step)%run[0].length];
+        sonic.getObjectByName(sonic_dic.Polpaccio_sx).rotation.z = run[3][(t + dead_step)%run[0].length];
+        sonic.getObjectByName(sonic_dic.Coscia_sx).rotation.z = run[2][(t + dead_step)%run[0].length];
+        sonic.getObjectByName(sonic_dic.Avambraccio_sx).rotation.z = run[4][(t + dead_step)%run[0].length];
+        sonic.getObjectByName(sonic_dic.Avambraccio_dx).rotation.z = run[5][(t + dead_step)%run[0].length];
+        sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.z = run[6][(t + dead_step)%run[0].length];
+        sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.z = run[7][(t + dead_step)%run[0].length];
+        sonic.position.z += s/2;
+        camera.position.z += s/2;
+        light.position.z += s/2;
+        bg.position.z += s/2;
+    } else if (dead_step == 40){
+        camera.position.z += 5;
+        camera.position.y = 1;
+        camera.position.x = sonic.position.x;
+        camera.rotation.x -= 1;
+        camera.rotation.y = 3.1;
+
+        sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.z = 0;
+        sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.y = - 1;
+        sonic.getObjectByName(sonic_dic.Avambraccio_dx).rotation.z = 0;
+        sonic.getObjectByName(sonic_dic.Avambraccio_dx).rotation.y = - 1.5;
+        sonic.getObjectByName(sonic_dic.Mano_dx).rotation.x = 5;
+        sonic.getObjectByName(sonic_dic.Mano_dx).rotation.z = 0.5;
+
+        sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.z = 0;
+        sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.y = 1;
+        sonic.getObjectByName(sonic_dic.Avambraccio_sx).rotation.z = 0;
+        sonic.getObjectByName(sonic_dic.Avambraccio_sx).rotation.y = 1.5;
+        sonic.getObjectByName(sonic_dic.Mano_sx).rotation.x = - 5;
+        sonic.getObjectByName(sonic_dic.Mano_sx).rotation.z = 0.5;
+
+        sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = 5.5;
+        sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = 7;   
+        sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.y = 0.2;        
+          
+        sonic.getObjectByName(sonic_dic.Polpaccio_sx).rotation.z = 5.5;
+        sonic.getObjectByName(sonic_dic.Coscia_sx).rotation.z = 7; 
+        sonic.getObjectByName(sonic_dic.Coscia_sx).rotation.y = -0.2;    
+        
+        sonic.getObjectByName(sonic_dic.Testa).rotation.z = -0.2;
+
+    }
+
+    requestAnimationFrame(death);
+    render();
 }
