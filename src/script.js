@@ -154,6 +154,7 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
     document.addEventListener("keydown", onDocumentKeyDown, false);
     function onDocumentKeyDown(event) {
+      keyCode = event.keyCode;
       if (keyCode == 65 && sonic.position.x < 2.5 && dead_step == 0) {
         sonic.position.x += 0.5;
       } else if (keyCode == 68 && sonic.position.x > -2.5 && dead_step == 0) {
