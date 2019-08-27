@@ -2,9 +2,10 @@
 
 ## Cose da fare:
 
-- cosa succede al game over
+- game over -> possibilità di iniziare nuova partita ? 
+
+- score in evidenza a fine partita
 
 - sistemare instructions.html
 
-- caratterizzare i paesaggi laterali (animali / piante / casette di heidi? )
 
