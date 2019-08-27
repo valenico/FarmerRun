@@ -65,10 +65,10 @@ var t_tails_jump = 0;
 function tails_jump(){
     for(var i = 0; i < obs.length; i++){
         if(obs[i].rotation.z != 80.1) continue;
-        var z1 = tails.position.z <= obs[i].position.z + 2; 
-        var z2 = tails.position.z >= obs[i].position.z - 2;
-        var x1 = tails.position.x >= obs[i].position.x - 2;
-        var x2 = tails.position.x <= obs[i].position.x + 2;
+        var z1 = tails.position.z <= obs[i].position.z + 1; 
+        var z2 = tails.position.z >= obs[i].position.z - 1;
+        var x1 = tails.position.x >= obs[i].position.x - error*2.5;
+        var x2 = tails.position.x <= obs[i].position.x + error*2.5;
         if(z1 && z2 && x1 && x2) return true;
     }
     return false;
