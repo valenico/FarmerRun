@@ -58,7 +58,7 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
     cow1.position.set(5, 0, 10);
     cow1.rotation.y = 1.5;
 
-    /*
+    
     const animation = gltf.animations[0];
     console.log(animation);
 
@@ -67,7 +67,7 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
 
     /////
     const action = mixer1.clipAction( animation );
-    action.play();*/
+    action.play();
     scene.add(cow1);
     ////
 });
@@ -77,7 +77,7 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
     cow2.scale.set(0.008, 0.008, 0.008);
     cow2.position.set(-5, 0, 6);
     cow2.rotation.y = 1.5;
-    /*const animation = gltf.animations[0];
+    const animation = gltf.animations[0];
     console.log(animation);
 
     mixer2 = new THREE.AnimationMixer( cow2 );
@@ -85,7 +85,7 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
 
     //////
     const action = mixer2.clipAction( animation );
-    action.play();*/
+    action.play();
     scene.add(cow2);
     /////
 });
@@ -137,14 +137,21 @@ loader1.load('./../Images/tree5.png', function(texture){
 
 function cowsRespawn(start){
   if(cow1.position.z < sonic.position.z - 10){
-    console.log("dentro");
     var x = Math.random()*3 + 4;
     var z = start + Math.random()*100 + 20;
+    var rot;
+    if(Math.random > 5) rot = 1.5;
+    else rot = -1.5;
+    cow1.rotation.y = rot;
     cow1.position.set(x, 0 , z);
   } 
   if (cow2.position.z < sonic.position.z - 10){
     var x = Math.random()*3 + 4;
     var z = start + Math.random()*100 + 20;
+    var rot;
+    if(Math.random > 5) rot = 1.5;
+    else rot = -1.5;
+    cow2.rotation.y = rot;
     cow2.position.set(-x, 0 , z);
   }
 }
