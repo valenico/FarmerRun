@@ -8,5 +8,3 @@
 
 - caratterizzare i paesaggi laterali (animali / piante / casette di heidi? )
 
-- se premi salto prima che carica la pagina da errore
-

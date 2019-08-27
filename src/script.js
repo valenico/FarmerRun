@@ -95,19 +95,6 @@ function init() {
   controls = new THREE.OrbitControls( camera );
   controls.enabled = false;
 
-document.addEventListener("keydown", onDocumentKeyDown, false);
-function onDocumentKeyDown(event) {
-    var keyCode = event.which;
-    if (keyCode == 65 && sonic.position.x < 2.5) {
-      sonic.position.x += 0.5;
-    } else if (keyCode == 68 && sonic.position.x > -2.5) {
-      sonic.position.x -= 0.5;
-    } else if (keyCode == 32){
-      jump = true;
-
-    }
-  };
-
   var light1 = new THREE.AmbientLight( 0xffffff, 1.4 , 1);
   light1.position.set( 30, 10, 30  );
   scene.add(light1);
@@ -158,8 +145,20 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic.getObjectByName(sonic_dic.Anulare_upper_dx).rotation.z = 1;
     sonic.getObjectByName(sonic_dic.Pollice_lower_dx).rotation.z = 2;
     sonic.getObjectByName(sonic_dic.Pollice_upper_dx).rotation.z = 1;
-
     scene.add(sonic);
+
+    document.addEventListener("keydown", onDocumentKeyDown, false);
+    function onDocumentKeyDown(event) {
+      var keyCode = event.which;
+      if (keyCode == 65 && sonic.position.x < 2.5) {
+        sonic.position.x += 0.5;
+      } else if (keyCode == 68 && sonic.position.x > -2.5) {
+        sonic.position.x -= 0.5;
+      } else if (keyCode == 32){
+        jump = true;
+      }
+  };
+
 });
 
 loader.load( "./../models/tails/scene.gltf", function(gltf){
