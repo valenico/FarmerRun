@@ -1,7 +1,18 @@
-var egglight = new THREE.PointLight( 'red', 50, 1 , 2);
-var pointLightHelper = new THREE.PointLightHelper( egglight , 1 );
-egglight.visible = false;
-pointLightHelper.visible = false;
+var alarm;
+
+loader1.load('./../Images/alert.png', function(texture){
+  var objGeometry = new THREE.PlaneGeometry( 1 , 1 , 32);
+  var objMaterial = new THREE.MeshPhongMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+      shading: THREE.FlatShading,
+      transparent: true,
+    });
+  alarm = new THREE.Mesh(objGeometry, objMaterial);
+  alarm.rotation.x = 300.0221;
+  alarm.rotation.z = 3.1;
+  alarm.visible = false;
+});
 
 var wait = 0;
 var e = false;
@@ -41,9 +52,8 @@ function eggman_spawn(){
     if(!egg){
       egg = true;
       eggman.position.z = sonic.position.z - 5;
-      egglight.position.set(eggman.position.x , 0 , sonic.position.z - 0.1 );
-      egglight.visible = true; 
-      pointLightHelper.visible = true;
+      alarm.position.set(eggman.position.x , 0.1 , sonic.position.z - 0.1 );
+      alarm.visible = true;
       if(Math.random() > 0.5) laugh.play();
       else wontescape.play();
     }
@@ -54,8 +64,8 @@ var played_retreat = false;
 function eggman_moves(){
     if(egg){
       eggman.position.x = eggman_moves_x[t_egg]
-      egglight.position.set(eggman.position.x, 0, sonic.position.z - 0.1 );
-      
+      alarm.position.set(eggman.position.x , 0.1 , sonic.position.z - 0.1 );
+          
       //here that should be a random movement towards sonic to hit him
       if(eggman.position.z >= sonic.position.z + 4){ //we're in front of sonic
         hitting = Math.random() > 0.95; //probability of trying to hit
@@ -97,7 +107,7 @@ function eggman_moves(){
           damage_feedback();
         }
       }
-      //else if(e && score == 0) window.alert("GAME OVER");
+      //else if(e && score == 0) window.alarm("GAME OVER");
     } 
 }
 
@@ -105,7 +115,6 @@ function isPlaying(audio) { return !audio.paused; }
 
 function turn_off_eggman(){
     if(eggman.position.z > sonic.position.z){
-      egglight.visible = false; 
-      pointLightHelper.visible = false;
+      alarm.visible = false;
     }
 }

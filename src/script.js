@@ -202,8 +202,7 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
   eggman.position.set(0, 0, -100);
   eggman.scale.set(0.5,0.5,0.5);
   scene.add( eggman );
-  scene.add( egglight );
-  scene.add( pointLightHelper );
+  scene.add(alarm);
 });
 
 function lerp(current, target, fraction){
