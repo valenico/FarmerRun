@@ -1,8 +1,8 @@
 var tree1, tree2, tree3, tree4;
 var trees = new Array();
-var max_trees = 10;
+var max_trees = 30;
 var tree_dist = 50;
-var min_tree_dist = 50;
+var min_tree_dist = 20;
 
 var objGeometry = new THREE.PlaneGeometry( 3 , 3 , 32);
 var times_horizontal = 1;
@@ -58,9 +58,7 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
     cow1.position.set(5, 0, 10);
     cow1.rotation.y = 1.5;
 
-    
     const animation = gltf.animations[0];
-    console.log(animation);
 
     mixer1 = new THREE.AnimationMixer( cow1 );
     mixers.push( mixer1 );
@@ -78,7 +76,6 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
     cow2.position.set(-5, 0, 6);
     cow2.rotation.y = 1.5;
     const animation = gltf.animations[0];
-    console.log(animation);
 
     mixer2 = new THREE.AnimationMixer( cow2 );
     mixers.push( mixer2 );
