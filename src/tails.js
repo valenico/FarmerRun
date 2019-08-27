@@ -62,11 +62,12 @@ var tails_jump_points = lerp(0 , 1.5 , 0.04).concat(lerp(1.5 , 0 , 0.04));
 var can_jump = false;
 var jumping = false;
 var t_tails_jump = 0;
+
 function tails_jump(){
     for(var i = 0; i < obs.length; i++){
         if(obs[i].rotation.z != 80.1) continue;
-        var z1 = tails.position.z <= obs[i].position.z + 1; 
-        var z2 = tails.position.z >= obs[i].position.z - 1;
+        var z1 = tails.position.z <= obs[i].position.z + 2; 
+        var z2 = tails.position.z >= obs[i].position.z - 2;
         var x1 = tails.position.x >= obs[i].position.x - error*2.5;
         var x2 = tails.position.x <= obs[i].position.x + error*2.5;
         if(z1 && z2 && x1 && x2) return true;
@@ -74,14 +75,16 @@ function tails_jump(){
     return false;
 }
 
+var mr = false, ml = false; 
+
 function move_aside(){
     var move = false;
     for(var i = 0; i < obs.length; i++){
         if(obs[i].rotation.z == 80.1) continue;
         var z1 = tails.position.z <= obs[i].position.z + 2; 
         var z2 = tails.position.z >= obs[i].position.z - 2;
-        var x1 = tails.position.x >= obs[i].position.x - 1;
-        var x2 = tails.position.x <= obs[i].position.x + 1;
+        var x1 = tails.position.x >= obs[i].position.x - 0.5;
+        var x2 = tails.position.x <= obs[i].position.x + 0.5;
         if(z1 && z2 && x1 && x2){
             move = true;
             break;
@@ -90,14 +93,18 @@ function move_aside(){
 
     if(move){
         var side = tails.position.x > 0 ? 1 : -1;
-        var diff = Math.abs(tails.position.x) - Math.abs(obs[i].position.x);
-        if(diff){ 
-            tails.position.x += side*diff;
-        } else {
-            tails.position.x -= side*diff;
-        }
-         
-        
+        var right = tails.position.x > -2 ? true : false;
+        var left = tails.position.x < 2 ? true : false;
+        if((side == 1 && left) || (side == -1 && !right) || ml ){ 
+            tails.position.x += 0.25;
+            ml = true;
+        } else if((side == 1 && !left) || (side == -1 && right) || mr){
+            tails.position.x -= 0.25;
+            mr = true;
+        }  
+    } else {
+        mr = false;
+        ml = false;
     }
 }
 
