@@ -6,25 +6,43 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <link rel="stylesheet" href="./style.css">
 </head>
-<body>
+<body onload="loadingFunction()">
 <!-- partial:index.partial.html -->
 
+<div class="container" id='loading'>
+  <div class="flex">
+  <div class="loader">
+  </div>
+  </div>
+  <div class="load-text">
+  Loading...
+  </div>
+  </div>
+<div class='canvas_three' id='game' style="display:none"></div>
+
+<script>
+    function loadingFunction(){
+      document.getElementById("loading").style.display = "none";
+      document.getElementById('game').style.display = 'initial';
+    }
+</script>
+    
 <audio autoplay id="bgAudio" loop="true">
   <source src="../audio/Sonic Generations - Green Hill Zone Classic.mp3" type="audio/mp3">
 </audio>
-
+    
 <script>
   var audio = document.getElementById("bgAudio");
   audio.volume = 0.4 ;
 </script>
-
+    
 <script>console.clear();</script>
 <script src="https://unpkg.com/three@0.87.1/build/three.js"></script>
 <script src="https://unpkg.com/three@0.87.1/examples/js/controls/OrbitControls.js"></script>
 <script src="https://unpkg.com/three@0.87.1/examples/js/loaders/GLTFLoader.js"></script>
-<!-- partial -->
+ <!-- partial -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js'></script>
-
+    
 <script  src="./ImprovedNoise.js"></script>
 <script  src="./script.js"></script>
 <script  src="./rings.js"></script>

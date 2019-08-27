@@ -72,6 +72,8 @@ function init() {
   camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 0.1, 800 );
   camera.position.set(0,2,-4);
 
+  var container = document.getElementById('game');
+
   renderer = new THREE.WebGLRenderer( { antialias: true } );
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
@@ -88,7 +90,7 @@ function init() {
     renderer.setSize( window.innerWidth, window.innerHeight );
   }, false );
 
-   document.body.appendChild( renderer.domElement);
+  container.appendChild( renderer.domElement);
 
   controls = new THREE.OrbitControls( camera );
   controls.enabled = false;
