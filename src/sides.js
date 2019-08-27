@@ -53,7 +53,7 @@ const mixers = [];
 const clock = new THREE.Clock();
 
 loader.load('./../models/cow/scene.gltf', function(gltf) {
-    var cow1 = gltf.scene;
+    cow1 = gltf.scene;
     cow1.scale.set(0.008, 0.008, 0.008);
     cow1.position.set(5, 0, 10);
     cow1.rotation.y = 1.5;
@@ -73,7 +73,7 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
 });
 
 loader.load('./../models/cow/scene.gltf', function(gltf) {
-    var cow2 = gltf.scene;
+    cow2 = gltf.scene;
     cow2.scale.set(0.008, 0.008, 0.008);
     cow2.position.set(-5, 0, 6);
     cow2.rotation.y = 1.5;

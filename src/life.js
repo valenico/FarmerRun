@@ -212,6 +212,7 @@ function death(){
     dead_step += 1;
 
     if(dead_step < 40){
+
         sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][(t + dead_step)%run[0].length];
         sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = run[0][(t + dead_step)%run[0].length];
         sonic.getObjectByName(sonic_dic.Polpaccio_sx).rotation.z = run[3][(t + dead_step)%run[0].length];
@@ -224,7 +225,9 @@ function death(){
         camera.position.z += s/2;
         light.position.z += s/2;
         bg.position.z += s/2;
+
     } else if (dead_step == 40){
+
         camera.position.z += 5;
         camera.position.y = 1;
         camera.position.x = sonic.position.x;
