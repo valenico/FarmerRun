@@ -154,16 +154,14 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
     document.addEventListener("keydown", onDocumentKeyDown, false);
     function onDocumentKeyDown(event) {
-      var keyCode = event.which;
-      if (keyCode == 65 && sonic.position.x < 2.5) {
+      if (keyCode == 65 && sonic.position.x < 2.5 && dead_step == 0) {
         sonic.position.x += 0.5;
-      } else if (keyCode == 68 && sonic.position.x > -2.5) {
+      } else if (keyCode == 68 && sonic.position.x > -2.5 && dead_step == 0) {
         sonic.position.x -= 0.5;
-      } else if (keyCode == 32){
+      } else if (keyCode == 32 && dead_step == 0){
         jump = true;
       }
-  };
-
+    };
 });
 
 loader.load( "./../models/tails/scene.gltf", function(gltf){
