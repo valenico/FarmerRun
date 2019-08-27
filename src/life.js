@@ -221,6 +221,16 @@ function death(){
         sonic.getObjectByName(sonic_dic.Avambraccio_dx).rotation.z = run[5][(t + dead_step)%run[0].length];
         sonic.getObjectByName(sonic_dic.Braccio_dx).rotation.z = run[6][(t + dead_step)%run[0].length];
         sonic.getObjectByName(sonic_dic.Braccio_sx).rotation.z = run[7][(t + dead_step)%run[0].length];
+        
+        if(jump){
+            sonic.position.y = jump_points[t_jump];
+            t_jump += 1;
+            if(t_jump >= jump_points.length){
+              jump = false;
+              t_jump = 0;
+            }
+          }
+        
         sonic.position.z += s/2;
         camera.position.z += s/2;
         light.position.z += s/2;
