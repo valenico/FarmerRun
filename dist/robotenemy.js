@@ -29,6 +29,16 @@ loader.load("./../models/fireball/scene.gltf", function(gltf){
     scene.add(fireball);
 });
 
+/*
+
+var geometry = new THREE.SphereGeometry( 0.2, 0.2, 32 );
+var material = new THREE.MeshPhongMaterial( {map: new THREE.TextureLoader().load( '../Images/fireball.jpg'), specular: 0xffffff, shininess: 100, emissive: 0xd62323,
+                                            flatShading: true} );
+var fireball = new THREE.Mesh( geometry, material );
+fireball.position.set(0,1,-5);
+scene.add( fireball )
+
+*/
 
 loader.load("./../models/robotfly/scene.gltf", function(gltf){
     robot = gltf.scene;
