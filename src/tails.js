@@ -136,10 +136,23 @@ function move_tails(t){
             t_tails_jump = 0;
             can_jump = false;
         }
-    }
+    } else move_aside();
 
-    move_aside();
+    if(!invincibility){
+        check_tails();
+    }
 } 
+
+function check_tails(){
+    var x1 = sonic.position.x <= tails.position.x + error;
+    var x2 = sonic.position.x >= tails.position.x - error;
+    var z1 = sonic.position.z >= tails.position.z - error;
+    var z2 = sonic.position.z <= tails.position.z + error;
+    if(x1 && x2 && z1 && z2){
+        getDamage();
+        damage_feedback();
+    }
+}
 
 function spawnTails(){
     if(Math.random() > items_probability){
