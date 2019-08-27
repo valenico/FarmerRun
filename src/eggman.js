@@ -16,6 +16,12 @@ var hitting = false;
 var n_hit = 0;
 var max_hit = 5;
 
+var laugh = new Audio('../audio/laugh.mp3');
+var challenging = new Audio('../audio/challenging.mp3');
+var letgo = new Audio('../audio/letgo.mp3');
+var won = new Audio('../audio/won.mp3');
+var wontescape = new Audio('../audio/wontescape.mp3');
+
 
 function check_eggman(oldv){
   if(oldv || (wait != 0 && wait < 80)){
@@ -38,8 +44,12 @@ function eggman_spawn(){
       egglight.position.set(eggman.position.x , 0 , sonic.position.z - 0.1 );
       egglight.visible = true; 
       pointLightHelper.visible = true;
+      if(Math.random() > 0.5) laugh.play();
+      else wontescape.play();
     }
 }
+
+var played_retreat = false;
 
 function eggman_moves(){
     if(egg){
@@ -63,8 +73,14 @@ function eggman_moves(){
 
       t_egg = (t_egg >= eggman_moves_x.length) ? 0 : t_egg+1;
 
+      if(n_hit >= max_hit-1 && !played_retreat){
+          if(Math.random() > 0.5) letgo.play();
+          else won.play();
+          played_retreat = true;
+        }
       // we must decide how make it go away, even with a cycle of movements 
       if(n_hit == max_hit){
+        
         eggman.position.z = camera.position.z;
         n_hit = 0;
         egg = false;
@@ -73,6 +89,7 @@ function eggman_moves(){
       if(!invincibility) {
         e = check_eggman(e);
         if(e){
+          challenging.play();
           getDamage();
           damage_feedback();
         }
