@@ -38,7 +38,6 @@ function generate_obstacle(){
             var x1 = px >= obs[l].position.x - 3;
             var x2 = px <= obs[l].position.x + 3;
             if(z1 && z2 && x1 && x2){
-                console.log("COLLISION");
                 put = false;
                 break;
             }

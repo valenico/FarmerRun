@@ -108,14 +108,14 @@ function fireball_lerp(fromx, fromy, fromz, tox, toy, toz){
 
 function robotEnemy(){
     if(robot_to_spawn == false){
-        if(robot.position.z >= sonic.position.z + 10){
+        if(robot.position.z >= sonic.position.z + 13){
             robot.position.z -= 0.8;
             return;
         }
         robot_time += 1;
         if(robot_time < robot_max_time){
 
-            robot.position.z = sonic.position.z + 10;
+            robot.position.z = sonic.position.z + 13;
             robot.rotation.z = robot_moves[0][t_robot];
             robot.rotation.y = robot_moves[1][t_robot];
             robot.position.x = robot_moves[2][t_robot];
@@ -125,7 +125,7 @@ function robotEnemy(){
 
 
             var rand = Math.random();
-            if(shooting == false && rand > 0 ){ 
+            if(shooting == false && rand > 0.99 ){ 
                 shooting = true;
                 frame_count = 0;
                 t_fireball = 0;
@@ -143,9 +143,15 @@ function robotEnemy(){
 
                 if(frame_count >= time_to_shoot){
                     if(frame_count == time_to_shoot){
-                        if(robot.position.x >= 2.5) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x - 1.5, sonic.position.y - 1, sonic.position.z + 1.5);
-                        else if(robot.position.x <= -2.5) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x + 1.5, sonic.position.y - 1, sonic.position.z + 1.5);
-                        else fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 1.5);
+                        if(robot.position.x >= 2){
+                            if(sonic.position.x < 0) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x - 1.5, sonic.position.y - 1, sonic.position.z + 2);
+                            else fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 1);
+                        }
+                        else if(robot.position.x <= -2) {
+                            if(sonic.position.x > 0) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x + 1.5, sonic.position.y - 1, sonic.position.z + 2);
+                            else fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 1);
+                        }
+                        else fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 1);
                     }
 
                     scene.remove(line);
