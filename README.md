@@ -4,7 +4,7 @@
 
 - cosa succede al game over
 
-- mettere un 'PLAY' all'inizio così sicuro cliccano lo schermo e si possono muvoere (?)
+- sistemare instructions.html
 
 - caratterizzare i paesaggi laterali (animali / piante / casette di heidi? )
 
