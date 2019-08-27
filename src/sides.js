@@ -136,21 +136,16 @@ loader1.load('./../Images/tree5.png', function(texture){
 });
 
 function cowsRespawn(start){
-  console.log("HELLO");
-  console.log(cow1);
-  console.log(cow1.position.z);
-  if(cow1.position.z < sonic.position.z + 3){7
+  if(cow1.position.z < sonic.position.z - 10){
     console.log("dentro");
-    //var x = Math.random()*3 + 4;
-    var z = start + Math.random() + 20;
-    cow1.matrixWorldNeedsUpdate = true;
-    //cow1.position.x = x;
-    cow1.position.z = z;
-  } 
-  if (cow2.position.z < sonic.position.z + 3){
     var x = Math.random()*3 + 4;
-    var z = start + Math.random() + 20;
-    cow2.position.set(x, 0 , -z);
+    var z = start + Math.random()*100 + 20;
+    cow1.position.set(x, 0 , z);
+  } 
+  if (cow2.position.z < sonic.position.z - 10){
+    var x = Math.random()*3 + 4;
+    var z = start + Math.random()*100 + 20;
+    cow2.position.set(-x, 0 , z);
   }
 }
 
