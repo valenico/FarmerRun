@@ -133,8 +133,8 @@ loader1.load('./../Images/tree5.png', function(texture){
 });
 
 function cowsRespawn(start){
-  if(cow1.position.z < sonic.position.z - 10){
-    var x = Math.random()*3 + 4;
+  if(cow1.position.z < sonic.position.z - 10 && Math.random()>0.99){
+    var x = Math.random()*4 + 3;
     var z = start + Math.random()*100 + 20;
     var rot;
     if(Math.random > 5) rot = 1.5;
@@ -142,8 +142,8 @@ function cowsRespawn(start){
     cow1.rotation.y = rot;
     cow1.position.set(x, 0 , z);
   } 
-  if (cow2.position.z < sonic.position.z - 10){
-    var x = Math.random()*3 + 4;
+  if (cow2.position.z < sonic.position.z - 10 && Math.random()>0.99){
+    var x = Math.random()*4 + 3;
     var z = start + Math.random()*100 + 20;
     var rot;
     if(Math.random > 5) rot = 1.5;
