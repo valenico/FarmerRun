@@ -28,6 +28,7 @@ loader.load("./../models/fireball/scene.gltf", function(gltf){
 
     fireball.scale.set(0.003,0.003,0.003);
     fireball.castShadow = true;
+    fireball.visible = false;
     scene.add(fireball);
 });
 
@@ -50,6 +51,7 @@ loader.load("./../models/robotfly/scene.gltf", function(gltf){
     robot.rotation.z = 0;
     robot.rotation.y = 3.5;
     robot.rotation.x = -0.4;
+    robot.visible = false;
     scene.add(robot);
 });
 
@@ -93,6 +95,7 @@ function laser(){
 function spawn_robot(){
 
     if((sonic.position.z + 3) % 100 <= 1 && robot_to_spawn == true ){
+        robot.visible = true;
         robot_to_spawn = false;
         robot.position.x = 4;
         robot.position.z = sonic.position.z + 150;
@@ -159,6 +162,7 @@ function robotEnemy(){
                         }
                         else fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 1);
                     }
+                    fireball.visible = true;
 
                     scene.remove(line);
                     fireball.position.x = fireball_moves[0][t_fireball];
@@ -178,6 +182,7 @@ function robotEnemy(){
                         shooting = false;         
                         frame_count = 0;
                         t_fireball = 0;
+                        fireball.visible = false;
                     }
                 }
                 frame_count += 1;
@@ -197,7 +202,8 @@ function robotEnemy(){
                 robot_to_spawn = true;
                 robot_time = 0;
                 t_fireball = 0; 
-                shooting = false;           }
+                shooting = false;  
+                robot.visible = false;         }
         }
     }
 }
