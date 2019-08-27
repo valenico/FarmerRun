@@ -15,6 +15,8 @@ var cylinder = new THREE.Mesh( cgeometry, cmaterial );
 cylinder.castShadow = true;
 cylinder.receiveShadow = true;
 
+var audio = new Audio('../audio/stone.mp3');
+
 
 function generate_obstacle(){  
     for(; n_obs <= max_obs; ){
@@ -163,6 +165,7 @@ function break_walls(){
             repositioningObstacle( l , sonic.position.z);
             rubble.position.set(eggman.position.x, 0, eggman.position.z);
             rubble.visible = true;
+            audio.play();
         }
     }
 }

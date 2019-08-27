@@ -9,7 +9,15 @@
 <body>
 <!-- partial:index.partial.html -->
 
-<embed name="green_hill_music" src="../audio/Sonic Generations - Green Hill Zone Classic.mp3" loop="true" hidden="true" autostart="true">
+<audio autoplay id="bgAudio" loop="true">
+  <source src="../audio/Sonic Generations - Green Hill Zone Classic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+  var audio = document.getElementById("bgAudio");
+  audio.volume = 0.5;
+</script>
+
 <script>console.clear();</script>
 <script src="https://unpkg.com/three@0.87.1/build/three.js"></script>
 <script src="https://unpkg.com/three@0.87.1/examples/js/controls/OrbitControls.js"></script>
