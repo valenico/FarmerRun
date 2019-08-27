@@ -266,6 +266,18 @@ function animate(){
     bg.position.z += s;
     heart.rotation.y += 0.05;
 
+    if(cow1 != undefined && cow2 != undefined) cowsRespawn(sonic.position.z);
+    /*
+    if(mixer1 != undefined) console.log(cow1.position.z);
+
+    if(cow1 != undefined && cow2 != undefined) cowsRespawn(sonic.position.z);
+
+    if(clock != undefined){
+      const delta = clock.getDelta();
+      for ( const mixer of mixers ) {
+          mixer.update( delta );
+      }}*/
+
     // Infinite road
     if(sonic.position.z >= 125*times + 10){
       if(times % 2 == 0){

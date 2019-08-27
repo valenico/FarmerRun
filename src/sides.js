@@ -47,6 +47,49 @@ function load_grass(texture){
   scene.add(side4);
 }
 
+var cow1, cow2;
+var mixer1, mixer2;
+const mixers = [];
+const clock = new THREE.Clock();
+
+loader.load('./../models/cow/scene.gltf', function(gltf) {
+    var cow1 = gltf.scene;
+    cow1.scale.set(0.008, 0.008, 0.008);
+    cow1.position.set(5, 0, 10);
+    cow1.rotation.y = 1.5;
+
+    /*
+    const animation = gltf.animations[0];
+    console.log(animation);
+
+    mixer1 = new THREE.AnimationMixer( cow1 );
+    mixers.push( mixer1 );
+
+    /////
+    const action = mixer1.clipAction( animation );
+    action.play();*/
+    scene.add(cow1);
+    ////
+});
+
+loader.load('./../models/cow/scene.gltf', function(gltf) {
+    var cow2 = gltf.scene;
+    cow2.scale.set(0.008, 0.008, 0.008);
+    cow2.position.set(-5, 0, 6);
+    cow2.rotation.y = 1.5;
+    /*const animation = gltf.animations[0];
+    console.log(animation);
+
+    mixer2 = new THREE.AnimationMixer( cow2 );
+    mixers.push( mixer2 );
+
+    //////
+    const action = mixer2.clipAction( animation );
+    action.play();*/
+    scene.add(cow2);
+    /////
+});
+
 loader1.load('./../Images/tree.png', function(texture){
     texture.repeat.set(times_horizontal, times_vert);
     var objMaterial = new THREE.MeshPhongMaterial({
@@ -91,6 +134,25 @@ loader1.load('./../Images/tree5.png', function(texture){
     tree4 = new THREE.Mesh(objGeometry, objMaterial);
     treesInit();
 });
+
+function cowsRespawn(start){
+  console.log("HELLO");
+  console.log(cow1);
+  console.log(cow1.position.z);
+  if(cow1.position.z < sonic.position.z + 3){7
+    console.log("dentro");
+    //var x = Math.random()*3 + 4;
+    var z = start + Math.random() + 20;
+    cow1.matrixWorldNeedsUpdate = true;
+    //cow1.position.x = x;
+    cow1.position.z = z;
+  } 
+  if (cow2.position.z < sonic.position.z + 3){
+    var x = Math.random()*3 + 4;
+    var z = start + Math.random() + 20;
+    cow2.position.set(x, 0 , -z);
+  }
+}
 
 
 function createSide(floorGeometry,texture,posx, posz){

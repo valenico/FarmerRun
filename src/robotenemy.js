@@ -15,7 +15,6 @@ var robot_speed = 0.007
 var fireball_speed = 0.025;
 
 var shot = new Audio('../audio/shot.mp3');
-shot.volume = 0.4;
 
 
 robot_moves = [lerp(0, 3, robot_speed).concat(lerp(3, 0, robot_speed)), 
@@ -99,8 +98,7 @@ function spawn_robot(){
         robot.position.z = sonic.position.z + 150;
         shooting = false;
         t_robot = 0;
-        robot_time = 0;
-        played_shot = false;
+        robot_time = 0
     }
 }
 
@@ -112,7 +110,7 @@ function fireball_lerp(fromx, fromy, fromz, tox, toy, toz){
                      ];
 }
 
-var played_shot = false;
+
 
 function robotEnemy(){
     if(robot_to_spawn == false){
@@ -162,11 +160,6 @@ function robotEnemy(){
                         else fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x, sonic.position.y - 1, sonic.position.z + 1);
                     }
 
-                    if(!played_shot){
-                        shot.play();
-                        played_shot = true;
-                    }
-
                     scene.remove(line);
                     fireball.position.x = fireball_moves[0][t_fireball];
                     fireball.position.y = fireball_moves[1][t_fireball];
@@ -185,7 +178,6 @@ function robotEnemy(){
                         shooting = false;         
                         frame_count = 0;
                         t_fireball = 0;
-                        played_shot = false;
                     }
                 }
                 frame_count += 1;
