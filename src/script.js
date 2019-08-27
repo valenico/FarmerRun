@@ -256,6 +256,9 @@ function damage_feedback(){
   current_frame = 0;
 }
 k = 0;
+
+var bg1;
+
 function animate(){
   if(typeof(sonic) != 'undefined' && typeof(tails) != 'undefined'){
     delete_obs(); // reposition of obstacles behind sonic
@@ -268,6 +271,7 @@ function animate(){
     camera.position.z += s;
     light.position.z += s;
     bg.position.z += s;
+    bg1.position.z += s;
     heart.rotation.y += 0.05;
 
     if(cow1 != undefined && cow2 != undefined) cowsRespawn(sonic.position.z);
@@ -423,7 +427,10 @@ var onLoad = function (texture) {
 
     bg = new THREE.Mesh(objGeometry, objMaterial);
     bg.position.set( 0 , 69, 250);
-    scene.add(bg);   
+    bg1 = bg.clone();
+    bg1.position.set( 0 , 69, -250);
+    scene.add(bg);
+     scene.add(bg1);   
   } 
 }
 
