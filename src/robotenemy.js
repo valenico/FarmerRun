@@ -7,6 +7,7 @@ var robot_to_spawn = true;
 var shooting = false;
 var frame_count = 0;
 var time_to_shoot = 80;
+var played_shot = false;
 
 var robot_time = 0;
 var robot_max_time = 1000;
@@ -14,7 +15,8 @@ var robot_max_time = 1000;
 var robot_speed = 0.007
 var fireball_speed = 0.025;
 
-var shot = new Audio('../audio/shot.mp3');
+var shot = new Audio('./../audio/shot.mp3');
+shot.volume = 0.4;
 
 
 robot_moves = [lerp(0, 3, robot_speed).concat(lerp(3, 0, robot_speed)), 
@@ -92,6 +94,7 @@ function laser(){
     scene.add( line );  
 }
 
+
 function spawn_robot(){
 
     if((sonic.position.z + 3) % 100 <= 1 && robot_to_spawn == true ){
@@ -99,6 +102,7 @@ function spawn_robot(){
         robot_to_spawn = false;
         robot.position.x = 4;
         robot.position.z = sonic.position.z + 150;
+        played_shot = false;
         shooting = false;
         t_robot = 0;
         robot_time = 0
@@ -164,6 +168,11 @@ function robotEnemy(){
                     }
                     fireball.visible = true;
 
+                    if(!played_shot) {
+                        shot.play();
+                        played_shot = true;
+                    }
+
                     scene.remove(line);
                     fireball.position.x = fireball_moves[0][t_fireball];
                     fireball.position.y = fireball_moves[1][t_fireball];
@@ -183,6 +192,7 @@ function robotEnemy(){
                         frame_count = 0;
                         t_fireball = 0;
                         fireball.visible = false;
+                        played_shot = false;
                     }
                 }
                 frame_count += 1;

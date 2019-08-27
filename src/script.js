@@ -275,12 +275,6 @@ function animate(){
 
     if(cow1 != undefined && cow2 != undefined) {
       cowsRespawn(sonic.position.z);
-
-      /*
-      if(cow1.rotation.y == 1.5) cow1.position.z += 0.02;
-      else cow1.position.z -= 0.02;
-      if(cow2.rotation.y == 1.5) cow2.position.z += 0.02;
-      else cow2.position.z -= 0.02;*/
     }
 
     if(clock != undefined){

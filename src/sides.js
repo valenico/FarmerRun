@@ -1,6 +1,6 @@
 var tree1, tree2, tree3, tree4;
 var trees = new Array();
-var max_trees = 30;
+var max_trees = 10;
 var tree_dist = 50;
 var min_tree_dist = 20;
 
@@ -55,7 +55,7 @@ const clock = new THREE.Clock();
 loader.load('./../models/cow/scene.gltf', function(gltf) {
     cow1 = gltf.scene;
     cow1.scale.set(0.008, 0.008, 0.008);
-    cow1.position.set(5, 0, 10);
+    cow1.position.set(5, 0, -10);
     cow1.rotation.y = 1.5;
 
     const animation = gltf.animations[0];
@@ -63,28 +63,24 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
     mixer1 = new THREE.AnimationMixer( cow1 );
     mixers.push( mixer1 );
 
-    /////
     const action = mixer1.clipAction( animation );
     action.play();
     scene.add(cow1);
-    ////
 });
 
 loader.load('./../models/cow/scene.gltf', function(gltf) {
     cow2 = gltf.scene;
     cow2.scale.set(0.008, 0.008, 0.008);
-    cow2.position.set(-5, 0, 6);
+    cow2.position.set(-5, 0, -10);
     cow2.rotation.y = 1.5;
     const animation = gltf.animations[0];
 
     mixer2 = new THREE.AnimationMixer( cow2 );
     mixers.push( mixer2 );
 
-    //////
     const action = mixer2.clipAction( animation );
     action.play();
     scene.add(cow2);
-    /////
 });
 
 loader1.load('./../Images/tree.png', function(texture){
@@ -135,7 +131,7 @@ loader1.load('./../Images/tree5.png', function(texture){
 function cowsRespawn(start){
   if(cow1.position.z < sonic.position.z - 10 && Math.random()>0.99){
     var x = Math.random()*4 + 3;
-    var z = start + Math.random()*100 + 20;
+    var z = start + 50 + Math.random()*100 + 20;
     var rot;
     if(Math.random > 5) rot = 1.5;
     else rot = -1.5;
@@ -144,7 +140,7 @@ function cowsRespawn(start){
   } 
   if (cow2.position.z < sonic.position.z - 10 && Math.random()>0.99){
     var x = Math.random()*4 + 3;
-    var z = start + Math.random()*100 + 20;
+    var z = start + Math.random()*30 + 20 + Math.random()*80 + 20;
     var rot;
     if(Math.random > 5) rot = 1.5;
     else rot = -1.5;
