@@ -73,7 +73,7 @@ function eggman_moves(){
 
       t_egg = (t_egg >= eggman_moves_x.length) ? 0 : t_egg+1;
 
-      if(n_hit >= max_hit-1 && !played_retreat){
+      if(n_hit >= max_hit-1 && !played_retreat && !isPlaying(challenging)){
           if(Math.random() > 0.5) letgo.play();
           else won.play();
           played_retreat = true;
@@ -84,12 +84,15 @@ function eggman_moves(){
         eggman.position.z = camera.position.z;
         n_hit = 0;
         egg = false;
+        played_retreat = false;
       }
 
       if(!invincibility) {
         e = check_eggman(e);
         if(e){
-          challenging.play();
+          if(!played_retreat){
+            challenging.play();
+          }
           getDamage();
           damage_feedback();
         }
@@ -97,6 +100,8 @@ function eggman_moves(){
       //else if(e && score == 0) window.alert("GAME OVER");
     } 
 }
+
+function isPlaying(audio) { return !audio.paused; }
 
 function turn_off_eggman(){
     if(eggman.position.z > sonic.position.z){
