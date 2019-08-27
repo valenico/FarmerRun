@@ -287,4 +287,10 @@ function clear_area(){
     shield.visible = false;
     heart.visible = false;
 
+    for(i = 0; i < trees.length; i++){
+        if(trees[i].position.z + 3 > sonic.position.z){
+            scene.remove(trees[i]);
+        }
+    }
+
 }

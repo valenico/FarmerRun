@@ -1,6 +1,6 @@
 var tree1, tree2, tree3, tree4;
 var trees = new Array();
-var max_trees = 10;
+var max_trees = 30;
 var tree_dist = 50;
 var min_tree_dist = 20;
 
@@ -240,7 +240,7 @@ function treesInit(){
 
 function treesRepositioning(start){
     for(var i = 0; i < trees.length; i++){
-        if(trees[i].position.z + 2 < sonic.position.z ){
+        if(trees[i].position.z + 1 < sonic.position.z ){
             var road_side = (Math.random() > 0.5 ? -1 : 1);
             var px = road_side*Math.random()*10 +(road_side == -1 ? -3 : 3) ;
             var pz = Math.random()*tree_dist + start + min_tree_dist;
