@@ -71,9 +71,11 @@ var line;
 
 function laser(){
 
-    var material = new THREE.LineBasicMaterial({
-    color: 0xfb0000,
-    blending: THREE.AdditiveBlending
+    var material = new THREE.MeshPhongMaterial({
+    color: 0xcf1b03,
+    blending: THREE.AdditiveBlending, 
+    shininess: 100, 
+    emissive: 0xcf1b03
     });
 
     var geometry = new THREE.Geometry();
