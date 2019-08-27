@@ -211,7 +211,7 @@ function getHeart(){
 function death(){
     dead_step += 1;
 
-    if(dead_step < 40){
+    if(dead_step < 70){
 
         sonic.getObjectByName(sonic_dic.Polpaccio_dx).rotation.z = run[1][(t + dead_step)%run[0].length];
         sonic.getObjectByName(sonic_dic.Coscia_dx).rotation.z = run[0][(t + dead_step)%run[0].length];
@@ -236,7 +236,7 @@ function death(){
         light.position.z += s/2;
         bg.position.z += s/2;
 
-    } else if (dead_step == 40){
+    } else if (dead_step == 70){
 
         camera.position.z += 5;
         camera.position.y = 1;
