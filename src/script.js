@@ -157,27 +157,7 @@ loader.load( './../models/scene.gltf', function ( gltf ) {
 
 loader.load( "./../models/tails/scene.gltf", function(gltf){
   tails = gltf.scene;
-  tails.getObjectByName('Reference_04').rotation.y = 3.1;
-  tails.getObjectByName(tails_dic.Indice_lower_sx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Indice_upper_sx).rotation.z = -1;
-  tails.getObjectByName(tails_dic.Medio_lower_sx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Medio_upper_sx).rotation.z = -1;
-  tails.getObjectByName(tails_dic.Mignolo_lower_sx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Mignolo_upper_sx).rotation.z = -1;
-  tails.getObjectByName(tails_dic.Anulare_lower_sx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Anulare_upper_sx).rotation.z = -1;    
-  tails.getObjectByName(tails_dic.Pollice_lower_sx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Pollice_upper_sx).rotation.z = -0.5;
-  tails.getObjectByName(tails_dic.Indice_lower_dx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Indice_upper_dx).rotation.z = -1;
-  tails.getObjectByName(tails_dic.Medio_lower_dx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Medio_upper_dx).rotation.z = -1;
-  tails.getObjectByName(tails_dic.Mignolo_lower_dx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Mignolo_upper_dx).rotation.z = -1;
-  tails.getObjectByName(tails_dic.Anulare_lower_dx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Anulare_upper_dx).rotation.z = -1;
-  tails.getObjectByName(tails_dic.Pollice_lower_dx).rotation.z = -2;
-  tails.getObjectByName(tails_dic.Pollice_upper_dx).rotation.z = -1;
+  tails.rotation.y = 3.1;
   tails.getObjectByName(tails_dic.Braccio_dx).rotation.y = -0.5;
   tails.getObjectByName(tails_dic.Braccio_sx).rotation.y = 0.5;
   tails.position.set(0 , -3, 0);
