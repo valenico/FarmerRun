@@ -1,6 +1,3 @@
-var spawn_tails = true;
-var can_move_tails = false;
-
 const tails_dic = { 
 
     Testa : "Head_08",

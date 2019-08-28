@@ -50,11 +50,14 @@ const sonic_dic = {
 
 var renderer, scene, camera, controls, sonic, eggman, tails;
 var t = 0;
+
 var jump = false;
+var spawn_tails = true;
+var can_move_tails = false;
 
 var ground1, ground2;
 var side1, side2, side3, side4;
-var bg;
+var bg, bg1;
 
 var items_probability = 0.999;
 
@@ -226,7 +229,6 @@ function damage_feedback(){
 }
 k = 0;
 
-var bg1;
 
 function animate(){
   if(typeof(sonic) != 'undefined' && typeof(tails) != 'undefined'){
