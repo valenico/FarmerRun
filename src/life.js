@@ -293,5 +293,6 @@ function clear_area(){
             scene.remove(trees[i]);
         }
     }
-
+    text2.className = 'Blazing';
+   // text2.style.color =  'goldenrod' ;
 }

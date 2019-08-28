@@ -72,3 +72,56 @@ html {
   font: 14pt "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: lighten(#0103f3, 75%);
 }
+
+.Blazing {
+  position: relative;
+  text-align: center;
+  left: 0px;
+  transform: translateY(450px);
+  font-size: 70px;
+  width: 100%;
+
+    
+	text-shadow:
+    0 3px 20px red,
+    0 0 20px red,
+		0 0 10px orange,
+		4px -5px 6px yellow,
+		-4px -10px 10px yellow,
+		0 -10px 30px yellow;
+  animation: 2s Blazing infinite alternate linear;
+  
+}
+
+@keyframes Blazing {
+	0%   { text-shadow: 0 3px 20px red, 0 0 20px red,
+		0 0 10px orange,
+		0 0 0 yellow,
+		0 0 5px yellow,
+		-2px -5px 5px yellow,
+		4px -10px 10px yellow; }
+	25%   { text-shadow: 0 3px 20px red, 0 0 30px red,
+		0 0 20px orange,
+		0 0 5px yellow,
+		-2px -5px 5px yellow,
+		3px -10px 10px yellow,
+		-4px -15px 20px yellow; }
+	50%   { text-shadow: 0 3px 20px red, 0 0 20px red,
+		0 -5px 10px orange,
+		-2px -5px 5px yellow,
+		3px -10px 10px yellow,
+		-4px -15px 20px yellow,
+		2px -20px 30px rgba(255,255,0,0.5); }
+	75%   { text-shadow: 0 3px 20px red, 0 0 20px red,
+		0 -5px 10px orange,
+		3px -5px 5px yellow,
+		-4px -10px 10px yellow,
+		2px -20px 30px rgba(255,255,0,0.5),
+		0px -25px 40px rgba(255,255,0,0)}
+	100%   { text-shadow: 0 3px 20px red, 0 0 20px red,
+		0 0 10px orange,
+		0 0 0 yellow,
+		0 0 5px yellow,
+		-2px -5px 5px yellow,
+		4px -10px 10px yellow; }
+}
