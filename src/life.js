@@ -294,5 +294,5 @@ function clear_area(){
         }
     }
     text2.className = 'Blazing';
-   // text2.style.color =  'goldenrod' ;
+    text2.style.color =  'rgb(255, 115, 0)';
 }
