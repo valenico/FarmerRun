@@ -130,7 +130,7 @@ function getDamage(){
             return;
         } else if(life1.src.slice(-10,-4) != 'nolife'){
             life1.src = './../Images/nolife.png';
-            window.alert("Game Over!");
+            dead_step += 1;
             return;
         }
     } else if(max_hearts == 3){
@@ -143,7 +143,7 @@ function getDamage(){
             return;
         } else if(life2.src.slice(-10,-4) != 'nolife'){
             life2.src = './../Images/nolife.png';
-            window.alert("Game Over!");
+            dead_step += 1;
             return;
         }
     } else if(max_hearts == 2){
@@ -153,7 +153,7 @@ function getDamage(){
             return;
         } else if(life3.src.slice(-10,-4) != 'nolife'){
             life3.src = './../Images/nolife.png';
-            window.alert("Game Over!");
+            dead_step += 1;
             return;
         } 
     } else {
