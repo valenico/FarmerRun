@@ -294,4 +294,29 @@ function clear_area(){
         }
     }
 
+    for(i = 0; i < obs.length; i++){
+        if(obs[i].position.z > sonic.position.z) scene.remove(obs[i]);
+    }
+
+
+    text2.className = 'Blazing';
+    text2.style.color =  'rgb(255, 115, 0)';
+
+    var back_button = document.createElement('a');
+    back_button.className = 'b';
+    back_button.style.position = 'absolute';
+    back_button.style.left = 30 + 'px';
+    back_button.style.top = 30 + 'px';
+    back_button.style.width = 90 + 'px';
+
+    var button_text = document.createElement('span');
+    button_text.innerHTML = 'Back';
+    back_button.appendChild(button_text);
+
+    document.body.appendChild(back_button);
+
+    back_button.addEventListener('click', function(){
+        window.location.href = "./instructions.html";
+    });
+
 }
