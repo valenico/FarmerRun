@@ -10,12 +10,6 @@
     <link rel="stylesheet" type="text/css" href="examples.css" />
 </head>
 <style>
-
-  body{
-    width:1920px;
-    background-color: #f8e0b3;
-    height:1080px;
-   }
 .b {
     position: absolute;
     top: 150px;
@@ -35,7 +29,6 @@
 .b:hover {
     transform: scale(1.5);
 }
-
 
 .instructions {
   text-align: center;
@@ -84,6 +77,11 @@ a:hover {
 .rightcolumn{
 }
 
+.difficulty{
+    position: absolute;
+    top: 40%;
+    left: 59%;
+}
 
 
 a,h4 {
@@ -131,8 +129,8 @@ a,h4 {
                 
 		    <div class='row'>
 		      <div class='column'>
-		          <p><img style="position: absolute;top:20%;left:10%;" height="200px" src='./../Images/eggman2.png'></p>
-		          <p><img style="position: absolute;top:30%;left:15%;" height="600px" src='./../Images/sonic2.png' /></p>
+		          <p><img style="position: absolute;top:20%;left:10%;" height="20%" src='./../Images/eggman2.png'></p>
+		          <p><img style="position: absolute;top:30%;left:15%;" height="60%" src='./../Images/sonic2.png' /></p>
 		      </div>
 		      <div class='column rightcolumn'>
 		        <div class='instructions'>
@@ -155,13 +153,13 @@ a,h4 {
 		          <p> You loose life when <u>you hit an obstacle or when Eggman hits you</u>. After you've been hit you're invulnerable for some seconds, use that time to escape from every danger! </p>
 		          <p> In the upper left corner you can see your <b>score</b>, in the upper right corner you can see your <b>lives</b>. When you loose one or more lives, the corresponding number of hearts turn gray </p>
 		          <p>Select the difficulty of your game. An easy game allows you to get hit four times before a game over; the extreme game gives you only one shot.</p> -->
-		        <div id="difficulty">   
-                    <h3 style = "position: absolute;top:57%; right:34.5%;">  Change difficulty:  </h3>
-                    <a style = "position: absolute;top:62%; right:40%;" href="#" class="previous round" onClick='return lowerDifficulty();'>&#8249;</a>
-                    <h4 style = "position: absolute;top:63%; right:36.2%;" id="diff">  Normal  </h4>
-                    <a style = "position: absolute;top:62%; right:33%; " href="#" class="next round" onClick='return increaseDifficulty();'>&#8250;</a>
+              <h3 style = "position: absolute; top: 57%; left: 61%">  Change difficulty:  </h3>
+              <div class="difficulty" id="difficulty">   
+                    <a style = "position: relative; top: 165px; left: 10%;" href="#" class="previous round" onClick='return lowerDifficulty();'>&#8249;</a>
+                    <h4 style = "position: relative; top: 165px; left: 20%;" id="diff">  Normal  </h4>
+                    <a style = "position: relative; top: 165px; left: 30%;" href="#" class="next round" onClick='return increaseDifficulty();'>&#8250;</a>
                 </div>
-                <button style="position: absolute; top: 70%; left: 55%;" class="b" id="play" onclick='playGame()'> <h2 style="text-align: center; font-size:xx-large; color: black;"> Play the Game! <h2> </button>
+                <button style="position: absolute; top: 70%; left: 55%;" class="b"> <h2 style="text-align: center; font-size:xx-large; color: black;"> Play the Game! <h2> </button>
 		      </div>
 		    </div>
 		          <!--
@@ -170,8 +168,8 @@ a,h4 {
 		        <a class="b" id='medium' ><span style="text-align: center; font-size:xx-large"> Medium</span> </a> &nbsp; &nbsp; &nbsp;
 		        <a class="b" id='hard' ><span style="text-align: center; font-size:xx-large">  Hard </span></a> &nbsp; &nbsp; &nbsp;
 		        <a class="b" id='extreme'><span style="text-align: center; font-size:xx-large"> Extreme </span></a>
-		      </div>-->
-		    <script src='./togame.js'></script>
+		      </div>
+		    <script src='./togame.js'></script>-->
 
             
 
@@ -211,16 +209,6 @@ a,h4 {
         else if (text == "  Normal  ") document.getElementById('diff').innerHTML = "  Hard  ";
         else if (text == "  Hard  ") document.getElementById('diff').innerHTML = "  Extreme  ";
     }
-
-    function playGame(){
-        var difficulty = document.getElementById("diff").innerHTML;
-        if(difficulty == "  Normal  ") window.location.href = "./index.html?max_hearts=3";
-        else if(difficulty == "  Easy  ") window.location.href = "./index.html?max_hearts=4";
-        else if (difficulty == "  Hard  ") window.location.href = "./index.html?max_hearts=2";
-        else if (difficulty == "  Extreme  ") window.location.href = "./index.html?max_hearts=1";
-
-    }
-
 </script>
 
 </body>
