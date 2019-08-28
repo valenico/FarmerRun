@@ -77,11 +77,6 @@ a:hover {
 .rightcolumn{
 }
 
-.difficulty{
-    position: absolute;
-    top: 40%;
-    left: 59%;
-}
 
 
 a,h4 {
@@ -153,11 +148,11 @@ a,h4 {
 		          <p> You loose life when <u>you hit an obstacle or when Eggman hits you</u>. After you've been hit you're invulnerable for some seconds, use that time to escape from every danger! </p>
 		          <p> In the upper left corner you can see your <b>score</b>, in the upper right corner you can see your <b>lives</b>. When you loose one or more lives, the corresponding number of hearts turn gray </p>
 		          <p>Select the difficulty of your game. An easy game allows you to get hit four times before a game over; the extreme game gives you only one shot.</p> -->
-		        <div class="difficulty" id="difficulty">   
-                    <h3 style = "position: relative; top: 150px;">  Change difficulty:  </h3>
-                    <a style = "position: relative; top: 200px;" href="#" class="previous round" onClick='return lowerDifficulty();'>&#8249;</a>
-                    <h4 style = "position: relative; top: 200px;" id="diff">  Normal  </h4>
-                    <a style = "position: relative; top: 200px;" href="#" class="next round" onClick='return increaseDifficulty();'>&#8250;</a>
+		        <div id="difficulty">   
+                    <h3 style = "position: absolute;top:57%; right:34.5%;">  Change difficulty:  </h3>
+                    <a style = "position: absolute;top:62%; right:40%;" href="#" class="previous round" onClick='return lowerDifficulty();'>&#8249;</a>
+                    <h4 style = "position: absolute;top:63%; right:36.2%;" id="diff">  Normal  </h4>
+                    <a style = "position: absolute;top:62%; right:33%; " href="#" class="next round" onClick='return increaseDifficulty();'>&#8250;</a>
                 </div>
                 <button style="position: absolute; top: 70%; left: 55%;" class="b" id="play" onclick='playGame()'> <h2 style="text-align: center; font-size:xx-large; color: black;"> Play the Game! <h2> </button>
 		      </div>
