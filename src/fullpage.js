@@ -985,13 +985,13 @@
                 css(section, {'padding-bottom': options.paddingBottom});
             }
 
-            if (typeof options.sectionsColor[index] !==  'undefined') {
+            if (typeof options.sectionsColor[index] !=  'undefined') {
                 css(section, {'background-color': options.sectionsColor[index]});
-            }
+            } 
 
             if (typeof options.anchors[index] !== 'undefined') {
                 section.setAttribute('data-anchor', options.anchors[index]);
-            }
+            } 
         }
 
         /**
