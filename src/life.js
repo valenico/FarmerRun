@@ -306,7 +306,7 @@ function clear_area(){
     back_button.className = 'b';
     back_button.style.position = 'absolute';
     back_button.style.left = 30 + 'px';
-    back_button.style.top = 30 + 'px';
+    back_button.style.bottom = 30 + 'px';
     back_button.style.width = 90 + 'px';
 
     var button_text = document.createElement('span');
