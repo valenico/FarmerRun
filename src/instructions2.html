@@ -12,7 +12,7 @@
 <style>
 
 
-html, body, {
+html, body {
     position:fixed;
     width: 100%;
     height: 100%;
@@ -167,9 +167,9 @@ a,h4 {
 		          <p>Select the difficulty of your game. An easy game allows you to get hit four times before a game over; the extreme game gives you only one shot.</p> -->
 	              <h3 style = "position: absolute; top: 60%; left: 59.5%">  Change difficulty:  </h3>
 		          <a style = "position: absolute; top: 63%; left: 56%;" href="#" class="previous round" onClick='return lowerDifficulty();'>&#8249;</a>
-		          <h4 style = "position: absolute; top: 64%; left: 61.4%;" id="diff">  Normal  </h4>
+		          <h4 style = "position: absolute; top: 64%; left: 61.4%;" id="diff">Normal</h4>
 		          <a style = "position: absolute; top: 63%; left: 67.5%;" href="#" class="next round" onClick='return increaseDifficulty();'>&#8250;</a>
-	              <button style="position: absolute; top: 70%; left: 55%;" class="b"> <h2 style="text-align: center; font-size:xx-large; color: black;"> Play the Game! <h2> </button>
+	              <button style="position: absolute; top: 70%; left: 55%;" class="b" onclick = "start()"> <h2 style="text-align: center; font-size:xx-large; color: black;"> Play the Game! <h2> </button>
 		      </div>
 		    </div>
 		          <!--
@@ -194,7 +194,7 @@ a,h4 {
 <script type="text/javascript" src="fullpage.js"></script>
 <script type="text/javascript">
     var myFullpage = new fullpage('#fullpage', {
-        sectionsColor: ['white', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff'],
+        sectionsColor: ['white', '#4BBFC3'],
         anchors: ['firstPage', 'secondPage'],
         navigation:true,
         navigationTooltips: ['Play the game!', 'HUD'],
@@ -208,16 +208,27 @@ a,h4 {
 <script type="text/javascript">
     function lowerDifficulty(){
         var text = document.getElementById('diff').innerHTML;
-        if(text == "  Normal  ") document.getElementById('diff').innerHTML = "  Easy  ";
-        else if (text == "  Hard  ") document.getElementById('diff').innerHTML = "  Normal  ";
-        else if (text == "  Extreme  ") document.getElementById('diff').innerHTML = "  Hard  ";
+        if(text == "Normal") document.getElementById('diff').innerHTML = "Easy";
+        else if (text == "Hard") document.getElementById('diff').innerHTML = "Normal";
+        else if (text == "Extreme") document.getElementById('diff').innerHTML = "Hard";
     }
 
     function increaseDifficulty(){
         var text = document.getElementById('diff').innerHTML;
-        if(text == "  Easy  ") document.getElementById('diff').innerHTML = "  Normal  ";
-        else if (text == "  Normal  ") document.getElementById('diff').innerHTML = "  Hard  ";
-        else if (text == "  Hard  ") document.getElementById('diff').innerHTML = "  Extreme  ";
+        if(text == "Easy") document.getElementById('diff').innerHTML = "Normal";
+        else if (text == "Normal") document.getElementById('diff').innerHTML = "Hard";
+        else if (text == "Hard") document.getElementById('diff').innerHTML = "Extreme";
+    }
+
+    function start(){
+    	var text = document.getElementById('diff').innerHTML;
+    	if(text == "Normal") window.location.href = "./index.html?max_hearts=3";
+    	else if(text == "Easy") window.location.href = "./index.html?max_hearts=4";
+    	else if(text == "Hard") window.location.href = "./index.html?max_hearts=2";
+    	else if(text == "Extreme") window.location.href = "./index.html?max_hearts=1";
+
+
+
     }
 </script>
 
