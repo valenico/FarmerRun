@@ -10,6 +10,18 @@
     <link rel="stylesheet" type="text/css" href="examples.css" />
 </head>
 <style>
+
+
+html, body, {
+    position:fixed;
+    width: 100%;
+    height: 100%;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
 .b {
     position: absolute;
     top: 150px;
@@ -153,13 +165,11 @@ a,h4 {
 		          <p> You loose life when <u>you hit an obstacle or when Eggman hits you</u>. After you've been hit you're invulnerable for some seconds, use that time to escape from every danger! </p>
 		          <p> In the upper left corner you can see your <b>score</b>, in the upper right corner you can see your <b>lives</b>. When you loose one or more lives, the corresponding number of hearts turn gray </p>
 		          <p>Select the difficulty of your game. An easy game allows you to get hit four times before a game over; the extreme game gives you only one shot.</p> -->
-              <h3 style = "position: absolute; top: 57%; left: 61%">  Change difficulty:  </h3>
-              <div class="difficulty" id="difficulty">   
-                    <a style = "position: relative; top: 165px; left: 10%;" href="#" class="previous round" onClick='return lowerDifficulty();'>&#8249;</a>
-                    <h4 style = "position: relative; top: 165px; left: 20%;" id="diff">  Normal  </h4>
-                    <a style = "position: relative; top: 165px; left: 30%;" href="#" class="next round" onClick='return increaseDifficulty();'>&#8250;</a>
-                </div>
-                <button style="position: absolute; top: 70%; left: 55%;" class="b"> <h2 style="text-align: center; font-size:xx-large; color: black;"> Play the Game! <h2> </button>
+	              <h3 style = "position: absolute; top: 60%; left: 59.5%">  Change difficulty:  </h3>
+		          <a style = "position: absolute; top: 63%; left: 56%;" href="#" class="previous round" onClick='return lowerDifficulty();'>&#8249;</a>
+		          <h4 style = "position: absolute; top: 64%; left: 61.4%;" id="diff">  Normal  </h4>
+		          <a style = "position: absolute; top: 63%; left: 67.5%;" href="#" class="next round" onClick='return increaseDifficulty();'>&#8250;</a>
+	              <button style="position: absolute; top: 70%; left: 55%;" class="b"> <h2 style="text-align: center; font-size:xx-large; color: black;"> Play the Game! <h2> </button>
 		      </div>
 		    </div>
 		          <!--
