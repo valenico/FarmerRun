@@ -128,3 +128,25 @@ html {
 		-2px -5px 5px yellow,
 		4px -10px 10px yellow; }
 }
+
+.b {
+  color: white;
+  background-color:#0502F4;
+  border: 5px solid #E8F22F;
+  text-decoration: none;
+  padding: 20px;
+  width: 150px;
+  height: 40px ;
+  border-radius: 50px;
+  display: inline-block;
+  transition: all 0.4s ease 0s;
+  }
+
+.b:hover {
+  transform: scale(1.5);
+}
+
+.b span{
+  margin-left: 5px;
+  font-size: xx-large;
+}
