@@ -11,7 +11,7 @@
 </head>
 <style>
 .b {
-    position: relative;
+    position: absolute;
     top: 150px;
     left: 30px;
     color: white;
@@ -20,7 +20,7 @@
     text-decoration: none;
     padding: 20px;
     width: 300px;
-    height: 50px ;
+    height: 100px ;
     border-radius: 50px;
     display: inline-block;
     transition: all 0.4s ease 0s;
@@ -69,21 +69,18 @@ a:hover {
 }
 
 .howtoplay{
-    position: relative;
-    bottom: 30px;
+    position: absolute;
+    bottom: 30px; 
     color: blue;
 }
 
 .rightcolumn{
-    position: relative;
-    top: 200px;
-    right: 200px;
 }
 
 .difficulty{
-    position: relative;
-    top: 100px;
-    right
+    position: absolute;
+    top: 40%;
+    left: 59%;
 }
 
 
@@ -92,7 +89,7 @@ a,h4 {
 }
 
 .tooltip {
-  position: relative;
+  position: absolute;
   display: inline-block;
 }
 
@@ -127,18 +124,18 @@ a,h4 {
 <div id="fullpage">
     <div class="section active" id="section0">
         <div class="intro">
-          <p style="text-align: center"> <img src='./../Images/logo.png' /> </p>
+          <p style="position: absolute;top:5%;left:20%;"> <img src='./../Images/logo.png' /> </p>
           <p>
                 
 		    <div class='row'>
 		      <div class='column'>
-		          <p><img style="margin-left: 100px" height="200px" src='./../Images/eggman2.png'></p>
-		          <p><img style="margin-left: 200px" height="600px" src='./../Images/sonic2.png' /></p>
+		          <p><img style="position: absolute;top:20%;left:10%;" height="200px" src='./../Images/eggman2.png'></p>
+		          <p><img style="position: absolute;top:30%;left:15%;" height="600px" src='./../Images/sonic2.png' /></p>
 		      </div>
 		      <div class='column rightcolumn'>
 		        <div class='instructions'>
-		          <h2 class="howtoplay">How to Play 
-                    <div class="tooltip"><img width="30px" height="30px" src='./../Images/info-new.png' /> 
+		          <h2 style="position: absolute;left: 58%;top:30%;" class="howtoplay">How to Play 
+                    <div style="position: absolute; left: 100%; top:-4%;" class="tooltip"><img width="30px" height="30px" src='./../Images/info-new.png' /> 
                     <span class="tooltiptext">
                           During the game you can collect rings to get points, hearts to get back lives and shields to get invulnerability for some time.
                           Eggman your enemy! He is coming for you, you will be warned about him with a <span style="color: red"> red signal </span> on the ground which moves along his trajectory so that you can avoid him even when he's behind you.
@@ -147,7 +144,7 @@ a,h4 {
                           Select the difficulty of your game. An easy game allows you to get hit four times before a game over; the extreme game gives you only one shot.
 
                     </span></div> </h2> <p> 
-		          <img src='./../Images/commands.png' alt='Game control commands.' width='250px'/>
+		          <img style="position: absolute;top:40%;left:56%;" src='./../Images/commands.png' alt='Game control commands.' width='250px'/>
 		        </div>
 		          <!--		          
 		          <p> You can move LEFT ( A ), RIGHT ( D ) and JUMP ( spacebar ). </p>
@@ -157,12 +154,12 @@ a,h4 {
 		          <p> In the upper left corner you can see your <b>score</b>, in the upper right corner you can see your <b>lives</b>. When you loose one or more lives, the corresponding number of hearts turn gray </p>
 		          <p>Select the difficulty of your game. An easy game allows you to get hit four times before a game over; the extreme game gives you only one shot.</p> -->
 		        <div class="difficulty" id="difficulty">   
-                    <h3 style = "position: relative; top: -20px;">  Change difficulty:  </h3>
-                    <a href="#" class="previous round" onClick='return lowerDifficulty();'>&#8249;</a>
-                    <h4 id="diff">  Normal  </h4>
-                    <a href="#" class="next round" onClick='return increaseDifficulty();'>&#8250;</a>
+                    <h3 style = "position: relative; top: 150px;">  Change difficulty:  </h3>
+                    <a style = "position: relative; top: 200px;" href="#" class="previous round" onClick='return lowerDifficulty();'>&#8249;</a>
+                    <h4 style = "position: relative; top: 200px;" id="diff">  Normal  </h4>
+                    <a style = "position: relative; top: 200px;" href="#" class="next round" onClick='return increaseDifficulty();'>&#8250;</a>
                 </div>
-                <a class="b" id='easy' > <span style="text-align: center; font-size:xx-large"> Play the Game! </span></a> &nbsp; &nbsp; &nbsp;
+                <button style="position: absolute; top: 70%; left: 55%;" class="b"> <h2 style="text-align: center; font-size:xx-large; color: black;"> Play the Game! <h2> </button>
 		      </div>
 		    </div>
 		          <!--
