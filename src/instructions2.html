@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" type="text/css" href="fullpage.css" />
     <link rel="stylesheet" type="text/css" href="examples.css" />
+
 </head>
 <style>
 
@@ -235,6 +236,7 @@ a,h4 {
 
 </script>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
     function lowerDifficulty(){
         var text = document.getElementById('diff').innerHTML;
@@ -260,6 +262,22 @@ a,h4 {
 
 
     }
+
+    jQuery(document).keydown(function(event) {
+        // If Control or Command key is pressed and the S key is pressed
+        // run save function. 83 is the key code for S.
+        if((event.ctrlKey || event.metaKey) && event.which == 187) {
+            // Save Function
+            event.preventDefault();
+            return false;
+        }
+        if((event.ctrlKey || event.metaKey) && event.which == 189) {
+            // Save Function
+            event.preventDefault();
+            return false;
+        }
+    }
+);
 </script>
 
 </body>
