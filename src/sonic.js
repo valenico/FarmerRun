@@ -1,3 +1,10 @@
+var sonic;
+var jump = false;
+var s = 0.1;
+var run_speed = 0.03;
+var error = 0.5;
+var invincibility = false;
+
 const sonic_dic = { 
 
     Testa : "Head_06",
