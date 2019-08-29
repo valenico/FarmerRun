@@ -300,8 +300,8 @@ function clear_area(){
     }
 
 
-    text2.className = 'Blazing';
-    text2.style.color =  'rgb(255, 115, 0)';
+    text.className = 'Blazing';
+    text.style.color =  'rgb(255, 115, 0)';
 
     var back_button = document.createElement('a');
     back_button.className = 'b';

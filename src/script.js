@@ -164,21 +164,22 @@ function lerp(current, target, fraction){
   return array_of_points;
 }
 
-var text2 = document.createElement('h1');
-text2.style.position = 'absolute';
-text2.style.color = "black";
-text2.style.height = 40 + 'px';
-text2.style.top = 0 + 'px';
-text2.style.left = 40 + 'px';
-document.body.appendChild(text2);
+// score text display
+var text = document.createElement('h1');
+text.style.position = 'absolute';
+text.style.color = "black";
+text.style.height = 40 + 'px';
+text.style.top = 0 + 'px';
+text.style.left = 40 + 'px';
+document.body.appendChild(text);
 
+// function launched after damage 
 function damage_feedback(){
   invincibility = true;
   current_frame = 0;
 }
-//k = 0;
 
-
+// animation loop during the game
 function animate(){
   if(typeof(sonic) != 'undefined' && typeof(tails) != 'undefined'){
     delete_obs(); // reposition of obstacles behind sonic
@@ -353,7 +354,6 @@ function render(){
   renderer.render(scene, camera);
 }
 
-// fine metodo texture
+// main call for game setting and starting
 init();
 animate();
-
