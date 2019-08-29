@@ -159,7 +159,6 @@ function getDamage(){
     } else {
         if(life4.src.slice(-10,-4) != 'nolife'){
             life4.src = './../Images/nolife.png';
-            //window.alert("Game Over!");
             dead_step += 1;
             return;
         }
@@ -236,8 +235,6 @@ function death(){
         light.position.z += s/2;
         bg.position.z += s/2;
 
-        requestAnimationFrame(death);
-
     } else if (dead_step == 70){
 
         camera.position.z += 5;
@@ -274,6 +271,7 @@ function death(){
 
     }
 
+    requestAnimationFrame(death);
     render();
 }
 
