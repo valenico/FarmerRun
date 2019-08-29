@@ -5,7 +5,7 @@ var score = 0;
 var light;
 var dead_step = 0;
 
-var renderer, scene, camera, controls;
+var renderer, camera, controls;
 var t = 0;
 
 var ground1, ground2;
@@ -65,6 +65,15 @@ function init() {
   light.shadow.camera.far = 8000;     // default
   light.shadow.camera.fov = 30;
 
+
+
+  // Initialization of the world
+  spawnClouds(0);
+  treesInit();  
+  scene.add(side1);
+  scene.add(side2);
+  scene.add(side3);
+  scene.add(side4);
 }
 
 //loading models
@@ -307,7 +316,7 @@ var onLoad = function (texture) {
     bg1 = bg.clone();
     bg1.position.set( 0 , 69, -250);
     scene.add(bg);
-     scene.add(bg1);   
+    scene.add(bg1);   
   } 
 }
 

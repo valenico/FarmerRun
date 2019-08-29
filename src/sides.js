@@ -18,6 +18,12 @@ var noiseScale = 2.7;
 var noiseSeed = Math.random() * 100;
 var stepCount = 0; 
 
+
+var cow1, cow2;
+var mixer1, mixer2;
+const mixers = [];
+const clock = new THREE.Clock();
+
 var SideConfig = {
   //const dimensions
   FLOOR_WIDTH: 100,  // size of floor in x direction
@@ -41,19 +47,12 @@ function load_grass(texture){
   side2 = createSide(objGeometry,texture, -53 , 0);
   side3 = createSide(objGeometry,texture, 53 , 250);
   side4 = createSide(objGeometry,texture,-53 , 250);
-  scene.add(side1);
-  scene.add(side2);
-  scene.add(side3);
-  scene.add(side4);
 }
 
-var cow1, cow2;
-var mixer1, mixer2;
-const mixers = [];
-const clock = new THREE.Clock();
 
 loader.load('./../models/cow/scene.gltf', function(gltf) {
     cow1 = gltf.scene;
+    cow1.name = "cow1";
     cow1.scale.set(0.008, 0.008, 0.008);
     cow1.position.set(5, 0, -10);
     cow1.rotation.y = 1.5;
@@ -65,11 +64,11 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
 
     const action = mixer1.clipAction( animation );
     action.play();
-    scene.add(cow1);
 });
 
 loader.load('./../models/cow/scene.gltf', function(gltf) {
     cow2 = gltf.scene;
+    cow2.name = "cow2";
     cow2.scale.set(0.008, 0.008, 0.008);
     cow2.position.set(-5, 0, -10);
     cow2.rotation.y = 1.5;
@@ -80,7 +79,6 @@ loader.load('./../models/cow/scene.gltf', function(gltf) {
 
     const action = mixer2.clipAction( animation );
     action.play();
-    scene.add(cow2);
 });
 
 loader1.load('./../Images/tree.png', function(texture){
@@ -125,10 +123,11 @@ loader1.load('./../Images/tree5.png', function(texture){
         transparent: true,
       });
     tree4 = new THREE.Mesh(objGeometry, objMaterial);
-    treesInit();
 });
 
 function cowsRespawn(start){
+  if(scene.getObjectByName(cow1.name) == null) scene.add(cow1);
+  if(scene.getObjectByName(cow2.name) == null) scene.add(cow2);
   if(cow1.position.z < sonic.position.z - 10 && Math.random()>0.99){
     var x = Math.random()*4 + 3;
     var z = start + 50 + Math.random()*100 + 20;
