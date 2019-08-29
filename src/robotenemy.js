@@ -26,16 +26,16 @@ robot_moves = [lerp(0, 3, robot_speed).concat(lerp(3, 0, robot_speed)),
 
 loader.load("./../models/fireball/scene.gltf", function(gltf){
     fireball = gltf.scene;
+    fireball.name = "fireball";
     fireball.position.set( 0 , 1 , -5);
-
     fireball.scale.set(0.003,0.003,0.003);
     fireball.castShadow = true;
     fireball.visible = false;
-    scene.add(fireball);
 });
 
 loader.load("./../models/robotfly/scene.gltf", function(gltf){
     robot = gltf.scene;
+    robot.name = "robot";
     robot.position.set( 4 , 3 , -4);
     robot.scale.set(0.1,0.1,0.1);
     robot.castShadow = true;
@@ -43,7 +43,6 @@ loader.load("./../models/robotfly/scene.gltf", function(gltf){
     robot.rotation.y = 3.5;
     robot.rotation.x = -0.4;
     robot.visible = false;
-    scene.add(robot);
 });
 
 
@@ -85,6 +84,9 @@ function laser(){
 
 
 function spawn_robot(){
+
+
+    if(scene.getObjectByName(robot.name) == null) scene.add(robot);
 
     if((sonic.position.z + 3) % 100 <= 1 && robot_to_spawn == true ){
         robot.visible = true;
@@ -143,7 +145,9 @@ function robotEnemy(){
                 line.geometry.vertices[1].z = sonic.position.z;
                 line.geometry.verticesNeedUpdate = true;
 
-                if(frame_count >= time_to_shoot){
+                if(frame_count >= time_to_shoot){                    
+                    if(scene.getObjectByName(fireball.name) == null) scene.add(fireball);
+
                     if(frame_count == time_to_shoot){
                         if(robot.position.x >= 2){
                             if(sonic.position.x < 0) fireball_lerp(robot.position.x, robot.position.y, robot.position.z, sonic.position.x - 1.5, sonic.position.y - 1, sonic.position.z + 2);

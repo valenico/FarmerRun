@@ -5,23 +5,15 @@ var score = 0;
 var light;
 var dead_step = 0;
 
-var renderer, scene, camera, controls, sonic, eggman, tails;
+var renderer, camera, controls;
 var t = 0;
-
-var jump = false;
-var spawn_tails = true;
-var can_move_tails = false;
 
 var ground1, ground2;
 var side1, side2, side3, side4;
 var bg, bg1;
 
 var items_probability = 0.999;
-var s = 0.1;
-var run_speed = 0.03;
-var error = 0.5;
 
-var invincibility = false;
 var current_frame;
 var invincibility_frames = 20; // duration of a "tic", the actual number of invincibility frames is 3*invincibility_frames
 
@@ -73,11 +65,18 @@ function init() {
   light.shadow.camera.far = 8000;     // default
   light.shadow.camera.fov = 30;
 
+
+
+  // Initialization of the world
+  spawnClouds(0);
+  treesInit();  
+  scene.add(side1);
+  scene.add(side2);
+  scene.add(side3);
+  scene.add(side4);
 }
 
 //loading models
-var loader = new THREE.GLTFLoader();
-loader.crossOrigin = true;
 
 loader.load( './../models/scene.gltf', function ( gltf ) {
     sonic = gltf.scene;
@@ -150,19 +149,6 @@ loader.load( './../models/eggman-yurro.glb', function ( gltf ) {
   scene.add( eggman );
   scene.add(alarm);
 });
-
-//interpolation function
-function lerp(current, target, fraction){
-
-  var array_of_points = [];
-
-  for (var is = 0; is < (1/fraction); is++){
-    var j = is*fraction;
-    array_of_points.push(current*(1-j)+target*j); 
-  }
-
-  return array_of_points;
-}
 
 // score text display
 var text = document.createElement('h1');
@@ -330,7 +316,7 @@ var onLoad = function (texture) {
     bg1 = bg.clone();
     bg1.position.set( 0 , 69, -250);
     scene.add(bg);
-     scene.add(bg1);   
+    scene.add(bg1);   
   } 
 }
 
@@ -345,7 +331,6 @@ var onError = function (xhr) {
   console.log(xhr);
 };
 
-var loader1 = new THREE.TextureLoader();
 loader1.load('./../Images/road.jpg', onLoad, onProgress, onError);
 loader1.load('./../Images/landscope1.jpg', onLoad, onProgress, onError);
 

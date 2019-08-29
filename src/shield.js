@@ -12,7 +12,7 @@ var smaterial = new THREE.MeshPhongMaterial({
 var shield = new THREE.Mesh( sgeometry, smaterial );
 shield.position.set(0,0,-10);
 shield.visible = false;
-scene.add(shield);
+var initialization = true;
 
 var shield_on = false;
 
@@ -66,6 +66,10 @@ function spawn_shield(start){
             shield.position.set(px, py, pz);
             shield.visible = true;
             shield_to_spawn = false;
+            if(initialization){
+                scene.add(shield);
+                initialization = false;
+            }
         } else {
             spawn_shield(start);
         }
@@ -115,16 +119,5 @@ function update_shield(){
             scene.add(shield); vanishing = true;
         }
     }
-    /*    scene.remove(shield);
-    } else if( shield_time == 430){
-        scene.add(shield);
-    } else if( shield_time == 440){
-        scene.remove(shield);
-    } else if( shield_time == 450){
-        scene.add(shield);
-    } else if( shield_time == 460){
-        scene.remove(shield);
-    } else if( shield_time == 470){
-        scene.add(shield);
-    } */
+
 }

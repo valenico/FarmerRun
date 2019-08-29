@@ -1,4 +1,5 @@
 var alarm;
+var eggman;
 
 loader1.load('./../Images/alert.png', function(texture){
   var objGeometry = new THREE.PlaneGeometry( 1 , 1 , 32);
