@@ -17,11 +17,11 @@ loader1.load('./../Images/alert.png', function(texture){
 var wait = 0;
 var e = false;
 
-
 var t_egg = 0;
 var t_jump = 0;
 
 var egg_speed = 0.12;
+var eggman_moves_x = lerp( 0 , -2.25, run_speed/6).concat(lerp(-2.25,2.25,run_speed/3)).concat(lerp(2.25,0,run_speed/6));
 var egg = false;
 var hitting = false;
 var n_hit = 0;
