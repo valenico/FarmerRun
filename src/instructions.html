@@ -48,9 +48,9 @@ html, body {
 }
 
 #section0 {
- /* background-image: url(./../Images/wallpaper7.png);
+ /* background-image: url(./../Images/wallpaper6.png);
   background-image: url(./../Images/wallpaper5.png); */
-  background-image: url(./../Images/wallpaper6.png);
+  background-image: url(./../Images/wallpaper7.png);
 
 }
 
@@ -120,6 +120,7 @@ a,h4 {
 .tooltip {
   position: relative;
   display: inline-block;
+  cursor: help;
 }
 
 /* Tooltip text */
@@ -139,6 +140,7 @@ a,h4 {
   left: 100%;
   width:350px;
 
+
   /* Fade in tooltip */
   opacity: 0;
   transition: opacity 0.3s;
@@ -153,6 +155,7 @@ a,h4 {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
+
   border-color: #555 transparent transparent transparent;
 }
 
@@ -235,7 +238,7 @@ a,h4 {
 <div id="fullpage">
     <div class="section active" id="section0">
         <div class="intro">
-          <p style="position: absolute;top:5%;left:22%;"> <img width ="60%" height="60%" src='./../Images/logo2.png' /> </p>
+          <p style="position: absolute;top:5%;left:22%;"> <img width ="70%" height="70%" src='./../Images/logo2.png' /> </p>
           <p>
                 
 		    <div class='row'>
@@ -245,14 +248,14 @@ a,h4 {
 		      </div> -->
 		      <div class='column rightcolumn'>
 		        <div class='instructions'>
-		          <h2 style="position: absolute;left: 58%;top:30%;font-size:x-large;" class="howtoplay">How to Play </h2>
-                    <div style="position: absolute; left: 66%; top:30%;" class="tooltip"><img width="30px" height="30px" src='./../Images/info-new.png' /> 
+		          <h2 style="position: absolute;left: 59%;top:35%;font-size:x-large;" class="howtoplay">How to Play: </h2>
+                   <!-- <div style="position: absolute; left: 66%; top:30%;" class="tooltip">
                     <span class="tooltiptext">
                           During the game you can collect rings to get points, hearts to get back lives and shields to get invulnerability for some time. 
                           In the upper left corner you can see your score, in the upper right corner you can see your lives. When you loose one or more hearts, the corresponding number of them turn gray
                           Select the difficulty of your game. An easy game allows you to get hit four times before a game over; the extreme game gives you only one shot.
 
-                    </span></div> 
+                    </span></div> -->
 		        <img style="position: absolute;top:40%;left:56%;" src='./../Images/commands-realpng.png' alt='Game control commands.' width='250px'/>
 		        </div>
 	              <h3 style = "position: absolute; top: 60%; left: 59%;  color: black; font-size:large;">  Change difficulty:  </h3>
@@ -305,7 +308,7 @@ a,h4 {
              <div class="tooltip" style="position: absolute; top: 74.5%; left: 70%;"> 
         	 	<img  width="190" height="auto" src="../Images/heart_1.png"/>
         	 	<span class="tooltiptext">
-        	 		You loose hearts when you hit an obstacle or when Eggman hits you. After you've been hit you're invulnerable for some seconds, use that time to escape from every danger! When you drop to 0 hearts it will be game over, taking a heart you find on the road will restore one of them letting you to absorb more hits from the enemies!
+        	 		You loose hearts when you hit an obstacle or when Eggman hits you. After you've been hit you're invulnerable for some seconds, use that time to escape from every danger! When you drop to 0 hearts it will be game over, taking a heart will restore one of them letting you to absorb one more hit from the enemies!
              	</span></div>
 
              <!-- RING -->
