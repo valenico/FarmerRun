@@ -183,9 +183,6 @@ a,h4 {
 }
 
 .scroll h2 {
-  position: absolute;
-  bottom: 20px;
-  left: 38%;
   z-index: 2;
   display: inline-block;
   -webkit-transform: translate(0, -50%);
@@ -202,19 +199,19 @@ a,h4 {
   opacity: .5;
 }
 
-#scrolldown h2 {
+#scrolldown1 h2 {
   padding-top: 60px;
 }
 
-#scrolldown a:hover{
+#scrolldown1 a:hover{
   background: 0%;
 }
 
-#scrolldown a:visited {
+#scrolldown1 a:visited {
   color: #000;
 }
 
-#scrolldown h2 span {
+#scrolldown1 h2 span {
   position: absolute;
   top: 0;
   left: 50%;
@@ -227,6 +224,32 @@ a,h4 {
   transform: rotate(-45deg);
   box-sizing: border-box; 
   
+}
+
+#scrolldown2 h2 {
+  padding-top: 60px;
+}
+
+#scrolldown2 a:hover{
+  background: 0%;
+}
+
+#scrolldown2 a:visited {
+  color: #000;
+}
+
+#scrolldown2 h2 span {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  box-sizing: border-box; 
 }
 
 
@@ -271,7 +294,7 @@ a,h4 {
 		      </div>
 		    </div>
 
-		    <div id="scrolldown" class="scroll">
+		    <div style = "position: absolute; bottom: 20px;left: 38%;" id="scrolldown1" class="scroll">
           <a href='./instructions.html#secondPage'> <h2><span></span> Scroll down to see the tutorial!</h2></a>
 			</div>          
 
@@ -279,11 +302,18 @@ a,h4 {
         </div>
     </div>
     <div class="section" id="section1">
+    	<p>
+    	  <div style = "position: absolute; top: 5%;left: 38%;" id="scrolldown2" class="scroll">
+          <a href='./instructions.html#firstPage'> <h2><span></span> Scroll up to go back to the main page</h2></a>
+			</div>          
+
+    	</p>
+
         <p id = "enemies">
-          <img style="position: absolute; top: 10%; left: 19%; border:5px solid black; max-width: 65%; max-height: 60%;" width="auto" height="auto" src="../Images/game.png"/>
+          <img style="position: absolute; top: 12%; left: 19%; border:5px solid black; max-width: 65%; max-height: 60%;" width="auto" height="auto" src="../Images/game.png"/>
           
           <!--EGGMAN-->
-          <div class="tooltip"  style="position: absolute; top: 10%; left: 42%;" > <img width = "135" height = "110" src="../Images/square.png"/>
+          <div class="tooltip"  style="position: absolute; top: 11%; left: 42%;" > <img width = "135" height = "110" src="../Images/square.png"/>
             <span class="tooltiptext">
               Watch out for you mortal enemy, Eggman! When he is coming for you, you will hear him and you will be warned with a <span style="color: red"> red signal </span> on the ground which moves along his trajectory so that you can avoid him even when he's behind you. He will repeatedly try to hit you with his huge weapon, to escape the danger you need to dodge left or right at the right time!
                </span></div>
@@ -295,7 +325,7 @@ a,h4 {
               </span></div>
           
           <!--ROBOT-->
-          <div class="tooltip" style="position: absolute; top: 15%; left: 49.5%;" ><img width = "100" height = "100" src="../Images/square.png"/>
+          <div class="tooltip" style="position: absolute; top: 16%; left: 49.5%;" ><img width = "100" height = "100" src="../Images/square.png"/>
             <span class="tooltiptext">
               The evil scientist has developed a new weapon to beat you, this robot will be targeting you over and over, you will be warned by his red laser. Pay attention, those projectiles are very fast!
             </span></div>
