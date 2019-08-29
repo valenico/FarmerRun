@@ -315,7 +315,7 @@ function clear_area(){
     document.body.appendChild(back_button);
 
     back_button.addEventListener('click', function(){
-        window.location.href = "./instructions.html";
+        window.location.href = "./index.html#firstPage.html";
     });
 
 }
