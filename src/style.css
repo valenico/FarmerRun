@@ -75,11 +75,6 @@ html {
   color: lighten(#0103f3, 75%);
 }
 
-a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
 .Blazing {
   position: relative;
   text-align: center;
