@@ -16,7 +16,7 @@ loader1.load('./../Images/cloud10.png', function(texture) {
     });
     cloud = new THREE.Mesh(objGeometry, objMaterial);
     spawnClouds(0);
-}, onProgress, onError);
+}, null , null);
 
 var max_clouds = 50;
 var clouds = new Array();
