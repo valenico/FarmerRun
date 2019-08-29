@@ -35,7 +35,6 @@ var won = new Audio('../audio/won.mp3');
 var wontescape = new Audio('../audio/wontescape.mp3');
 var that = new Audio('../audio/that.mp3');
 var cantwin = new Audio('../audio/youcantwin.mp3');
-cantwiwn.volume = 0.4;
 
 
 function check_eggman(oldv){
