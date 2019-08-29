@@ -44,11 +44,11 @@ html, body {
 }
 
 .section {
-  background-size: contain;
+  background-size: cover;
 }
 
 #section0 {
-  background-image: url(./../Images/77.jpg);
+  background-image: url(./../Images/wallpaper4.jpg);
 }
 
 .instructions {
@@ -154,10 +154,10 @@ a,h4 {
           <p>
                 
 		    <div class='row'>
-		      <div class='column'>
+		   <!--   <div class='column'>
 		          <p><img style="position: absolute;top:20%;left:10%;" height="20%" src='./../Images/eggman2.png'></p>
 		          <p><img style="position: absolute;top:30%;left:15%;" height="60%" src='./../Images/sonic2.png' /></p>
-		      </div>
+		      </div> -->
 		      <div class='column rightcolumn'>
 		        <div class='instructions'>
 		          <h2 style="position: absolute;left: 58%;top:30%;" class="howtoplay">How to Play 
@@ -171,7 +171,7 @@ a,h4 {
                           Select the difficulty of your game. An easy game allows you to get hit four times before a game over; the extreme game gives you only one shot.
 
                     </span></div> </h2> <p> 
-		          <img style="position: absolute;top:40%;left:56%;" src='./../Images/commands.png' alt='Game control commands.' width='250px'/>
+		          <img style="position: absolute;top:40%;left:56%;" src='./../Images/commands-realpng.png' alt='Game control commands.' width='250px'/>
 		        </div>
 		          <!--		          
 		          <p> You can move LEFT ( A ), RIGHT ( D ) and JUMP ( spacebar ). </p>
@@ -180,9 +180,9 @@ a,h4 {
 		          <p> You loose life when <u>you hit an obstacle or when Eggman hits you</u>. After you've been hit you're invulnerable for some seconds, use that time to escape from every danger! </p>
 		          <p> In the upper left corner you can see your <b>score</b>, in the upper right corner you can see your <b>lives</b>. When you loose one or more lives, the corresponding number of hearts turn gray </p>
 		          <p>Select the difficulty of your game. An easy game allows you to get hit four times before a game over; the extreme game gives you only one shot.</p> -->
-	              <h3 style = "position: absolute; top: 60%; left: 59.5%;  color:white;">  Change difficulty:  </h3>
+	              <h3 style = "position: absolute; top: 60%; left: 59.5%;  color: black;">  Change difficulty:  </h3>
 		          <a id="prev" style = "position: absolute; top: 63%; left: 56%;" href="#" class="previous round" onclick="lowerDifficulty()">&#8249;</a>
-		          <h4 style = "position: absolute; top: 64%; left: 61.4%; color:white;" id="diff">Normal</h4>
+		          <h4 style = "position: absolute; top: 64%; left: 61.4%; color:black;" id="diff">Normal</h4>
 		          <a id="next" style = "position: absolute; top: 63%; left: 67.5%;" href="#" class="next round" onclick="increaseDifficulty()">&#8250;</a>
 	             <button style="position: absolute; top: 70%; left: 55%;" class="b" onclick = "start()"> <h2 style="text-align: center; font-size:xx-large; color: white;"> Play the Game! <h2> </button>
 		      </div>
