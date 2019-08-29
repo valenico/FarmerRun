@@ -261,7 +261,7 @@ function animate(){
     check_ring(); 
     collision();
 
-    text2.innerHTML = "Score: " + score;
+    text.innerHTML = "Score: " + score;
 
     turn_off_eggman();
     spawn_shield(sonic.position.z);
