@@ -3,6 +3,7 @@ var can_get_heart = false;
 var max_hearts = Number(document.URL.substr(-1,1));
 var num_hearts = max_hearts;
 
+var remach = new Audio('./../audio/remach.mp3');
 
 var life1 = document.createElement('img');
 life1.style.position = 'absolute';
@@ -238,6 +239,7 @@ function death(){
         requestAnimationFrame(death);
 
     } else if (dead_step == 70){
+        remach.play();
 
         camera.position.z += 5;
         camera.position.y = 1;

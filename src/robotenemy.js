@@ -85,10 +85,8 @@ function laser(){
 
 function spawn_robot(){
 
-
-    if(scene.getObjectByName(robot.name) == null) scene.add(robot);
-
     if((sonic.position.z + 3) % 100 <= 1 && robot_to_spawn == true ){
+        if(scene.getObjectByName(robot.name) == null) scene.add(robot);
         robot.visible = true;
         robot_to_spawn = false;
         robot.position.x = 4;

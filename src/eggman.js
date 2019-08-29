@@ -33,6 +33,9 @@ var challenging = new Audio('../audio/challenging.mp3');
 var letgo = new Audio('../audio/letgo.mp3');
 var won = new Audio('../audio/won.mp3');
 var wontescape = new Audio('../audio/wontescape.mp3');
+var that = new Audio('../audio/that.mp3');
+var cantwin = new Audio('../audio/youcantwin.mp3');
+cantwiwn.volume = 0.4;
 
 
 function check_eggman(oldv){
@@ -96,13 +99,15 @@ function eggman_moves(){
         n_hit = 0;
         egg = false;
         played_retreat = false;
+        cantwin.play();
       }
 
       if(!invincibility) {
         e = check_eggman(e);
         if(e){
           if(!played_retreat){
-            challenging.play();
+            if(Math.random() > 0.5) challenging.play();
+            else that.play();
           }
           getDamage();
           damage_feedback();

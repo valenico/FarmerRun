@@ -19,6 +19,9 @@ var invincibility_frames = 20; // duration of a "tic", the actual number of invi
 
 var times = 1; 
 
+var pain = new Audio('./../audio/pain.mp3');
+pain.volume = 0.4;
+
 // scene creation and main light positioning
 function init() {
 
@@ -163,6 +166,7 @@ document.body.appendChild(text);
 function damage_feedback(){
   invincibility = true;
   current_frame = 0;
+  pain.play();
 }
 
 // animation loop during the game
