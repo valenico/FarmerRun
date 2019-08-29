@@ -235,6 +235,8 @@ function death(){
         light.position.z += s/2;
         bg.position.z += s/2;
 
+        requestAnimationFrame(death);
+
     } else if (dead_step == 70){
 
         camera.position.z += 5;
@@ -270,8 +272,6 @@ function death(){
         clear_area();
 
     }
-
-    requestAnimationFrame(death);
     render();
 }
 
