@@ -1,8 +1,7 @@
-# FarmerRun
+# Sonic Run
 
-## Cose da fare:
+Sonic Run game, developed with WebGl and Three.js.
 
-- sistemare instructions.html
-
+Not running on Chrome and Safari. 
 
 
