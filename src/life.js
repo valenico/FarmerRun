@@ -176,7 +176,6 @@ function check_lives(){
         return;
     } else if(life3.src.slice(-10,-4) == 'nolife'){
         life3.src = './../Images/life.png';
-        can_get_heart = false;
         return;
     } else if(life4.src.slice(-10,-4) == 'nolife'){
         life4.src = './../Images/life.png';
