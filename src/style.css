@@ -76,13 +76,11 @@ html {
 }
 
 .Blazing {
-  position: relative;
-  text-align: center;
+  position: absolute;
   font-family: 'Akronim';
-  left: 0px;
-  transform: translateY(465px);
-  font-size: 120px;
-  width: 95%;
+  margin-left: 37%;
+  margin-top: 40%;
+  font-size: 160px;
     
 	text-shadow:
     0 3px 20px red,
