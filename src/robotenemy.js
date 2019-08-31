@@ -46,8 +46,6 @@ loader.load("./../models/robotfly/scene.gltf", function(gltf){
 });
 
 
-
-
 function check_fireball(){
     if(fireball.position.z + 2 < sonic.position.z) return false;
     var z1 = fireball.position.z <= sonic.position.z + error;
@@ -77,8 +75,8 @@ function laser(){
         new THREE.Vector3( robot.position.x,  robot.position.y,  robot.position.z ),
         new THREE.Vector3( sonic.position.x, sonic.position.y + 0.5, sonic.position.z )
     );
-
     line = new THREE.Line( geometry, material );
+    line.name = "laser";
     scene.add( line );  
 }
 
@@ -164,7 +162,7 @@ function robotEnemy(){
                         played_shot = true;
                     }
 
-                    scene.remove(line);
+                    if(scene.getObjectByName("laser")!=null) scene.remove(line);
                     fireball.position.x = fireball_moves[0][t_fireball];
                     fireball.position.y = fireball_moves[1][t_fireball];
                     fireball.position.z = fireball_moves[2][t_fireball];
@@ -191,7 +189,7 @@ function robotEnemy(){
         }
         else { // end condition
             robot.position.z -= 0.5;
-            scene.remove(line);
+            if(scene.getObjectByName("laser")!=null) scene.remove(line);
 
             if(t_fireball != 0){
                 fireball.position.x = fireball_moves[0][t_fireball];
