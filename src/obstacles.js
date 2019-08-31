@@ -152,7 +152,7 @@ loader.load('./../models/rubble/scene.gltf', function(gltf){
 
 function break_walls(){
     for(var l = 0; l < n_obs; l++){
-        if(obs[l].visible == false) return;
+        if(obs[l].visible == false) continue;
         var z1 = eggman.position.z <= obs[l].position.z + error; 
         var z2 = eggman.position.z >= obs[l].position.z - error;
         if(obs[l].rotation.z == 80.1){ // horizontal
