@@ -162,7 +162,11 @@ function robotEnemy(){
                         played_shot = true;
                     }
 
-                    if(scene.getObjectByName("laser")!=null) scene.remove(line);
+                    if(scene.getObjectByName("laser")!=null) {
+                        line.geometry.dispose();
+                        line.material.dispose();
+                        scene.remove(line);
+                    }
                     fireball.position.x = fireball_moves[0][t_fireball];
                     fireball.position.y = fireball_moves[1][t_fireball];
                     fireball.position.z = fireball_moves[2][t_fireball];
@@ -189,7 +193,11 @@ function robotEnemy(){
         }
         else { // end condition
             robot.position.z -= 0.5;
-            if(scene.getObjectByName("laser")!=null) scene.remove(line);
+            if(scene.getObjectByName("laser")!=null) {
+                line.geometry.dispose();
+                line.material.dispose();
+                scene.remove(line);
+            }
 
             if(t_fireball != 0){
                 fireball.position.x = fireball_moves[0][t_fireball];

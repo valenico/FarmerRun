@@ -11,12 +11,11 @@ var times_vert = 1;
 var p = 0;
 
 
-var FLOOR_RES = 20;
+var SIDE_RES = 20;
 var FLOOR_THICKNESS = 10;
 var snoise = new ImprovedNoise();
 var noiseScale = 2.7;
 var noiseSeed = Math.random() * 100;
-var stepCount = 0; 
 
 
 var cow1, cow2;
@@ -26,8 +25,8 @@ const clock = new THREE.Clock();
 
 var SideConfig = {
   //const dimensions
-  FLOOR_WIDTH: 100,  // size of floor in x direction
-  FLOOR_DEPTH: 250,  //size of floor in z direction
+  SIDE_WIDTH: 100,  // size of floor in x direction
+  SIDE_DEPTH: 250,  //size of floor in z direction
   MOVE_STEP: 250    //z distance to move before recreating a new floor strip
 
 };
@@ -40,7 +39,7 @@ function load_grass(texture){
 
   var times_horizontal = 20; 
   var times_vert = 80; 
-  var objGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
+  var objGeometry = new THREE.PlaneGeometry( SideConfig.SIDE_WIDTH, SideConfig.SIDE_DEPTH , SIDE_RES,SIDE_RES );
   texture.repeat.set(times_horizontal, times_vert);
 
   side1 = createSide(objGeometry,texture, 53 , 0);
@@ -158,7 +157,7 @@ function createSide(floorGeometry,texture,posx, posz){
     });
 
   //add extra x width
-  var floorGeometry = new THREE.PlaneGeometry( SideConfig.FLOOR_WIDTH, SideConfig.FLOOR_DEPTH , FLOOR_RES,FLOOR_RES );
+  var floorGeometry = new THREE.PlaneGeometry( SideConfig.SIDE_WIDTH, SideConfig.SIDE_DEPTH , SIDE_RES,SIDE_RES );
   var floorMesh = new THREE.Mesh( floorGeometry, floorMaterial );
   floorMesh.rotation.x = Math.PI/2;
   floorMesh.position.y = 0;
@@ -167,23 +166,22 @@ function createSide(floorGeometry,texture,posx, posz){
 
   var i;
   var ipos;
-  var offset = stepCount *SideConfig.MOVE_STEP/SideConfig.FLOOR_DEPTH * FLOOR_RES;
 
-  for( i = 0; i < FLOOR_RES + 1; i++) {
-    for( var j = 0; j < FLOOR_RES + 1; j++) {
-      ipos = i + offset;
+  for( i = 0; i < SIDE_RES + 1; i++) {
+    for( var j = 0; j < SIDE_RES + 1; j++) {
+      ipos = i;
       if(posx > 0){
-        if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        else if(j < 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0;
-        else if(j < 7) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*j/4;
-        else if(j > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;        
+        if(i < 3 || i > SIDE_RES - 3) floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z = 0; 
+        else if(j < 3) floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z = 0;
+        else if(j < 7) floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z = snoise.noise(ipos/SIDE_RES * noiseScale, j/SIDE_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*j/4;
+        else if(j > SIDE_RES - 3) floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z = 0; 
+        else floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z = snoise.noise(ipos/SIDE_RES * noiseScale, j/SIDE_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;        
       } else {
-        if(i < 3 || i > FLOOR_RES - 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        else if(j< 3) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = 0; 
-        else if(j > FLOOR_RES - 3)  floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z =  0;
-        else if(j > FLOOR_RES - 7) floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*(-j+FLOOR_RES)/5; 
-        else floorGeometry.vertices[i * (FLOOR_RES + 1)+ j].z = snoise.noise(ipos/FLOOR_RES * noiseScale, j/FLOOR_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;
+        if(i < 3 || i > SIDE_RES - 3) floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z = 0; 
+        else if(j< 3) floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z = 0; 
+        else if(j > SIDE_RES - 3)  floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z =  0;
+        else if(j > SIDE_RES - 7) floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z = snoise.noise(ipos/SIDE_RES * noiseScale, j/SIDE_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS*(-j+SIDE_RES)/5; 
+        else floorGeometry.vertices[i * (SIDE_RES + 1)+ j].z = snoise.noise(ipos/SIDE_RES * noiseScale, j/SIDE_RES * noiseScale, noiseSeed ) * FLOOR_THICKNESS;
       }
     }
   }
