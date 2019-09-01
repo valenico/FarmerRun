@@ -318,7 +318,7 @@ var onLoad = function (texture) {
     bg = new THREE.Mesh(objGeometry, objMaterial);
     bg.position.set( 0 , 69, 250);
     bg1 = bg.clone();
-    bg1.position.set( 0 , 69, -250);
+    bg1.position.set( -20 , 40, -250);
     scene.add(bg);
     scene.add(bg1);   
   } 

@@ -63,7 +63,5 @@ function cloudRepositioning(cloud){
   var y = Math.floor(Math.random()* 5 + 16);
   var z = sonic.position.z + 400 + Math.floor(Math.random()*150);
 
-  if(cloudsCollision(x,y,z)) cloudRepositioning(cloud);
-  else cloud.position.set(x,y,z);
-
+  if(!cloudsCollision(x,y,z)) cloud.position.set(x,y,z);
 }
