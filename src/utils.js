@@ -1,3 +1,4 @@
+THREE.ImageUtils.crossOrigin = "";
 //interpolation function
 function lerp(current, target, fraction){
 
