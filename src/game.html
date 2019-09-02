@@ -4,10 +4,9 @@
   <meta charset="UTF-8">
   <title> Sonic Run </title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="css/game.css">
 </head>
 <body onload="loadingFunction()">
-<!-- partial:index.partial.html -->
 
 <div class="container" id='loading'>
   <div class="flex">
@@ -41,15 +40,12 @@
 console.clear();
 
 jQuery(document).keydown(function(event) {
-    // If Control or Command key is pressed and the S key is pressed
-    // run save function. 83 is the key code for S.
+    // Zoom disabled
     if((event.ctrlKey || event.metaKey) && event.which == 187) {
-        // Save Function
         event.preventDefault();
         return false;
     }
     if((event.ctrlKey || event.metaKey) && event.which == 189) {
-        // Save Function
         event.preventDefault();
         return false;
     }
@@ -74,8 +70,6 @@ jQuery(document).keydown(function(event) {
 <script  src="./clouds.js"></script>
 <script  src='./sides.js'></script>
 <script  src="./script.js"></script>
-
-
 
 </body>
 </html>

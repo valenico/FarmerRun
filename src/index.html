@@ -2,98 +2,60 @@
 <html lang="en">
 
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="co-authored by Gianmarco Roggiolani, Valerio Nicolanti">
+	<title>Sonic Run</title>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <title>Sonic Run</title>
-
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-
-  <!-- Custom styles for this template -->
-  <link href="css/modern-business.css" rel="stylesheet">
-  <style>
-    html, body {
-        position:fixed;
-        width: 100%;
-        height: 100%;
-        top:0;
-        bottom:0;
-        left:0;
-        right:0;
-    }
-
-    .carousel-control-prev:hover, .carousel-control-next:hover {
-      background-color: transparent;
-    }
-
-    .tool:hover {
-      background-color: transparent;
-      cursor: help;
-    }
-  </style>
-  
-
+	<link href="css/index.css" rel="stylesheet">
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
-
-
-  <header>
     <div id="carouselExampleIndicators" style="padding-top: 0px;" class="carousel slide"  data-interval="false" data-ride="carousel">
       <ol class="carousel-indicators" style="position: absolute; left: -5%;">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
       </ol>
 
-
       <div class="carousel-inner" role="listbox">
-
 
         <!-- Slide One -->
         <div class="carousel-item active min-vh-100" style="background-image: url(./../Images/wallpaper7.png);">
 
+        	<div class="intro">
+	            <p style="position: absolute;top:10%;left:35%;"> <img width ="110%" height="110%" src='./../Images/logo.png' /> </p>
+	                  
+		        <div class='row'>
+		          <div class='column rightcolumn'>
+		            <div class='instructions'>
+		              <h3 style="position: absolute;left: 43.7%;top:35%;font-size:x-large;" class="howtoplay">How to Play: </h3>
+		              <img style="position: absolute;top:40%;left:41%;" src='./../Images/commands.png' alt='Game control commands.' width='250px'/>
+		              <h3 style = "position: absolute; top: 60%; left: 43.2%;  color: black; font-size:large;">  Change difficulty: </h3>
+		              <a id="left" style = "position: absolute; top: 63%; left: 41%;" href="#" class="left round" onclick="lowerDifficulty()">&#8249;</a>
+		              <h4 style = "position: absolute; top: 64%; left: 45.7%; color:black;font-size:large;" id="diff">Normal</h4>
+		              <a id="right" style = "position: absolute; top: 63%; left: 52%;" href="#" class="right round" onclick="increaseDifficulty()">&#8250;</a>
+		              <button style="position: absolute; top: 70%; left: 40%;" class="b" onclick = "start()"> <h3 style="text-align: center; font-size:x-large; color: black;"> Play the Game! </h3> </button>
+		            </div>
+		          </div>
+		        </div>          
 
-          <div class="intro">
-            <p style="position: absolute;top:10%;left:35%;"> <img width ="110%" height="110%" src='./../Images/logo.png' /> </p>
-                  
-          <div class='row'>
-          <div class='column rightcolumn'>
-            <div class='instructions'>
-              <h3 style="position: absolute;left: 43.7%;top:35%;font-size:x-large;" class="howtoplay">How to Play: </h3>
-              <img style="position: absolute;top:40%;left:41%;" src='./../Images/commands.png' alt='Game control commands.' width='250px'/>
-              <h3 style = "position: absolute; top: 60%; left: 43.2%;  color: black; font-size:large;">  Change difficulty: </h3>
-              <a id="left" style = "position: absolute; top: 63%; left: 41%;" href="#" class="left round" onclick="lowerDifficulty()">&#8249;</a>
-              <h4 style = "position: absolute; top: 64%; left: 45.7%; color:black;font-size:large;" id="diff">Normal</h4>
-              <a id="right" style = "position: absolute; top: 63%; left: 52%;" href="#" class="right round" onclick="increaseDifficulty()">&#8250;</a>
-              <button style="position: absolute; top: 70%; left: 40%;" class="b" onclick = "start()"> <h3 style="text-align: center; font-size:x-large; color: black;"> Play the Game! </h3> </button>
-            </div>
-          </div>
-        </div>          
-
-        </div>
-
-          <div style="color:black; position: absolute; left: 10%;" class="carousel-caption d-none d-md-block">
-          </div>
+        	</div>
+	        <div style="color:black; position: absolute; left: 10%;" class="carousel-caption d-none d-md-block">
+	        </div>
         </div>
         <!-- End Slide One -->  
-
 
 
         <!-- Slide Two --> 
         <div id="car" class="carousel-item min-vh-100" style="background-color: rgba(238,83,78,1);">
 
-
-
-          <img style="position: absolute; top: 5%; left: 19%; border:5px solid black; max-width: 65%; max-height: 60%;" width="auto" height="auto" src="../Images/game.png"/>
-   
+          <img style="position: absolute; top: 5%; left: 19%; border:5px solid black; max-width: 65%; max-height: 60%;" width="auto" height="auto" src="../Images/game.png"/>   
           
           <!--EGGMAN-->
           <a style="position: absolute;left: 40.5%;top: 3%;" href="#" class="tool" data-toggle="tooltip" data-placement="bottom" title="Watch out for you mortal enemy, Eggman! When he is coming for you, you will hear him and you will be warned with a red signal on the ground which moves along his trajectory so that you can avoid him even when he's behind you. He will repeatedly try to hit you with his huge weapon, to escape the danger you need to dodge left or right at the right time!"><img width = "135" height = "110" src="../Images/square.png"/></a>
@@ -131,71 +93,60 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-  </header>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+	  $('[data-toggle="tooltip"]').tooltip();   
+	});
 
-
-  <!-- Bootstrap core JavaScript -->
-  <script>
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();   
-    });
-  </script>
-  <script type="text/javascript">
-    function lowerDifficulty(){
-        var text = document.getElementById('diff').innerHTML;
-        if(text == "Normal"){ 
-          document.getElementById('diff').innerHTML = "Easy";
-          document.getElementById("left").style.backgroundColor = "white";
-        }
-        else if (text == "Hard") document.getElementById('diff').innerHTML = "Normal";
-        else if (text == "Extreme"){
-          document.getElementById('diff').innerHTML = "Hard";
-          document.getElementById("right").style.backgroundColor = "#0506DB";
-        }
-    }
-
-    function increaseDifficulty(){
-        var text = document.getElementById('diff').innerHTML;
-        if(text == "Easy"){
-          document.getElementById('diff').innerHTML = "Normal";
-          document.getElementById("left").style.backgroundColor = "#0506DB";
-        }
-        else if (text == "Normal") document.getElementById('diff').innerHTML = "Hard";
-        else if (text == "Hard"){ 
-          document.getElementById('diff').innerHTML = "Extreme";
-          document.getElementById("right").style.backgroundColor = "white";
-        }
-    }
-
-    function start(){
-      var text = document.getElementById('diff').innerHTML;
-      if(text == "Normal") window.location.href = "./game.html?max_hearts=3";
-      else if(text == "Easy") window.location.href = "./game.html?max_hearts=4";
-      else if(text == "Hard") window.location.href = "./game.html?max_hearts=2";
-      else if(text == "Extreme") window.location.href = "./game.html?max_hearts=1";
-    }
-
-    jQuery(document).keydown(function(event) {
-        // If Control or Command key is pressed and the S key is pressed
-        // run save function. 83 is the key code for S.
-        if((event.ctrlKey || event.metaKey) && event.which == 187) {
-            // Save Function
-            event.preventDefault();
-            return false;
-        }
-        if((event.ctrlKey || event.metaKey) && event.which == 189) {
-            // Save Function
-            event.preventDefault();
-            return false;
-        }
-    }
-);
+	jQuery(document).keydown(function(event) {
+	    // Zoom disabled
+	    if((event.ctrlKey || event.metaKey) && event.which == 187) {
+	        event.preventDefault();
+	        return false;
+	    }
+	    if((event.ctrlKey || event.metaKey) && event.which == 189) {
+	        event.preventDefault();
+	        return false;
+	    }
+	});
 </script>
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
 
+function lowerDifficulty(){
+	var text = document.getElementById('diff').innerHTML;
+	if(text == "Normal"){ 
+	  document.getElementById('diff').innerHTML = "Easy";
+	  document.getElementById("left").style.backgroundColor = "white";
+	}
+	else if (text == "Hard") document.getElementById('diff').innerHTML = "Normal";
+	else if (text == "Extreme"){
+	  document.getElementById('diff').innerHTML = "Hard";
+	  document.getElementById("right").style.backgroundColor = "#0506DB";
+	}
+}
+
+function increaseDifficulty(){
+	var text = document.getElementById('diff').innerHTML;
+	if(text == "Easy"){
+	  document.getElementById('diff').innerHTML = "Normal";
+	  document.getElementById("left").style.backgroundColor = "#0506DB";
+	}
+	else if (text == "Normal") document.getElementById('diff').innerHTML = "Hard";
+	else if (text == "Hard"){ 
+	  document.getElementById('diff').innerHTML = "Extreme";
+	  document.getElementById("right").style.backgroundColor = "white";
+	}
+}
+
+function start(){
+	var text = document.getElementById('diff').innerHTML;
+	if(text == "Normal") window.location.href = "./game.html?max_hearts=3";
+	else if(text == "Easy") window.location.href = "./game.html?max_hearts=4";
+	else if(text == "Hard") window.location.href = "./game.html?max_hearts=2";
+	else if(text == "Extreme") window.location.href = "./game.html?max_hearts=1";
+}
+</script>
 
 </body>
-
 </html>
