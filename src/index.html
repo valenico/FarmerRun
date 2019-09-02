@@ -333,17 +333,39 @@
 </div>
 
 <script type="text/javascript" src="utilities/fullpage.js"></script>
-<script type="text/javascript">
-    var myFullpage = new fullpage('#fullpage', {
-    	licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
-        sectionsColor: ['undefined', '#fffcab'], /* old color #4bbfc3 */
-        anchors: ['firstPage', 'secondPage'],
-        navigation:true,
-        navigationTooltips: ['Play the game!', 'Tutorial'],
-        showActiveTooltip: true,
-        menu: '#menu'
-    });
+<script type="text/javascript" src="secret.json"></script>
 
+<script type="text/javascript">
+	var key;
+
+	function loadJSON(callback) {
+		var xobj = new XMLHttpRequest();
+		xobj.overrideMimeType("application/json");
+		xobj.open('GET', 'secret.json', true); // Replace 'my_data' with the path to your file
+		xobj.onreadystatechange = function () {
+		      if (xobj.readyState == 4 && xobj.status == "200") {
+		        // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+		        callback(xobj.responseText);
+		      }
+		};
+		xobj.send(null);  
+	}
+
+	loadJSON(function(response) {
+		// Parse JSON string into object
+		key = (JSON.parse(response)[0]["KEY"]).toString();
+
+		var myFullpage = new fullpage('#fullpage', {
+			sectionsColor: ['undefined', '#fffcab'], /* old color #4bbfc3 */
+			anchors: ['firstPage', 'secondPage'],
+			navigation:true,
+			navigationTooltips: ['Play the game!', 'Tutorial'],
+			showActiveTooltip: true,
+			menu: '#menu',
+			licenseKey: key
+		});
+
+	});
 
 </script>
 
